@@ -1,0 +1,6 @@
+outs:
+- md5: cf5670261d5f683b5c7327f331ba5f3f.dir
+  size: 11880809068
+  nfiles: 148225
+  hash: md5
+  path: uco_yolo

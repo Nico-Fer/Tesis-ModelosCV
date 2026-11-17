@@ -1,0 +1,37 @@
+2026-10-16 13:29:56.304566: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+13:30:15 From C:\Users\nico\Documents\Facultad\Tesis\Codigo\modelosCV\venv-torch\Lib\site-packages\keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+13:30:22 cv5_int8 fold 4: 0 cuadros en caché, 13968 por predecir.
+Loading resultados/fase5_cv/modelos/fold4_int8.tflite for TensorFlow Lite inference...
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+13:31:52   500/13968 (146 ms/cuadro, faltan ~33 min)
+13:33:02   1000/13968 (143 ms/cuadro, faltan ~31 min)
+13:34:21   1500/13968 (148 ms/cuadro, faltan ~31 min)
+13:35:41   2000/13968 (151 ms/cuadro, faltan ~30 min)
+13:37:01   2500/13968 (153 ms/cuadro, faltan ~29 min)
+13:38:24   3000/13968 (155 ms/cuadro, faltan ~28 min)
+13:39:43   3500/13968 (156 ms/cuadro, faltan ~27 min)
+13:41:01   4000/13968 (156 ms/cuadro, faltan ~26 min)
+13:42:19   4500/13968 (156 ms/cuadro, faltan ~25 min)
+13:43:38   5000/13968 (156 ms/cuadro, faltan ~23 min)
+13:45:02   5500/13968 (157 ms/cuadro, faltan ~22 min)
+13:46:18   6000/13968 (157 ms/cuadro, faltan ~21 min)
+13:47:30   6500/13968 (156 ms/cuadro, faltan ~19 min)
+13:48:46   7000/13968 (155 ms/cuadro, faltan ~18 min)
+13:50:02   7500/13968 (155 ms/cuadro, faltan ~17 min)
+13:51:17   8000/13968 (155 ms/cuadro, faltan ~15 min)
+13:52:33   8500/13968 (155 ms/cuadro, faltan ~14 min)
+13:53:50   9000/13968 (155 ms/cuadro, faltan ~13 min)
+13:55:03   9500/13968 (154 ms/cuadro, faltan ~11 min)
+13:56:04   10000/13968 (152 ms/cuadro, faltan ~10 min)
+13:57:05   10500/13968 (151 ms/cuadro, faltan ~9 min)
+13:58:12   11000/13968 (150 ms/cuadro, faltan ~7 min)
+13:59:27   11500/13968 (150 ms/cuadro, faltan ~6 min)
+14:00:43   12000/13968 (150 ms/cuadro, faltan ~5 min)
+14:01:55   12500/13968 (150 ms/cuadro, faltan ~4 min)
+14:03:11   13000/13968 (150 ms/cuadro, faltan ~2 min)
+14:04:26   13500/13968 (150 ms/cuadro, faltan ~1 min)
+14:05:37   13968/13968 (150 ms/cuadro, faltan ~0 min)
+14:07:05 Resultado en C:\Users\nico\Documents\Facultad\Tesis\Codigo\modelosCV\reports\e75\eval\cv5_int8_fold4.json
+14:07:05 vs pseudo: {'oks': 0.9673527734055979, 'pck02': 0.9978401636572665, 'pck02_pierna': 0.997537517269017, 'pck02_brazo': 0.9990627529501981, 'n_cuadros': 13968}
+14:07:05 vs instrumental (global): {'n_articulaciones': 41904, 'con_prediccion': 1.0, 'pck0.05': 0.9374284077892325, 'pck0.10': 0.9942248949980909, 'error_mediano': 0.021579232548668045, 'error_p90': 0.04240893869625557, 'dx_mediano': -0.0015181968994141136, 'dy_mediano': 0.0020595721978081214}

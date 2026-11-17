@@ -1,0 +1,6 @@
+outs:
+- md5: c501471ab888189a699d59cc5dc6f034.dir
+  size: 871484980
+  nfiles: 7348
+  hash: md5
+  path: coco_pose

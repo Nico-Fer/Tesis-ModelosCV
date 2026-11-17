@@ -1,0 +1,1662 @@
+{
+  "generado": "2026-10-17T16:49:14",
+  "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+  "pseudo_vs_uco": {
+    "fecha": "2026-10-16T11:32:31",
+    "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+    "normalizacion": "distancia / alto del cuadro (720 px); dx, dy = pseudo - original",
+    "cuadros_con_anotacion_original": 74107,
+    "cuadros_sin_pseudo_etiqueta": 152,
+    "cuadros_comparados": 73955,
+    "global": {
+      "n": 221865,
+      "cobertura": 0.998904739368535,
+      "pck0.05": 0.9623419647082685,
+      "pck0.10": 0.9942262186464742,
+      "error_mediano": 0.019893454575302914,
+      "error_p90": 0.03883671132032159,
+      "dx_mediano": -0.00215111111111119,
+      "dy_mediano": 0.0018560000000000243,
+      "dx_mediano_px": -1.5488000000000568,
+      "dy_mediano_px": 1.3363200000000175
+    },
+    "por_zona": {
+      "brazo": {
+        "n": 46236,
+        "cobertura": 0.9999783718314733,
+        "pck0.05": 0.8882472532225971,
+        "pck0.10": 0.9832814257288692,
+        "error_mediano": 0.024285079486013158,
+        "error_p90": 0.05268698667728689,
+        "dx_mediano": -0.0017511111111111353,
+        "dy_mediano": 0.006156999999999968,
+        "dx_mediano_px": -1.2608000000000175,
+        "dy_mediano_px": 4.433039999999977
+      },
+      "pierna": {
+        "n": 175629,
+        "cobertura": 0.9986220954398192,
+        "pck0.05": 0.9818481002567913,
+        "pck0.10": 0.9971075391877195,
+        "error_mediano": 0.01891549510354793,
+        "error_p90": 0.036460463601354874,
+        "dx_mediano": -0.0022346666666665824,
+        "dy_mediano": 0.0011020000000000474,
+        "dx_mediano_px": -1.6089599999999393,
+        "dy_mediano_px": 0.7934400000000341
+      }
+    },
+    "por_camara": {
+      "cam0": {
+        "n": 44460,
+        "cobertura": 0.9961763382816015,
+        "pck0.05": 0.9183985605038236,
+        "pck0.10": 0.9854251012145749,
+        "error_mediano": 0.02460926545656065,
+        "error_p90": 0.04711528616972926,
+        "dx_mediano": -0.0029528888888889306,
+        "dy_mediano": 0.008496000000000059,
+        "dx_mediano_px": -2.12608000000003,
+        "dy_mediano_px": 6.1171200000000425
+      },
+      "cam1": {
+        "n": 44367,
+        "cobertura": 0.999842225077197,
+        "pck0.05": 0.9616156152095026,
+        "pck0.10": 0.9946581918993846,
+        "error_mediano": 0.019837064262313887,
+        "error_p90": 0.039555816961210126,
+        "dx_mediano": -0.0010186666666666,
+        "dy_mediano": -0.003238500000000033,
+        "dx_mediano_px": -0.733439999999952,
+        "dy_mediano_px": -2.3317200000000238
+      },
+      "cam2": {
+        "n": 44631,
+        "cobertura": 0.9997311285877529,
+        "pck0.05": 0.974524433689588,
+        "pck0.10": 0.9962358002285407,
+        "error_mediano": 0.018375363733697234,
+        "error_p90": 0.0345742464272829,
+        "dx_mediano": -0.0033546666666668143,
+        "dy_mediano": 0.0017039999999999278,
+        "dx_mediano_px": -2.4153600000001063,
+        "dy_mediano_px": 1.226879999999948
+      },
+      "cam3": {
+        "n": 44298,
+        "cobertura": 0.9995485123481873,
+        "pck0.05": 0.982504853492257,
+        "pck0.10": 0.9979231568016614,
+        "error_mediano": 0.01895411643428635,
+        "error_p90": 0.03547015081911246,
+        "dx_mediano": -0.011820444444444474,
+        "dy_mediano": 0.00042999999999998595,
+        "dx_mediano_px": -8.51072000000002,
+        "dy_mediano_px": 0.3095999999999899
+      },
+      "cam4": {
+        "n": 44109,
+        "cobertura": 0.9992291822530549,
+        "pck0.05": 0.9747897254528555,
+        "pck0.10": 0.9969167290122197,
+        "error_mediano": 0.01853815489773315,
+        "error_p90": 0.03734495030080082,
+        "dx_mediano": 0.008757333333333308,
+        "dy_mediano": 0.0021959999999999757,
+        "dx_mediano_px": 6.305279999999982,
+        "dy_mediano_px": 1.5811199999999825
+      }
+    },
+    "por_articulacion": {
+      "left_shoulder": {
+        "n": 7676,
+        "cobertura": 1.0,
+        "pck0.05": 0.9822824387701928,
+        "pck0.10": 1.0,
+        "error_mediano": 0.02365056998425625,
+        "error_p90": 0.03891226399989943,
+        "dx_mediano": -0.004828444444444389,
+        "dy_mediano": 0.010129500000000013,
+        "dx_mediano_px": -3.47647999999996,
+        "dy_mediano_px": 7.29324000000001
+      },
+      "right_shoulder": {
+        "n": 7736,
+        "cobertura": 1.0,
+        "pck0.05": 0.9859100310237849,
+        "pck0.10": 1.0,
+        "error_mediano": 0.027085362689020703,
+        "error_p90": 0.03939496367854151,
+        "dx_mediano": -0.0028257777777777665,
+        "dy_mediano": 0.015306999999999987,
+        "dx_mediano_px": -2.034559999999992,
+        "dy_mediano_px": 11.02103999999999
+      },
+      "left_elbow": {
+        "n": 7676,
+        "cobertura": 1.0,
+        "pck0.05": 0.9235278791036998,
+        "pck0.10": 0.9958311620635748,
+        "error_mediano": 0.021699391946547287,
+        "error_p90": 0.04597781567238148,
+        "dx_mediano": -0.008082666666666584,
+        "dy_mediano": 0.005400999999999989,
+        "dx_mediano_px": -5.81951999999994,
+        "dy_mediano_px": 3.888719999999992
+      },
+      "right_elbow": {
+        "n": 7736,
+        "cobertura": 1.0,
+        "pck0.05": 0.9047311271975181,
+        "pck0.10": 0.9958634953464323,
+        "error_mediano": 0.022610549986423926,
+        "error_p90": 0.04909690181641142,
+        "dx_mediano": 0.006616888888888944,
+        "dy_mediano": 0.007611000000000034,
+        "dx_mediano_px": 4.7641600000000395,
+        "dy_mediano_px": 5.479920000000025
+      },
+      "left_wrist": {
+        "n": 7676,
+        "cobertura": 0.9998697238144867,
+        "pck0.05": 0.7730588848358521,
+        "pck0.10": 0.9514069828035435,
+        "error_mediano": 0.023276155932097305,
+        "error_p90": 0.07694812015929849,
+        "dx_mediano": -0.002204444444444379,
+        "dy_mediano": 0.0003210000000000157,
+        "dx_mediano_px": -1.587199999999953,
+        "dy_mediano_px": 0.23112000000001132
+      },
+      "right_wrist": {
+        "n": 7736,
+        "cobertura": 1.0,
+        "pck0.05": 0.7600827300930714,
+        "pck0.10": 0.9565667011375388,
+        "error_mediano": 0.027551906506903527,
+        "error_p90": 0.07660803846330627,
+        "dx_mediano": 0.0003324444444444315,
+        "dy_mediano": 0.0003149999999999542,
+        "dx_mediano_px": 0.2393599999999907,
+        "dy_mediano_px": 0.22679999999996703
+      },
+      "left_hip": {
+        "n": 29481,
+        "cobertura": 0.9997625589362641,
+        "pck0.05": 0.9889420304602965,
+        "pck0.10": 0.9997625589362641,
+        "error_mediano": 0.027011187742167056,
+        "error_p90": 0.03904240421920639,
+        "dx_mediano": -0.021370666666666673,
+        "dy_mediano": 0.005017500000000064,
+        "dx_mediano_px": -15.386880000000005,
+        "dy_mediano_px": 3.6126000000000458
+      },
+      "right_hip": {
+        "n": 29062,
+        "cobertura": 0.9990365425641732,
+        "pck0.05": 0.9807652604775996,
+        "pck0.10": 0.9990365425641732,
+        "error_mediano": 0.02803158572293695,
+        "error_p90": 0.04221980311182338,
+        "dx_mediano": 0.020564444444444458,
+        "dy_mediano": 0.005528499999999992,
+        "dx_mediano_px": 14.80640000000001,
+        "dy_mediano_px": 3.980519999999994
+      },
+      "left_knee": {
+        "n": 29481,
+        "cobertura": 0.999151996200943,
+        "pck0.05": 0.995658220548828,
+        "pck0.10": 0.9985753536175842,
+        "error_mediano": 0.014440782745324827,
+        "error_p90": 0.025489914997673127,
+        "dx_mediano": 0.0074400000000000395,
+        "dy_mediano": 0.002548999999999968,
+        "dx_mediano_px": 5.356800000000028,
+        "dy_mediano_px": 1.835279999999977
+      },
+      "right_knee": {
+        "n": 29062,
+        "cobertura": 0.9978322207693896,
+        "pck0.05": 0.9837932695616268,
+        "pck0.10": 0.9975913564104328,
+        "error_mediano": 0.01709513570876909,
+        "error_p90": 0.030090742436379946,
+        "dx_mediano": -0.012129777777777621,
+        "dy_mediano": 0.0005590000000000872,
+        "dx_mediano_px": -8.733439999999888,
+        "dy_mediano_px": 0.4024800000000628
+      },
+      "left_ankle": {
+        "n": 29481,
+        "cobertura": 0.9985753536175842,
+        "pck0.05": 0.97486516739595,
+        "pck0.10": 0.9940300532546386,
+        "error_mediano": 0.01322571822363031,
+        "error_p90": 0.03058291989566076,
+        "dx_mediano": 0.0021706666666667157,
+        "dy_mediano": -0.0016920000000000268,
+        "dx_mediano_px": 1.5628800000000354,
+        "dy_mediano_px": -1.2182400000000193
+      },
+      "right_ankle": {
+        "n": 29062,
+        "cobertura": 0.9973504920514762,
+        "pck0.05": 0.9668639460463836,
+        "pck0.10": 0.9936342990847155,
+        "error_mediano": 0.017003086896208004,
+        "error_p90": 0.035205191362533236,
+        "dx_mediano": -0.006922666666666781,
+        "dy_mediano": -0.0023849999999999705,
+        "dx_mediano_px": -4.984320000000082,
+        "dy_mediano_px": -1.7171999999999787
+      }
+    },
+    "error_maximo_por_cuadro_px": {
+      "p50": 22.20081788729134,
+      "p95": 43.227567312324915,
+      "p99": 77.77059538218988,
+      "mayor_a_100px": 339
+    }
+  },
+  "auditoria_cvat": {
+    "seleccionados": 998,
+    "por_estrato": {
+      "discrepancia_gt": 459,
+      "score_bajo": 187,
+      "sin_deteccion": 152,
+      "control": 150,
+      "multi_persona_muestra": 50
+    },
+    "montados_en_cvat": 998,
+    "jobs": 10,
+    "tarea_cvat": [
+      "4"
+    ],
+    "auditados_exportados": 0,
+    "audit_report": [],
+    "nota": "Sólo existe el auditados.txt del gate de round-trip (5 cuadros de prueba)."
+  },
+  "fase2_particion0": {
+    "app_stock_int8": {
+      "modelo": "models/yolov8n-pose_saved_model/yolov8n-pose_int8.tflite",
+      "md5": "ee27dcf9f0ad0c25fcf37868e097ad68",
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 0.8441484007518378,
+      "pck02_vs_pseudo": 0.9817358473935112,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.7560014035956819,
+      "total_pck0.10": 0.9394389745495078,
+      "total_error_mediano": 0.03222439690950626,
+      "pierna_pck0.05": 0.7356979712481526,
+      "pierna_pck0.10": 0.9280397689103856,
+      "pierna_error_mediano": 0.033128266969702315,
+      "brazo_pck0.05": 0.823272792022792,
+      "brazo_pck0.10": 0.9772079772079773,
+      "brazo_error_mediano": 0.029736948919763743,
+      "compuerta": {
+        "train2017": {
+          "n_imagenes": 80,
+          "n_gt_validas": 80,
+          "n_detectadas": 80,
+          "n_evaluables": 80,
+          "n_sin_esqueleto": 0,
+          "span_x_rel_gt": 0.777630692228463,
+          "span_x_rel_pred": 0.7649515049485668,
+          "razon_pred_gt": 0.9839028255032879,
+          "razon_pred_gt_mediana": 0.9848142690559836,
+          "colapsadas": 0,
+          "error_kpt": 0.01673456323336921,
+          "det025": 80
+        },
+        "val2017": {
+          "n_imagenes": 37,
+          "n_gt_validas": 37,
+          "n_detectadas": 37,
+          "n_evaluables": 37,
+          "n_sin_esqueleto": 0,
+          "span_x_rel_gt": 0.7660043965921599,
+          "span_x_rel_pred": 0.757396483272603,
+          "razon_pred_gt": 0.9880496844544971,
+          "razon_pred_gt_mediana": 0.9968229170494464,
+          "colapsadas": 0,
+          "error_kpt": 0.018803253128627566,
+          "det025": 37
+        }
+      }
+    },
+    "base_pt": {
+      "modelo": "base_pt",
+      "md5": null,
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 0.845859874451533,
+      "pck02_vs_pseudo": 0.9813208364857023,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.7552789646417735,
+      "total_pck0.10": 0.938633971143724,
+      "total_error_mediano": 0.03223287108303193,
+      "pierna_pck0.05": 0.7329840118231896,
+      "pierna_pck0.10": 0.9267499664113933,
+      "pierna_error_mediano": 0.03332922872256976,
+      "brazo_pck0.05": 0.8291488603988604,
+      "brazo_pck0.10": 0.9780092592592593,
+      "brazo_error_mediano": 0.029305547688506812
+    },
+    "v2_fp32": {
+      "modelo": "models/student_pruned_ft_deploy_v2.pt",
+      "md5": "bf0a2fdae2668617aadb00b800435782",
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 0.9353639331869801,
+      "pck02_vs_pseudo": 0.9964815889408775,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.9395834623402894,
+      "total_pck0.10": 0.9964084463434268,
+      "total_error_mediano": 0.02193430044506935,
+      "pierna_pck0.05": 0.9653096869541852,
+      "pierna_pck0.10": 0.9999462582292087,
+      "pierna_error_mediano": 0.02077430870590996,
+      "brazo_pck0.05": 0.8543447293447294,
+      "brazo_pck0.10": 0.9846866096866097,
+      "brazo_error_mediano": 0.026687533178962414,
+      "compuerta": {
+        "train2017": {
+          "n_imagenes": 80,
+          "n_gt_validas": 80,
+          "n_detectadas": 47,
+          "n_evaluables": 47,
+          "n_sin_esqueleto": 33,
+          "span_x_rel_gt": 0.777630692228463,
+          "span_x_rel_pred": 0.7122539279959442,
+          "razon_pred_gt": 0.9115797039962732,
+          "razon_pred_gt_mediana": 0.8511828911013719,
+          "colapsadas": 16,
+          "error_kpt": 0.4565559432972798
+        },
+        "val2017": {
+          "n_imagenes": 37,
+          "n_gt_validas": 37,
+          "n_detectadas": 20,
+          "n_evaluables": 19,
+          "n_sin_esqueleto": 18,
+          "span_x_rel_gt": 0.7660043965921599,
+          "span_x_rel_pred": 0.5864127580839283,
+          "razon_pred_gt": 0.7956961771925101,
+          "razon_pred_gt_mediana": 0.6390268091639214,
+          "colapsadas": 8,
+          "error_kpt": 0.5022934930717049
+        }
+      }
+    },
+    "v2_int8": {
+      "modelo": "models/student_pruned_ft_deploy_v2_saved_model/student_pruned_ft_deploy_v2_int8.tflite",
+      "md5": "babaf18065f0b086ebf0caf688bcb350",
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 0.9309528600500866,
+      "pck02_vs_pseudo": 0.9964485349747688,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.9370446054451256,
+      "total_pck0.10": 0.9961194707618635,
+      "total_error_mediano": 0.022159313752199445,
+      "pierna_pck0.05": 0.9630525325809486,
+      "pierna_pck0.10": 0.9998925164584173,
+      "pierna_error_mediano": 0.021008932296116924,
+      "brazo_pck0.05": 0.8508725071225072,
+      "brazo_pck0.10": 0.9836182336182336,
+      "brazo_error_mediano": 0.026646976498621733
+    },
+    "v3_fp32": {
+      "modelo": "models/student_pruned_ft_deploy_v3.pt",
+      "md5": "01360a5ab5193a31b97a8ef6924de878",
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 0.9436023890349742,
+      "pck02_vs_pseudo": 0.9959490528202378,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.9284785435630689,
+      "total_pck0.10": 0.9963052407785827,
+      "total_error_mediano": 0.022701615737065535,
+      "pierna_pck0.05": 0.9508800214967084,
+      "pierna_pck0.10": 1.0,
+      "pierna_error_mediano": 0.021662176788163498,
+      "brazo_pck0.05": 0.854255698005698,
+      "brazo_pck0.10": 0.9840633903133903,
+      "brazo_error_mediano": 0.027143260216306028,
+      "compuerta": {
+        "train2017": {
+          "n_imagenes": 80,
+          "n_gt_validas": 80,
+          "n_detectadas": 78,
+          "n_evaluables": 78,
+          "n_sin_esqueleto": 2,
+          "span_x_rel_gt": 0.777630692228463,
+          "span_x_rel_pred": 0.7346260965220593,
+          "razon_pred_gt": 0.9440914117789464,
+          "razon_pred_gt_mediana": 0.9342991073912226,
+          "colapsadas": 0,
+          "error_kpt": 0.030297509531507647,
+          "det025": 78
+        },
+        "val2017": {
+          "n_imagenes": 37,
+          "n_gt_validas": 37,
+          "n_detectadas": 37,
+          "n_evaluables": 37,
+          "n_sin_esqueleto": 0,
+          "span_x_rel_gt": 0.7660043965921599,
+          "span_x_rel_pred": 0.7206969869937424,
+          "razon_pred_gt": 0.9422855954882611,
+          "razon_pred_gt_mediana": 0.9659171329605265,
+          "colapsadas": 1,
+          "error_kpt": 0.03609200783534995,
+          "det025": 37
+        }
+      }
+    },
+    "v3_int8": {
+      "modelo": "models/student_pruned_ft_deploy_v3_saved_model/student_pruned_ft_deploy_v3_int8.tflite",
+      "md5": "63a694b75d7dd9adb6ae781f13f4e337",
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 0.9408911750952191,
+      "pck02_vs_pseudo": 0.9960629053701677,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.9249076310194646,
+      "total_pck0.10": 0.9963052407785827,
+      "total_error_mediano": 0.02285057400811744,
+      "pierna_pck0.05": 0.9480048367593712,
+      "pierna_pck0.10": 0.9999731291146043,
+      "pierna_error_mediano": 0.02166386365471485,
+      "brazo_pck0.05": 0.8483796296296297,
+      "brazo_pck0.10": 0.9841524216524217,
+      "brazo_error_mediano": 0.027543646602593327,
+      "compuerta": {
+        "train2017": {
+          "n_imagenes": 80,
+          "n_gt_validas": 80,
+          "n_detectadas": 80,
+          "n_evaluables": 80,
+          "n_sin_esqueleto": 0,
+          "span_x_rel_gt": 0.777630692228463,
+          "span_x_rel_pred": 0.7334625169863256,
+          "razon_pred_gt": 0.9449732219936944,
+          "razon_pred_gt_mediana": 0.9219721665800318,
+          "colapsadas": 0,
+          "error_kpt": 0.03874844287882123,
+          "det025": 78
+        },
+        "val2017": {
+          "n_imagenes": 37,
+          "n_gt_validas": 37,
+          "n_detectadas": 37,
+          "n_evaluables": 37,
+          "n_sin_esqueleto": 0,
+          "span_x_rel_gt": 0.7660043965921599,
+          "span_x_rel_pred": 0.7170478707233889,
+          "razon_pred_gt": 0.9378690083779251,
+          "razon_pred_gt_mediana": 0.9622039654748612,
+          "colapsadas": 1,
+          "error_kpt": 0.03596186844262031,
+          "det025": 37
+        }
+      }
+    },
+    "pseudo": {
+      "modelo": "pseudo",
+      "md5": null,
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 1.0,
+      "pck02_vs_pseudo": 1.0,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.9635890767230169,
+      "total_pck0.10": 0.9969038330546783,
+      "total_error_mediano": 0.020315662901403384,
+      "pierna_pck0.05": 0.9805454789735322,
+      "pierna_pck0.10": 0.9991938734381298,
+      "pierna_error_mediano": 0.019629104335144823,
+      "brazo_pck0.05": 0.9074074074074074,
+      "brazo_pck0.10": 0.9893162393162394,
+      "brazo_error_mediano": 0.02241777521960197
+    }
+  },
+  "base_pt_por_particion": {
+    "0": {
+      "modelo": "base_pt",
+      "md5": null,
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 0.845859874451533,
+      "pck02_vs_pseudo": 0.9813208364857023,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.7552789646417735,
+      "total_pck0.10": 0.938633971143724,
+      "total_error_mediano": 0.03223287108303193,
+      "pierna_pck0.05": 0.7329840118231896,
+      "pierna_pck0.10": 0.9267499664113933,
+      "pierna_error_mediano": 0.03332922872256976,
+      "brazo_pck0.05": 0.8291488603988604,
+      "brazo_pck0.10": 0.9780092592592593,
+      "brazo_error_mediano": 0.029305547688506812
+    },
+    "1": {
+      "modelo": "base_pt",
+      "md5": null,
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 0.8567230425194958,
+      "pck02_vs_pseudo": 0.978643375168132,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.74964789411742,
+      "total_pck0.10": 0.9238100750516101,
+      "total_error_mediano": 0.03285603490113756,
+      "pierna_pck0.05": 0.7312557777453413,
+      "pierna_pck0.10": 0.9131756921130735,
+      "pierna_error_mediano": 0.03388459914332577,
+      "brazo_pck0.05": 0.8201398601398602,
+      "brazo_pck0.10": 0.9645687645687646,
+      "brazo_error_mediano": 0.029052142907037958
+    },
+    "2": {
+      "modelo": "base_pt",
+      "md5": null,
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 0.8680855891085929,
+      "pck02_vs_pseudo": 0.9841310709175262,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.7672765933635499,
+      "total_pck0.10": 0.9440714005931398,
+      "total_error_mediano": 0.03124433389531374,
+      "pierna_pck0.05": 0.7619940941462567,
+      "pierna_pck0.10": 0.9379537953795379,
+      "pierna_error_mediano": 0.03085608648838407,
+      "brazo_pck0.05": 0.7891332470892626,
+      "brazo_pck0.10": 0.969383354894351,
+      "brazo_error_mediano": 0.03278879334873852
+    },
+    "3": {
+      "modelo": "base_pt",
+      "md5": null,
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 0.8536469888185833,
+      "pck02_vs_pseudo": 0.9813598574101842,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.7592035034898043,
+      "total_pck0.10": 0.9432507641074769,
+      "total_error_mediano": 0.033292796460891394,
+      "pierna_pck0.05": 0.7473738591355261,
+      "pierna_pck0.10": 0.9362263934332128,
+      "pierna_error_mediano": 0.03406319124803184,
+      "brazo_pck0.05": 0.805,
+      "brazo_pck0.10": 0.9704444444444444,
+      "brazo_error_mediano": 0.030117308711609017
+    },
+    "4": {
+      "modelo": "base_pt",
+      "md5": null,
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 0.8514441172977106,
+      "pck02_vs_pseudo": 0.9793991343747886,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.7001479572355861,
+      "total_pck0.10": 0.9156405116456663,
+      "total_error_mediano": 0.034970895954471906,
+      "pierna_pck0.05": 0.6756298016794712,
+      "pierna_pck0.10": 0.904800190578286,
+      "pierna_error_mediano": 0.036413735066297206,
+      "brazo_pck0.05": 0.7990867579908676,
+      "brazo_pck0.10": 0.9593847632780581,
+      "brazo_error_mediano": 0.02966339319342895
+    }
+  },
+  "pseudo_por_particion": {
+    "0": {
+      "modelo": "pseudo",
+      "md5": null,
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 1.0,
+      "pck02_vs_pseudo": 1.0,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.9635890767230169,
+      "total_pck0.10": 0.9969038330546783,
+      "total_error_mediano": 0.020315662901403384,
+      "pierna_pck0.05": 0.9805454789735322,
+      "pierna_pck0.10": 0.9991938734381298,
+      "pierna_error_mediano": 0.019629104335144823,
+      "brazo_pck0.05": 0.9074074074074074,
+      "brazo_pck0.10": 0.9893162393162394,
+      "brazo_error_mediano": 0.02241777521960197
+    },
+    "1": {
+      "modelo": "pseudo",
+      "md5": null,
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 1.0,
+      "pck02_vs_pseudo": 1.0,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.9635739229418687,
+      "total_pck0.10": 0.9919739152244795,
+      "total_error_mediano": 0.02028714493853056,
+      "pierna_pck0.05": 0.986109083832044,
+      "pierna_pck0.10": 0.9962535882839488,
+      "pierna_error_mediano": 0.01953393930832277,
+      "brazo_pck0.05": 0.8772027972027973,
+      "brazo_pck0.10": 0.9755710955710956,
+      "brazo_error_mediano": 0.023700896206683874
+    },
+    "2": {
+      "modelo": "pseudo",
+      "md5": null,
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 1.0,
+      "pck02_vs_pseudo": 1.0,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.9625370712327234,
+      "total_pck0.10": 0.9944882770969727,
+      "total_error_mediano": 0.019222138003990162,
+      "pierna_pck0.05": 0.9870418620809449,
+      "pierna_pck0.10": 0.9980892826124718,
+      "pierna_error_mediano": 0.01800580474174763,
+      "brazo_pck0.05": 0.8611470461405778,
+      "brazo_pck0.10": 0.9795889032629007,
+      "brazo_error_mediano": 0.026779905509749517
+    },
+    "3": {
+      "modelo": "pseudo",
+      "md5": null,
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 1.0,
+      "pck02_vs_pseudo": 1.0,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.9743168651065188,
+      "total_pck0.10": 0.9953241184252544,
+      "total_error_mediano": 0.019050053015706687,
+      "pierna_pck0.05": 0.9925664427989208,
+      "pierna_pck0.10": 0.9968715917570748,
+      "pierna_error_mediano": 0.018032251230969028,
+      "brazo_pck0.05": 0.9036666666666666,
+      "brazo_pck0.10": 0.9893333333333333,
+      "brazo_error_mediano": 0.024715683313604173
+    },
+    "4": {
+      "modelo": "pseudo",
+      "md5": null,
+      "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+      "oks_vs_pseudo": 1.0,
+      "pck02_vs_pseudo": 1.0,
+      "deteccion": 1.0,
+      "total_pck0.05": 0.9465922107674685,
+      "total_pck0.10": 0.9925305460099274,
+      "total_error_mediano": 0.02065625545372615,
+      "pierna_pck0.05": 0.9624501220892144,
+      "pierna_pck0.10": 0.9952355428503364,
+      "pierna_error_mediano": 0.01949818036745921,
+      "brazo_pck0.05": 0.8826003364575823,
+      "brazo_pck0.10": 0.9816149963950973,
+      "brazo_error_mediano": 0.024902798292115065
+    }
+  },
+  "cv_fase5": {
+    "particiones": {
+      "0": {
+        "modelo": "resultados/fase5_cv/modelos/fold0_int8.tflite",
+        "md5": "f67d003ad9bfa739a0c0cd9578a36942",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.9525214811213991,
+        "pck02_vs_pseudo": 0.9958388729332089,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.943670402708114,
+        "total_pck0.10": 0.9968831919417095,
+        "total_error_mediano": 0.022484951582475397,
+        "pierna_pck0.05": 0.9682117425769179,
+        "pierna_pck0.10": 0.9999731291146043,
+        "pierna_error_mediano": 0.021538990697716563,
+        "brazo_pck0.05": 0.8623575498575499,
+        "brazo_pck0.10": 0.9866452991452992,
+        "brazo_error_mediano": 0.026122210597630226,
+        "compuerta_train2017": {
+          "razon_pred_gt": 0.8182292403969722,
+          "colapsadas": 14,
+          "n_evaluables": 34,
+          "error_kpt": 0.5574008266360068,
+          "det025": 14,
+          "n_imagenes": 80
+        }
+      },
+      "1": {
+        "modelo": "resultados/fase5_cv/modelos/fold1_int8.tflite",
+        "md5": "34b2f8480452f50d2e6e0085d1d531c6",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.9639547450547319,
+        "pck02_vs_pseudo": 0.9985111968266246,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.9566668596013969,
+        "total_pck0.10": 0.9943663058787212,
+        "total_error_mediano": 0.021544068698495848,
+        "pierna_pck0.05": 0.9810003405828833,
+        "pierna_pck0.10": 0.9995864350703061,
+        "pierna_error_mediano": 0.020796054490463133,
+        "brazo_pck0.05": 0.8634032634032635,
+        "brazo_pck0.10": 0.9743589743589743,
+        "brazo_error_mediano": 0.025119956760217475,
+        "compuerta_train2017": {
+          "razon_pred_gt": 0.7931370132324931,
+          "colapsadas": 20,
+          "n_evaluables": 57,
+          "error_kpt": 0.4076880563906287,
+          "det025": 13,
+          "n_imagenes": 80
+        }
+      },
+      "2": {
+        "modelo": "resultados/fase5_cv/modelos/fold2_int8.tflite",
+        "md5": "b7ebc0b9f978aaea6b6d2dc18e091eb0",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.9709572579339194,
+        "pck02_vs_pseudo": 0.9989206157441562,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.9555424990207599,
+        "total_pck0.10": 0.9953276257624084,
+        "total_error_mediano": 0.020452247856804436,
+        "pierna_pck0.05": 0.9897863470557582,
+        "pierna_pck0.10": 1.0,
+        "pierna_error_mediano": 0.018909435943408593,
+        "brazo_pck0.05": 0.8138565473623688,
+        "brazo_pck0.10": 0.9759954003162282,
+        "brazo_error_mediano": 0.03091778530854001,
+        "compuerta_train2017": {
+          "razon_pred_gt": 0.7675255566553517,
+          "colapsadas": 28,
+          "n_evaluables": 67,
+          "error_kpt": 0.4460564801125278,
+          "det025": 31,
+          "n_imagenes": 80
+        }
+      },
+      "3": {
+        "modelo": "resultados/fase5_cv/modelos/fold3_int8.tflite",
+        "md5": "c17d219fed291c1435904f63f07a98ea",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.9651607178398868,
+        "pck02_vs_pseudo": 0.9986905016914354,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.9627526116509283,
+        "total_pck0.10": 0.9974225628392865,
+        "total_error_mediano": 0.020405502278590983,
+        "pierna_pck0.05": 0.989380632569887,
+        "pierna_pck0.10": 0.9999425980138913,
+        "pierna_error_mediano": 0.018770154806746736,
+        "brazo_pck0.05": 0.8596666666666667,
+        "brazo_pck0.10": 0.9876666666666667,
+        "brazo_error_mediano": 0.029258055873587107,
+        "compuerta_train2017": {
+          "razon_pred_gt": 0.8740077772996406,
+          "colapsadas": 29,
+          "n_evaluables": 68,
+          "error_kpt": 0.4124202572939113,
+          "det025": 33,
+          "n_imagenes": 80
+        }
+      },
+      "4": {
+        "modelo": "resultados/fase5_cv/modelos/fold4_int8.tflite",
+        "md5": "87e99492456ac5db0309a4a8c5034529",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.9673527734055979,
+        "pck02_vs_pseudo": 0.9978401636572665,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.9374284077892325,
+        "total_pck0.10": 0.9942248949980909,
+        "total_error_mediano": 0.021579232548668045,
+        "pierna_pck0.05": 0.9551247692216068,
+        "pierna_pck0.10": 0.9976475492823537,
+        "pierna_error_mediano": 0.020773592817486433,
+        "brazo_pck0.05": 0.8660177841864937,
+        "brazo_pck0.10": 0.9804133621725547,
+        "brazo_error_mediano": 0.025089802646985328,
+        "compuerta_train2017": {
+          "razon_pred_gt": 0.8581584283816301,
+          "colapsadas": 17,
+          "n_evaluables": 57,
+          "error_kpt": 0.2649211523732677,
+          "det025": 31,
+          "n_imagenes": 80
+        }
+      }
+    },
+    "completa": true,
+    "agregado": {
+      "oks_vs_pseudo": {
+        "media": 0.9639893950711069,
+        "desvio": 0.006208859391322763,
+        "n": 5
+      },
+      "pck02_vs_pseudo": {
+        "media": 0.9979602701705383,
+        "desvio": 0.001120158353836153,
+        "n": 5
+      },
+      "total_pck0.05": {
+        "media": 0.9512121561540863,
+        "desvio": 0.00925805094111161,
+        "n": 5
+      },
+      "total_pck0.10": {
+        "media": 0.9956449162840434,
+        "desvio": 0.0012996408870154924,
+        "n": 5
+      },
+      "total_error_mediano": {
+        "media": 0.02129320059300694,
+        "desvio": 0.0007823336000522241,
+        "n": 5
+      },
+      "pierna_pck0.05": {
+        "media": 0.9767007664014106,
+        "desvio": 0.013327302390578515,
+        "n": 5
+      },
+      "brazo_pck0.05": {
+        "media": 0.8530603622952684,
+        "desvio": 0.019707310545611288,
+        "n": 5
+      },
+      "compuerta_error_kpt": {
+        "media": 0.41769735456126844,
+        "desvio": 0.09358408184322384,
+        "n": 5
+      },
+      "compuerta_razon": {
+        "media": 0.8222116031932176,
+        "desvio": 0.03956456134966239,
+        "n": 5
+      },
+      "compuerta_colapsadas": {
+        "suma": 108,
+        "de": 283
+      },
+      "compuerta_det025": {
+        "suma": 122,
+        "de": 400
+      }
+    }
+  },
+  "cv_v3": {
+    "particiones": {
+      "0": {
+        "modelo": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold0\\student_pruned_ft_saved_model\\student_pruned_ft_int8.tflite",
+        "md5": "c3377584d55281ab9bb0533fad19f572",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.9413927191771866,
+        "pck02_vs_pseudo": 0.9959967974379503,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.9263112267013437,
+        "total_pck0.10": 0.9965116519082708,
+        "total_error_mediano": 0.023169196351418286,
+        "pierna_pck0.05": 0.9470643557705226,
+        "pierna_pck0.10": 0.9999462582292087,
+        "pierna_error_mediano": 0.022252195265314093,
+        "brazo_pck0.05": 0.8575498575498576,
+        "brazo_pck0.10": 0.9851317663817664,
+        "brazo_error_mediano": 0.026605667926599533,
+        "compuerta": {
+          "train2017": {
+            "n_imagenes": 80,
+            "n_gt_validas": 80,
+            "n_detectadas": 80,
+            "n_evaluables": 80,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.777630692228463,
+            "span_x_rel_pred": 0.7221707377128492,
+            "razon_pred_gt": 0.9293618904247744,
+            "razon_pred_gt_mediana": 0.9405337644531322,
+            "colapsadas": 0,
+            "error_kpt": 0.03285394266118267,
+            "det025": 79
+          },
+          "val2017": {
+            "n_imagenes": 37,
+            "n_gt_validas": 37,
+            "n_detectadas": 37,
+            "n_evaluables": 37,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.7660043965921599,
+            "span_x_rel_pred": 0.7261994316398667,
+            "razon_pred_gt": 0.9501908212151146,
+            "razon_pred_gt_mediana": 0.9755771839210157,
+            "colapsadas": 0,
+            "error_kpt": 0.032923591966617156,
+            "det025": 37
+          }
+        },
+        "compuerta_train2017": {
+          "n_imagenes": 80,
+          "n_gt_validas": 80,
+          "n_detectadas": 80,
+          "n_evaluables": 80,
+          "n_sin_esqueleto": 0,
+          "span_x_rel_gt": 0.777630692228463,
+          "span_x_rel_pred": 0.7221707377128492,
+          "razon_pred_gt": 0.9293618904247744,
+          "razon_pred_gt_mediana": 0.9405337644531322,
+          "colapsadas": 0,
+          "error_kpt": 0.03285394266118267,
+          "det025": 79
+        }
+      },
+      "1": {
+        "modelo": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold1\\student_pruned_ft_saved_model\\student_pruned_ft_int8.tflite",
+        "md5": "ac6c70d7bf8d43c6404d93e6c2c23ddb",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.9572115509949108,
+        "pck02_vs_pseudo": 0.9989150560782528,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.9483127857845691,
+        "total_pck0.10": 0.9934980995929077,
+        "total_error_mediano": 0.02133316827922459,
+        "pierna_pck0.05": 0.975356395660001,
+        "pierna_pck0.10": 0.999635089767917,
+        "pierna_error_mediano": 0.019985015074980787,
+        "brazo_pck0.05": 0.8446620046620047,
+        "brazo_pck0.10": 0.96997668997669,
+        "brazo_error_mediano": 0.027186465942967572,
+        "compuerta": {
+          "train2017": {
+            "n_imagenes": 80,
+            "n_gt_validas": 80,
+            "n_detectadas": 80,
+            "n_evaluables": 80,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.777630692228463,
+            "span_x_rel_pred": 0.7398950483719409,
+            "razon_pred_gt": 0.9533919446971446,
+            "razon_pred_gt_mediana": 0.9630195967150467,
+            "colapsadas": 1,
+            "error_kpt": 0.032583464190770024,
+            "det025": 79
+          },
+          "val2017": {
+            "n_imagenes": 37,
+            "n_gt_validas": 37,
+            "n_detectadas": 37,
+            "n_evaluables": 37,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.7660043965921599,
+            "span_x_rel_pred": 0.7242834400220377,
+            "razon_pred_gt": 0.9480649611079304,
+            "razon_pred_gt_mediana": 0.9505251450816254,
+            "colapsadas": 1,
+            "error_kpt": 0.03525596279755596,
+            "det025": 37
+          }
+        },
+        "compuerta_train2017": {
+          "n_imagenes": 80,
+          "n_gt_validas": 80,
+          "n_detectadas": 80,
+          "n_evaluables": 80,
+          "n_sin_esqueleto": 0,
+          "span_x_rel_gt": 0.777630692228463,
+          "span_x_rel_pred": 0.7398950483719409,
+          "razon_pred_gt": 0.9533919446971446,
+          "razon_pred_gt_mediana": 0.9630195967150467,
+          "colapsadas": 1,
+          "error_kpt": 0.032583464190770024,
+          "det025": 79
+        }
+      },
+      "2": {
+        "modelo": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold2\\student_pruned_ft_saved_model\\student_pruned_ft_int8.tflite",
+        "md5": "2e158a42c61dfa645f0ce6b391481f74",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.9550081798289631,
+        "pck02_vs_pseudo": 0.9988512974891938,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.949387275474232,
+        "total_pck0.10": 0.9951317777404733,
+        "total_error_mediano": 0.021151371802858143,
+        "pierna_pck0.05": 0.9851658850095536,
+        "pierna_pck0.10": 1.0,
+        "pierna_error_mediano": 0.01948771994539291,
+        "brazo_pck0.05": 0.8013511571079488,
+        "brazo_pck0.10": 0.97498921949116,
+        "brazo_error_mediano": 0.03207136848129588,
+        "compuerta": {
+          "train2017": {
+            "n_imagenes": 80,
+            "n_gt_validas": 80,
+            "n_detectadas": 80,
+            "n_evaluables": 80,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.777630692228463,
+            "span_x_rel_pred": 0.7325052726399855,
+            "razon_pred_gt": 0.9425819136492137,
+            "razon_pred_gt_mediana": 0.9459198167124357,
+            "colapsadas": 0,
+            "error_kpt": 0.03274973159178009,
+            "det025": 80
+          },
+          "val2017": {
+            "n_imagenes": 37,
+            "n_gt_validas": 37,
+            "n_detectadas": 37,
+            "n_evaluables": 37,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.7660043965921599,
+            "span_x_rel_pred": 0.7196614494175406,
+            "razon_pred_gt": 0.9423089420918705,
+            "razon_pred_gt_mediana": 0.9592737097105312,
+            "colapsadas": 0,
+            "error_kpt": 0.03505507102912325,
+            "det025": 37
+          }
+        },
+        "compuerta_train2017": {
+          "n_imagenes": 80,
+          "n_gt_validas": 80,
+          "n_detectadas": 80,
+          "n_evaluables": 80,
+          "n_sin_esqueleto": 0,
+          "span_x_rel_gt": 0.777630692228463,
+          "span_x_rel_pred": 0.7325052726399855,
+          "razon_pred_gt": 0.9425819136492137,
+          "razon_pred_gt_mediana": 0.9459198167124357,
+          "colapsadas": 0,
+          "error_kpt": 0.03274973159178009,
+          "det025": 80
+        }
+      },
+      "3": {
+        "modelo": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold3\\student_pruned_ft_saved_model\\student_pruned_ft_int8.tflite",
+        "md5": "db0a672c900c698fcada6e0756dd37f7",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.9508243906155316,
+        "pck02_vs_pseudo": 0.9980923357973996,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.9548378267414808,
+        "total_pck0.10": 0.9968751425573651,
+        "total_error_mediano": 0.023075922685846142,
+        "pierna_pck0.05": 0.9816600654382641,
+        "pierna_pck0.10": 0.9999425980138913,
+        "pierna_error_mediano": 0.021766231558930607,
+        "brazo_pck0.05": 0.851,
+        "brazo_pck0.10": 0.985,
+        "brazo_error_mediano": 0.029374298927119645,
+        "compuerta": {
+          "train2017": {
+            "n_imagenes": 80,
+            "n_gt_validas": 80,
+            "n_detectadas": 80,
+            "n_evaluables": 80,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.777630692228463,
+            "span_x_rel_pred": 0.7309204957493958,
+            "razon_pred_gt": 0.9404001450974497,
+            "razon_pred_gt_mediana": 0.9472995920851954,
+            "colapsadas": 1,
+            "error_kpt": 0.03188070200199342,
+            "det025": 79
+          },
+          "val2017": {
+            "n_imagenes": 37,
+            "n_gt_validas": 37,
+            "n_detectadas": 37,
+            "n_evaluables": 37,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.7660043965921599,
+            "span_x_rel_pred": 0.7335405605555205,
+            "razon_pred_gt": 0.9581871082647747,
+            "razon_pred_gt_mediana": 0.9742159163579345,
+            "colapsadas": 0,
+            "error_kpt": 0.03356863156159727,
+            "det025": 37
+          }
+        },
+        "compuerta_train2017": {
+          "n_imagenes": 80,
+          "n_gt_validas": 80,
+          "n_detectadas": 80,
+          "n_evaluables": 80,
+          "n_sin_esqueleto": 0,
+          "span_x_rel_gt": 0.777630692228463,
+          "span_x_rel_pred": 0.7309204957493958,
+          "razon_pred_gt": 0.9404001450974497,
+          "razon_pred_gt_mediana": 0.9472995920851954,
+          "colapsadas": 1,
+          "error_kpt": 0.03188070200199342,
+          "det025": 79
+        }
+      },
+      "4": {
+        "modelo": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold4\\student_pruned_ft_saved_model\\student_pruned_ft_int8.tflite",
+        "md5": "ed619e5efad13504e6a1ec094edd5845",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.9551837273087849,
+        "pck02_vs_pseudo": 0.9979923243389464,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.9251384116074838,
+        "total_pck0.10": 0.993532836960672,
+        "total_error_mediano": 0.02425062062750951,
+        "pierna_pck0.05": 0.9427371806324817,
+        "pierna_pck0.10": 0.9974391042820558,
+        "pierna_error_mediano": 0.023718241561227593,
+        "brazo_pck0.05": 0.8541216053833213,
+        "brazo_pck0.10": 0.9777697668829608,
+        "brazo_error_mediano": 0.02673345300305126,
+        "compuerta": {
+          "train2017": {
+            "n_imagenes": 80,
+            "n_gt_validas": 80,
+            "n_detectadas": 80,
+            "n_evaluables": 80,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.777630692228463,
+            "span_x_rel_pred": 0.7315765089854117,
+            "razon_pred_gt": 0.9419422087261872,
+            "razon_pred_gt_mediana": 0.9523601358544056,
+            "colapsadas": 2,
+            "error_kpt": 0.03432340214044935,
+            "det025": 78
+          },
+          "val2017": {
+            "n_imagenes": 37,
+            "n_gt_validas": 37,
+            "n_detectadas": 37,
+            "n_evaluables": 37,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.7660043965921599,
+            "span_x_rel_pred": 0.7354458944213164,
+            "razon_pred_gt": 0.9611462895550629,
+            "razon_pred_gt_mediana": 0.9843852229234267,
+            "colapsadas": 0,
+            "error_kpt": 0.035547081612224536,
+            "det025": 37
+          }
+        },
+        "compuerta_train2017": {
+          "n_imagenes": 80,
+          "n_gt_validas": 80,
+          "n_detectadas": 80,
+          "n_evaluables": 80,
+          "n_sin_esqueleto": 0,
+          "span_x_rel_gt": 0.777630692228463,
+          "span_x_rel_pred": 0.7315765089854117,
+          "razon_pred_gt": 0.9419422087261872,
+          "razon_pred_gt_mediana": 0.9523601358544056,
+          "colapsadas": 2,
+          "error_kpt": 0.03432340214044935,
+          "det025": 78
+        }
+      }
+    },
+    "completa": true,
+    "agregado": {
+      "oks_vs_pseudo": {
+        "media": 0.9519241135850753,
+        "desvio": 0.005660621862863907,
+        "n": 5
+      },
+      "pck02_vs_pseudo": {
+        "media": 0.9979695622283487,
+        "desvio": 0.0010562961773665483,
+        "n": 5
+      },
+      "total_pck0.05": {
+        "media": 0.9407975052618219,
+        "desvio": 0.012509625905652527,
+        "n": 5
+      },
+      "total_pck0.10": {
+        "media": 0.9951099017519377,
+        "desvio": 0.0014259380573155482,
+        "n": 5
+      },
+      "total_error_mediano": {
+        "media": 0.022596055949371335,
+        "desvio": 0.001181384258399546,
+        "n": 5
+      },
+      "pierna_pck0.05": {
+        "media": 0.9663967765021646,
+        "desvio": 0.0178831829763295,
+        "n": 5
+      },
+      "brazo_pck0.05": {
+        "media": 0.8417369249406266,
+        "desvio": 0.020633952804727938,
+        "n": 5
+      },
+      "compuerta_error_kpt": {
+        "media": 0.03287824851723511,
+        "desvio": 0.000798445141341145,
+        "n": 5
+      },
+      "compuerta_razon": {
+        "media": 0.9415356205189539,
+        "desvio": 0.007633105202233395,
+        "n": 5
+      },
+      "compuerta_colapsadas": {
+        "suma": 4,
+        "de": 400
+      },
+      "compuerta_det025": {
+        "suma": 395,
+        "de": 400
+      }
+    },
+    "estado_corrida": {
+      "creado": "2026-10-16T11:08:55",
+      "experimento": "fase2-v3-cv",
+      "folds": {
+        "0": {
+          "inicio": "2026-10-16T11:08:55",
+          "train_done": "2026-10-16T14:50:14",
+          "checkpoint": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold0\\student_pruned_ft.pt",
+          "run_id": "e986eeaad38b48aba57e633e77862507",
+          "eval_fp32": "2026-10-16T14:55:11",
+          "eval_int8": "2026-10-16T16:02:41",
+          "int8": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold0\\student_pruned_ft_saved_model\\student_pruned_ft_int8.tflite"
+        },
+        "1": {
+          "inicio": "2026-10-16T14:50:19",
+          "train_done": "2026-10-16T18:30:13",
+          "checkpoint": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold1\\student_pruned_ft.pt",
+          "run_id": "4239571ef4d341a493f8e0fc6ae7a4c6",
+          "eval_fp32": "2026-10-16T18:35:21",
+          "eval_int8": "2026-10-16T19:36:03",
+          "int8": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold1\\student_pruned_ft_saved_model\\student_pruned_ft_int8.tflite"
+        },
+        "2": {
+          "inicio": "2026-10-16T18:30:13",
+          "train_done": "2026-10-16T21:35:47",
+          "checkpoint": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold2\\student_pruned_ft.pt",
+          "run_id": "c9a15afcc5794005b3789f1423e284bd",
+          "eval_fp32": "2026-10-16T21:38:46",
+          "eval_int8": "2026-10-16T22:18:37",
+          "int8": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold2\\student_pruned_ft_saved_model\\student_pruned_ft_int8.tflite"
+        },
+        "3": {
+          "inicio": "2026-10-17T09:56:00",
+          "train_done": "2026-10-17T12:57:52",
+          "checkpoint": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold3\\student_pruned_ft.pt",
+          "run_id": "14cecc1380014f1fbc9d2ef77b01d77b",
+          "eval_fp32": "2026-10-17T13:01:28",
+          "eval_int8": "2026-10-17T13:55:51",
+          "int8": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold3\\student_pruned_ft_saved_model\\student_pruned_ft_int8.tflite"
+        },
+        "4": {
+          "inicio": "2026-10-17T12:57:58",
+          "train_done": "2026-10-17T16:02:29",
+          "checkpoint": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold4\\student_pruned_ft.pt",
+          "run_id": "6249c94e91224326942d4e9fb1a97987",
+          "eval_fp32": "2026-10-17T16:05:40",
+          "eval_int8": "2026-10-17T16:49:07",
+          "int8": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold4\\student_pruned_ft_saved_model\\student_pruned_ft_int8.tflite"
+        }
+      },
+      "terminado": "2026-10-17T16:49:07"
+    }
+  },
+  "cv_v3_fp32": {
+    "particiones": {
+      "0": {
+        "modelo": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold0\\student_pruned_ft.pt",
+        "md5": "039c2748af9f555ef52f305bfd2db8b5",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.9446970878726593,
+        "pck02_vs_pseudo": 0.9959527254831388,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.928684954692757,
+        "total_pck0.10": 0.9964497285693644,
+        "total_error_mediano": 0.022877438846670255,
+        "pierna_pck0.05": 0.9505844417573559,
+        "pierna_pck0.10": 0.999919387343813,
+        "pierna_error_mediano": 0.021876683060168836,
+        "brazo_pck0.05": 0.8561253561253561,
+        "brazo_pck0.10": 0.9849537037037037,
+        "brazo_error_mediano": 0.026708416280218604,
+        "compuerta": {
+          "train2017": {
+            "n_imagenes": 80,
+            "n_gt_validas": 80,
+            "n_detectadas": 78,
+            "n_evaluables": 78,
+            "n_sin_esqueleto": 2,
+            "span_x_rel_gt": 0.777630692228463,
+            "span_x_rel_pred": 0.7257573059808426,
+            "razon_pred_gt": 0.9332632503514383,
+            "razon_pred_gt_mediana": 0.9367209623534687,
+            "colapsadas": 0,
+            "error_kpt": 0.03099101202543298,
+            "det025": 78
+          },
+          "val2017": {
+            "n_imagenes": 37,
+            "n_gt_validas": 37,
+            "n_detectadas": 37,
+            "n_evaluables": 37,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.7660043965921599,
+            "span_x_rel_pred": 0.7226098041661746,
+            "razon_pred_gt": 0.9457652258211768,
+            "razon_pred_gt_mediana": 0.9604519699609625,
+            "colapsadas": 0,
+            "error_kpt": 0.033088355288676714,
+            "det025": 37
+          }
+        },
+        "compuerta_train2017": {
+          "n_imagenes": 80,
+          "n_gt_validas": 80,
+          "n_detectadas": 78,
+          "n_evaluables": 78,
+          "n_sin_esqueleto": 2,
+          "span_x_rel_gt": 0.777630692228463,
+          "span_x_rel_pred": 0.7257573059808426,
+          "razon_pred_gt": 0.9332632503514383,
+          "razon_pred_gt_mediana": 0.9367209623534687,
+          "colapsadas": 0,
+          "error_kpt": 0.03099101202543298,
+          "det025": 78
+        }
+      },
+      "1": {
+        "modelo": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold1\\student_pruned_ft.pt",
+        "md5": "45b61d90a5ce52ae3b58a1b8c97e1c95",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.9593635379722324,
+        "pck02_vs_pseudo": 0.9989150560782528,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.9500299048831781,
+        "total_pck0.10": 0.9936717408500704,
+        "total_error_mediano": 0.02144217282334776,
+        "pierna_pck0.05": 0.9765484357514718,
+        "pierna_pck0.10": 0.9996594171167226,
+        "pierna_error_mediano": 0.020257373205881578,
+        "brazo_pck0.05": 0.8483916083916084,
+        "brazo_pck0.10": 0.9707226107226107,
+        "brazo_error_mediano": 0.02642290875679523,
+        "compuerta": {
+          "train2017": {
+            "n_imagenes": 80,
+            "n_gt_validas": 80,
+            "n_detectadas": 79,
+            "n_evaluables": 79,
+            "n_sin_esqueleto": 1,
+            "span_x_rel_gt": 0.777630692228463,
+            "span_x_rel_pred": 0.7390255507111851,
+            "razon_pred_gt": 0.9503460436104771,
+            "razon_pred_gt_mediana": 0.9590289847371649,
+            "colapsadas": 1,
+            "error_kpt": 0.031140991025225214,
+            "det025": 79
+          },
+          "val2017": {
+            "n_imagenes": 37,
+            "n_gt_validas": 37,
+            "n_detectadas": 37,
+            "n_evaluables": 37,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.7660043965921599,
+            "span_x_rel_pred": 0.7284745876610087,
+            "razon_pred_gt": 0.9538578268229387,
+            "razon_pred_gt_mediana": 0.9581743888998671,
+            "colapsadas": 0,
+            "error_kpt": 0.034997225154427415,
+            "det025": 37
+          }
+        },
+        "compuerta_train2017": {
+          "n_imagenes": 80,
+          "n_gt_validas": 80,
+          "n_detectadas": 79,
+          "n_evaluables": 79,
+          "n_sin_esqueleto": 1,
+          "span_x_rel_gt": 0.777630692228463,
+          "span_x_rel_pred": 0.7390255507111851,
+          "razon_pred_gt": 0.9503460436104771,
+          "razon_pred_gt_mediana": 0.9590289847371649,
+          "colapsadas": 1,
+          "error_kpt": 0.031140991025225214,
+          "det025": 79
+        }
+      },
+      "2": {
+        "modelo": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold2\\student_pruned_ft.pt",
+        "md5": "a4c3376deca89fdb2907cd38e02b9c78",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.9617807336925774,
+        "pck02_vs_pseudo": 0.9988760540088232,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.9532482793352358,
+        "total_pck0.10": 0.9947121034077556,
+        "total_error_mediano": 0.020492429207146633,
+        "pierna_pck0.05": 0.9877366684036825,
+        "pierna_pck0.10": 1.0,
+        "pierna_error_mediano": 0.018869927863302546,
+        "brazo_pck0.05": 0.8105505246514302,
+        "brazo_pck0.10": 0.9728331177231565,
+        "brazo_error_mediano": 0.0311768995332386,
+        "compuerta": {
+          "train2017": {
+            "n_imagenes": 80,
+            "n_gt_validas": 80,
+            "n_detectadas": 79,
+            "n_evaluables": 79,
+            "n_sin_esqueleto": 1,
+            "span_x_rel_gt": 0.777630692228463,
+            "span_x_rel_pred": 0.7311167071167199,
+            "razon_pred_gt": 0.9414465642814248,
+            "razon_pred_gt_mediana": 0.95160139494734,
+            "colapsadas": 0,
+            "error_kpt": 0.032204712715361676,
+            "det025": 79
+          },
+          "val2017": {
+            "n_imagenes": 37,
+            "n_gt_validas": 37,
+            "n_detectadas": 37,
+            "n_evaluables": 37,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.7660043965921599,
+            "span_x_rel_pred": 0.7196493273817612,
+            "razon_pred_gt": 0.9420181969325493,
+            "razon_pred_gt_mediana": 0.9483371310763887,
+            "colapsadas": 0,
+            "error_kpt": 0.03569140057384674,
+            "det025": 37
+          }
+        },
+        "compuerta_train2017": {
+          "n_imagenes": 80,
+          "n_gt_validas": 80,
+          "n_detectadas": 79,
+          "n_evaluables": 79,
+          "n_sin_esqueleto": 1,
+          "span_x_rel_gt": 0.777630692228463,
+          "span_x_rel_pred": 0.7311167071167199,
+          "razon_pred_gt": 0.9414465642814248,
+          "razon_pred_gt_mediana": 0.95160139494734,
+          "colapsadas": 0,
+          "error_kpt": 0.032204712715361676,
+          "det025": 79
+        }
+      },
+      "3": {
+        "modelo": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold3\\student_pruned_ft.pt",
+        "md5": "3c2f28988b2609c728ad701859894d9c",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.9559242003255146,
+        "pck02_vs_pseudo": 0.9980963774588458,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.957688974043155,
+        "total_pck0.10": 0.9969663792710186,
+        "total_error_mediano": 0.02203591344476209,
+        "pierna_pck0.05": 0.9850180816256242,
+        "pierna_pck0.10": 0.9999425980138913,
+        "pierna_error_mediano": 0.020634485170564175,
+        "brazo_pck0.05": 0.8518888888888889,
+        "brazo_pck0.10": 0.9854444444444445,
+        "brazo_error_mediano": 0.029140606601902454,
+        "compuerta": {
+          "train2017": {
+            "n_imagenes": 80,
+            "n_gt_validas": 80,
+            "n_detectadas": 78,
+            "n_evaluables": 78,
+            "n_sin_esqueleto": 2,
+            "span_x_rel_gt": 0.777630692228463,
+            "span_x_rel_pred": 0.7416571042317731,
+            "razon_pred_gt": 0.9539750292942173,
+            "razon_pred_gt_mediana": 0.9551187665882195,
+            "colapsadas": 1,
+            "error_kpt": 0.02993862337860085,
+            "det025": 78
+          },
+          "val2017": {
+            "n_imagenes": 37,
+            "n_gt_validas": 37,
+            "n_detectadas": 37,
+            "n_evaluables": 37,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.7660043965921599,
+            "span_x_rel_pred": 0.7334419695199806,
+            "razon_pred_gt": 0.9583678127896962,
+            "razon_pred_gt_mediana": 0.9827634633821245,
+            "colapsadas": 0,
+            "error_kpt": 0.03307796489363227,
+            "det025": 37
+          }
+        },
+        "compuerta_train2017": {
+          "n_imagenes": 80,
+          "n_gt_validas": 80,
+          "n_detectadas": 78,
+          "n_evaluables": 78,
+          "n_sin_esqueleto": 2,
+          "span_x_rel_gt": 0.777630692228463,
+          "span_x_rel_pred": 0.7416571042317731,
+          "razon_pred_gt": 0.9539750292942173,
+          "razon_pred_gt_mediana": 0.9551187665882195,
+          "colapsadas": 1,
+          "error_kpt": 0.02993862337860085,
+          "det025": 78
+        }
+      },
+      "4": {
+        "modelo": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold4\\student_pruned_ft.pt",
+        "md5": "382a57a5f4f3445140f602cdca0808f9",
+        "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+        "oks_vs_pseudo": 0.960487417709944,
+        "pck02_vs_pseudo": 0.998005004395753,
+        "deteccion": 1.0,
+        "total_pck0.05": 0.9287657502863689,
+        "total_pck0.10": 0.9934851088201604,
+        "total_error_mediano": 0.024104151635349208,
+        "pierna_pck0.05": 0.94598296706569,
+        "pierna_pck0.10": 0.9972604371389435,
+        "pierna_error_mediano": 0.02358897759200455,
+        "brazo_pck0.05": 0.8592886325402548,
+        "brazo_pck0.10": 0.9782504205719779,
+        "brazo_error_mediano": 0.026572538973407174,
+        "compuerta": {
+          "train2017": {
+            "n_imagenes": 80,
+            "n_gt_validas": 80,
+            "n_detectadas": 78,
+            "n_evaluables": 78,
+            "n_sin_esqueleto": 2,
+            "span_x_rel_gt": 0.777630692228463,
+            "span_x_rel_pred": 0.7386994762849812,
+            "razon_pred_gt": 0.9507611111271231,
+            "razon_pred_gt_mediana": 0.9555803861285609,
+            "colapsadas": 0,
+            "error_kpt": 0.03169809436205494,
+            "det025": 78
+          },
+          "val2017": {
+            "n_imagenes": 37,
+            "n_gt_validas": 37,
+            "n_detectadas": 37,
+            "n_evaluables": 37,
+            "n_sin_esqueleto": 0,
+            "span_x_rel_gt": 0.7660043965921599,
+            "span_x_rel_pred": 0.7330173483227347,
+            "razon_pred_gt": 0.9580404545890412,
+            "razon_pred_gt_mediana": 0.9841485165253696,
+            "colapsadas": 0,
+            "error_kpt": 0.03508851276360526,
+            "det025": 37
+          }
+        },
+        "compuerta_train2017": {
+          "n_imagenes": 80,
+          "n_gt_validas": 80,
+          "n_detectadas": 78,
+          "n_evaluables": 78,
+          "n_sin_esqueleto": 2,
+          "span_x_rel_gt": 0.777630692228463,
+          "span_x_rel_pred": 0.7386994762849812,
+          "razon_pred_gt": 0.9507611111271231,
+          "razon_pred_gt_mediana": 0.9555803861285609,
+          "colapsadas": 0,
+          "error_kpt": 0.03169809436205494,
+          "det025": 78
+        }
+      }
+    },
+    "completa": true,
+    "agregado": {
+      "oks_vs_pseudo": {
+        "media": 0.9564505955145854,
+        "desvio": 0.006190534290008949,
+        "n": 5
+      },
+      "pck02_vs_pseudo": {
+        "media": 0.9979690434849628,
+        "desvio": 0.001077093619844239,
+        "n": 5
+      },
+      "total_pck0.05": {
+        "media": 0.943683572648139,
+        "desvio": 0.012453198622619349,
+        "n": 5
+      },
+      "total_pck0.10": {
+        "media": 0.9950570121836739,
+        "desvio": 0.0014208561166311193,
+        "n": 5
+      },
+      "total_error_mediano": {
+        "media": 0.02219042119145519,
+        "desvio": 0.0012329868217790265,
+        "n": 5
+      },
+      "pierna_pck0.05": {
+        "media": 0.9691741189207649,
+        "desvio": 0.01751219899169318,
+        "n": 5
+      },
+      "brazo_pck0.05": {
+        "media": 0.8452490021195077,
+        "desvio": 0.017738966756302554,
+        "n": 5
+      },
+      "compuerta_error_kpt": {
+        "media": 0.031194686701335135,
+        "desvio": 0.0007610037439903655,
+        "n": 5
+      },
+      "compuerta_razon": {
+        "media": 0.945958399732936,
+        "desvio": 0.007590879817449919,
+        "n": 5
+      },
+      "compuerta_colapsadas": {
+        "suma": 2,
+        "de": 392
+      },
+      "compuerta_det025": {
+        "suma": 392,
+        "de": 400
+      }
+    }
+  }
+}

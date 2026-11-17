@@ -1,0 +1,11 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "command": true,
+        "pdftotext": true,
+        "/^cd \"/Users/nicolasfernandez/Desktop/Facultad/Tesis/Tesis-ModelosCV\" && python3 -c \"\nimport pypdf\nr = pypdf\\.PdfReader\\('main_tesis\\.pdf'\\)\nprint\\('pages:', len\\(r\\.pages\\)\\)\nimport re\ntext = ''\nfor i,p in enumerate\\(r\\.pages\\):\n    t = p\\.extract_text\\(\\) or ''\n    text \\+= f'\\\\n=== PAGE \\{i\\+1\\} ===\\\\n' \\+ t\nopen\\('/tmp/tesis_text\\.txt','w'\\)\\.write\\(text\\)\nprint\\('written', len\\(text\\)\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "&": true
+    }
+}

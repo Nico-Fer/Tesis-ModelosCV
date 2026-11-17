@@ -1,0 +1,50 @@
+% ---------------------------------------------------------------------------------------
+% Fragmento para la sección \ref{sec:artefacto_generalizacion} (tesis_chapter07.tex).
+% Va a continuación del párrafo que cierra la discusión de v3 ("Por eso esta verificación
+% sobre datos externos se incorporó como condición de aceptación ...").
+%
+% Fuente de los números: resultados/fase5_cv/gate_ood/ (resumen.csv, por_imagen.csv),
+% generados por scripts/run_ood_gate_fase5.py sobre el set reconstruido de
+% scripts/build_ood_gt_set.py (IDs versionados en data/ood_gate/).
+%
+% DEPENDENCIA: el primer párrafo remite a la sec. \ref{sec:validacion_cruzada} como la que
+% reporta los cinco modelos de la validación cruzada (OKS 0,964 en promedio). Al
+% 16-10-2026 esa sección todavía dice "Las cinco particiones no se ejecutaron" y muestra la
+% tabla vieja de la partición 0 (destilación rota 0,626; 1.903.083 parámetros del modelo
+% sin BatchNorm). Hay que actualizarla con resultados/fase5_cv/RESULTADOS.md antes de
+% insertar este fragmento, o el texto se contradice.
+%
+% Nota: v2, v3 y la referencia se volvieron a medir sobre el set reconstruido (80 imágenes),
+% así que sus valores difieren levemente de la Tabla \ref{tab:compuerta_generalizacion}
+% (79 imágenes originales). Si se prefiere una sola tabla, esta puede reemplazar a aquella:
+% contiene las mismas columnas más la de la validación cruzada.
+% ---------------------------------------------------------------------------------------
+
+La misma compuerta se aplicó a los cinco modelos cuantizados que produce la validación cruzada de la sección~\ref{sec:validacion_cruzada}. Al igual que v2, esos modelos se entrenaron exclusivamente sobre imágenes de rehabilitación, de modo que la exactitud que logran dentro del dominio (0,964 de OKS en promedio) no dice nada, por sí sola, sobre su comportamiento en la aplicación. El conjunto original de 79 imágenes externas no se conservó, por lo que se reconstruyó con criterios explícitos sobre la anotación oficial de COCO: imágenes con una única persona anotada, sus diecisiete puntos presentes y los doce del cuerpo visibles, una altura de al menos la mitad de la imagen, postura de pie y orientación frontal. De las 578 imágenes de la partición de entrenamiento de COCO que cumplen esas condiciones se tomaron 80 con semilla fija, y la lista quedó versionada junto al código. Como control, los linajes v2 y v3 y el modelo de dominio general se volvieron a medir sobre el conjunto reconstruido: los valores se apartan en menos de 0,08 de los de la Tabla~\ref{tab:compuerta_generalizacion} y los tres veredictos se mantienen.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{0.30\textwidth}|r|r|r|r|}
+\hline
+\textbf{Medida} & \textbf{Validación cruzada} & \textbf{v2} & \textbf{v3} & \textbf{Referencia} \\
+\hline
+Extensión horizontal predicha sobre la anotada & 0,822 $\pm$ 0,040 & 0,759 & 0,945 & 0,984 \\
+\hline
+Imágenes con esqueleto colapsado & 108/283 (38\%) & 33/73 & 0/80 & 0/80 \\
+\hline
+Error de punto (fracción de la diagonal anotada) & 0,418 $\pm$ 0,094 & 0,393 & 0,039 & 0,017 \\
+\hline
+Imágenes con persona detectada al umbral de la aplicación & 122/400 (31\%) & 47/80 & 78/80 & 80/80 \\
+\hline
+OKS dentro del dominio de entrenamiento & 0,964 $\pm$ 0,006 & 0,931 & 0,941 & --- \\
+\hline
+\end{tabular}
+\caption{Compuerta de generalización fuera de dominio sobre 80 imágenes externas con anotación real (conjunto reconstruido). La columna de validación cruzada reúne los cinco modelos cuantizados de la sección~\ref{sec:validacion_cruzada}: media y desvío entre particiones, o totales sumados sobre las cinco. Las imágenes colapsadas se cuentan sobre las que tienen un esqueleto utilizable. Fuente: elaboración propia.}
+\label{tab:compuerta_validacion_cruzada}
+\end{table}
+
+Los cinco modelos fallan la compuerta, y por el mismo motivo que v2. Con el umbral de confianza que usa la aplicación, detectan a la persona en apenas el 31\% de las imágenes externas (entre 13 y 33 de 80 según la partición), frente al 59\% de v2 y al 98\% de v3. Cuando la detectan, el esqueleto no cae sobre el cuerpo: el error medio de los puntos es de 0,42 de la diagonal de la persona, unas ocho veces el de v3, y el 38\% de las imágenes con un esqueleto utilizable quedan colapsadas. La extensión horizontal promedio, de 0,82, parece cercana a la de un modelo sano solo porque promedia esqueletos demasiado angostos con otros demasiado anchos; es el error de los puntos el que separa sin ambigüedad a los modelos utilizables de los que no lo son. La falla no proviene de la cuantización, porque las versiones de punto flotante de los mismos modelos fallan de igual manera, y tampoco se limita a imágenes que el modelo de partida pudo haber visto en su entrenamiento original: sobre las 37 imágenes de la partición de validación de COCO que cumplen los mismos criterios, que ninguno de estos modelos vio, el resultado se repite (error medio de 0,49 y persona detectada en el 28\% de los casos).
+
+El resultado refuerza la lectura metodológica de esta sección en lugar de contradecirla. Los modelos de la validación cruzada caracterizan correctamente el efecto de la cadena de optimización dentro del dominio de entrenamiento, que es para lo que fueron construidos, pero ninguno de ellos es desplegable. La destilación desde un maestro de dominio general no evitó la pérdida de generalidad, posiblemente porque el término de imitación pesa una fracción menor de la función de pérdida y la supervisión directa proviene solo de imágenes de rehabilitación. Lo que sí la evitó, en el linaje v3, fue incorporar imágenes de dominio general al conjunto de entrenamiento. El artefacto que llega a la aplicación sigue siendo, por lo tanto, el de ese linaje.

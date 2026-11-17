@@ -1,0 +1,79 @@
+# Configuración — FASE 5 (poda + distillation + INT8) para producir el MODELO DESPLEGABLE.
+# Ejecutar con:
+#   python -m src.training.combined --config configs/combined_yolov8n_deploy.yaml
+#
+# Es combined_yolov8n.yaml con la validación cruzada DESACTIVADA: entrena una sola
+# vez sobre el fold 0 en vez de cinco. Sirve para obtener el .tflite INT8 que va a
+# la app móvil al 1/5 del costo.
+#
+# ATENCIÓN: un run de este config NO es el resultado comparativo de la tesis. Sin
+# CV no hay media ± desvío entre sujetos, así que sus métricas no son comparables
+# con las de combined_yolov8n.yaml (que sigue siendo el config de la tabla final).
+# Por eso va a otro experimento MLflow y sus runs llevan el tag cv=single-fold.
+
+family: yolo
+model: models/yolov8n-pose.pt          # ESTUDIANTE: el modelo ligero que se despliega
+teacher_model: models/yolov8x-pose.pt  # MAESTRO: usado en la etapa de distillation
+
+# Dataset pseudo-etiquetado con ViTPose-H (17 keypoints densos), no el GT esparso
+# de UCO. El archivo base no existe: _kfold descubre los hermanos
+# pose_dataset_pseudo_fold{0..4}.yaml y, con cross_validation:false, usa sólo el
+# fold indicado abajo — data/processed/uco_pseudo, 57.805 train / 16.150 val,
+# split por sujeto (sin fuga).
+data: data/processed/pose_dataset_pseudo.yaml
+
+# --- Validación cruzada desactivada (única diferencia con combined_yolov8n.yaml) ---
+cross_validation: false
+fold: 0                      # pose_dataset_pseudo_fold0.yaml
+
+imgsz: 640
+
+# --- Hardware (RTX 3090, 24 GB) ---
+# batch como en Fase 4: el maestro yolov8x comparte la VRAM con el estudiante.
+device: 0
+batch: 24
+workers: 2                   # era 8. Ultralytics lanza workers para el loader de train Y el
+                             # de val (~1 GB de commit cada uno en Windows): con 8, 17
+                             # procesos agotaron el archivo de paginación (WinError 1455 al
+                             # cargar las DLL de CUDA, 2026-09-30). Subirlo si hay RAM libre:
+                             # sólo cambia la velocidad de carga de datos, no el modelo.
+amp: true
+patience: 15
+
+# optimizer y lr0 explícitos: con el default 'auto' Ultralytics SOBREESCRIBE el lr0
+# recibido, y la reducción a 1/10 del fine-tuning post-poda se descartaba en
+# silencio (ver src/models/yolo.py). Aplica a la etapa 2 (poda + recuperación).
+optimizer: AdamW
+lr0: 0.01                    # el fine-tuning post-poda usa lr0/10 = 0.001
+
+pruning:
+  sparsity: 0.3
+  method: structured            # informativo: poda estructurada real (torch_pruning, DepGraph)
+  fine_tune_epochs: 25          # recuperación post-poda, a lr0/10 (= 0.001). Subido de 10:
+                                # medido en el piloto, la poda a sparsity 0.3 lleva el OKS
+                                # de 0.84 a 0.00 (el modelo deja de detectar persona), así
+                                # que la recuperación arranca casi de cero.
+
+distillation:
+  beta: 1000                    # peso de attention transfer (β de Zagoruyko & Komodakis): el
+                                # término es (1-α)·(β/2)·B·L_AT. Reemplaza a 'temperature' (T²
+                                # no aplica a attention maps). LR de esta etapa: lr0/10 = 0.001.
+  alpha: 0.5                   # peso de la task loss frente a la de distillation.
+                                # Mismo valor que en las Fases 4 y 5 con CV, para que el
+                                # modelo desplegable se entrene igual que el que se midió.
+  epochs: 20                    # reducido vs. los 80 de la Fase 5 con CV. Motivo medido: tras
+                                # la poda + 25 epochs de fine-tuning el ESTUDIANTE llega a
+                                # OKS 0.9354, por ENCIMA del maestro yolov8x-pose COCO (0.911).
+                                # Con alpha 0.5, la mitad del peso de la loss empuja los features
+                                # hacia un modelo que hoy es peor en este dominio, así que 80
+                                # epochs son un riesgo caro (11-22 h) por una ganancia incierta.
+                                # Con 20 el veredicto igual queda medido en la etapa 'distilled'.
+  val: false                    # sin validación por epoch de Ultralytics: son métricas de
+                                # mAP que este pipeline descarta (la evaluación comparable
+                                # son las 5 etapas de pose_eval, al final). Evita 80 pasadas
+                                # sobre las 16.150 imgs del val. Efecto colateral asumido:
+                                # el early stopping (patience) queda inoperante y los 80
+                                # epochs corren completos.
+
+mlflow:
+  experiment: fase5-deploy      # separado de fase5-combined: no mezclar con la tabla de CV

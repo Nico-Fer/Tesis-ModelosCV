@@ -1,0 +1,37 @@
+# Configuración — FASE 2 (pruning estructurado + fine-tuning) para yolov8n-pose.
+# Ejecutar con:
+#   python -m src.training.prune --config configs/prune_yolov8n.yaml
+
+family: yolo
+model: models/yolov8n-pose.pt   # checkpoint base (mismo que Fase 1)
+
+# Dataset pseudo-etiquetado (ver baseline_yolov8n.yaml). Necesario para el
+# fine-tuning de recuperación: sin él la fase aborta (ver src/utils/strict.py).
+data: data/processed/pose_dataset_pseudo.yaml
+
+imgsz: 640
+
+# --- Hardware (RTX 3090, 24 GB) ---
+device: 0
+batch: 48
+workers: 8
+amp: true
+patience: 15
+
+# optimizer y lr0 explícitos: con el default 'auto' Ultralytics SOBREESCRIBE el lr0
+# recibido, y la reducción a 1/10 que aplica fine_tune_after_pruning para el
+# fine-tuning post-poda se descartaba en silencio (ver src/models/yolo.py).
+optimizer: AdamW
+lr0: 0.01                    # el fine-tuning post-poda usa lr0/10 = 0.001
+
+pruning:
+  sparsity: 0.3              # fracción de canales a eliminar por capa (0.0–1.0)
+  method: structured         # informativo: la poda real es estructurada (torch_pruning, DepGraph)
+  fine_tune_epochs: 20       # épocas de recuperación tras la poda (lr0 se reduce a 1/10)
+
+export:
+  format: tflite
+  quantize: false            # Fase 2 = Float32; INT8 corresponde a Fases 3/5
+
+mlflow:
+  experiment: fase2-pruning

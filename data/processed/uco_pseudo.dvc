@@ -1,0 +1,6 @@
+outs:
+- md5: 12dbfd14aaf3d1519e9560fe0d704e8a.dir
+  size: 11886353051
+  nfiles: 148228
+  hash: md5
+  path: uco_pseudo

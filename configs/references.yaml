@@ -1,0 +1,141 @@
+# =============================================================================
+# configs/references.yaml — Catálogo de ejercicios para el generador de
+# referencias JSON (schema v1). Correr en venv-torch:
+#   python -m src.references --config configs/references.yaml
+# La referencia NUNCA es sintética: sale de la extracción real sobre el video.
+# =============================================================================
+
+# Backend de pose: el MISMO binario .tflite que corre la app, no el .pt. Así la
+# referencia y la ejecución en vivo comparten el sesgo del modelo y la distancia
+# DTW mide al usuario, no la diferencia entre dos modelos.
+# MD5 esperado: EE27DCF9F0AD0C25FCF37868E097AD68 — un smoke run con
+# export.format: tflite regenera ese directorio y lo pisa (ver AGENTS.md).
+backend: yolo
+model: models/yolov8n-pose_saved_model/yolov8n-pose_int8.tflite
+imgsz: 640
+det_conf: 0.25
+
+output_dir: references/        # apuntable a app/src/main/assets/references/
+kpt_conf_thr: 0.5              # conf < 0.5 invalida la dimensión en ese cuadro
+
+# Gaps dentro del ciclo: se interpolan por arco corto hasta este máximo EN
+# TIEMPO (mismo parpadeo físico a cualquier fps); más largos ⇒ abortar y
+# recapturar. Todo gap interpolado queda visible en el reporte.
+max_gap_ms: 150
+
+smoothing:
+  detect_window: 5             # media móvil SOLO para detección del ciclo
+  store_window: 1              # 1 = trayectoria cruda (subirlo alisa pero recorta extremos)
+
+cycle:
+  rest_frames: 15              # cuadros inicio/fin para el baseline (mediana circular)
+  valley_tol_rad: 0.15         # default global; cada ejercicio puede overridear (cycle:/multi:
+                               # por entrada) porque la excursión varía por gesto — ver abajo
+
+multi:                         # sólo con --multi
+  prominence_rad: 0.35         # default global; overrideable por ejercicio
+  min_gap_s: 0.8               # TODO: calibrar
+
+scoring:                       # TODO: calibrar — placeholders, NO definitivos
+  similarityScale: 0.5
+  goodThreshold: 0.7
+
+exercises:
+  # Elevación de hombro — SOLO hombro, BILATERAL. Sin ángulo de codo a propósito:
+  # no es parte del gesto prescrito, y exigir su flexión penalizaría una
+  # ejecución correcta (aunque en este clip sí tenga excursión, 1.14 rad).
+  #
+  # Video propio (ver data/references/README.md): sentado, cámara frontal, 2 reps.
+  # Reemplaza al clip UCO s26/e09/cam0, que era unilateral izquierdo y de perfil:
+  # ahora los dos brazos se mueven, así que se declaran las DOS dimensiones.
+  # Excursión medida: hombro_izq 1.53 rad, hombro_der 1.70 rad.
+  - exerciseId: "C1000000-0000-0000-0000-000000000001"   # Elevación lateral de hombros
+    video: data/references/videos/C1000000-0000-0000-0000-000000000001.mp4
+    driverAngleIndex: 0
+    angleDefinitions:
+      - {name: hombro_izq, pointA: LEFT_HIP,  vertex: LEFT_SHOULDER,  pointC: LEFT_ELBOW,  weight: 1.0}
+      - {name: hombro_der, pointA: RIGHT_HIP, vertex: RIGHT_SHOULDER, pointC: RIGHT_ELBOW, weight: 1.0}
+
+  # Sentadilla parcial. Video propio v2 (2026-08): de pie, cámara frontal, 4 reps.
+  #
+  # BILATERAL a pedido: en este clip el lado derecho sí acompaña (~0.2 rad de
+  # excursión con picos alineados a los izquierdos, medido con el probe), a
+  # diferencia del clip v1 donde era puro escorzo. Los imbalances entre lados
+  # son parte del gesto real y se aceptan.
+  #
+  # trimStartS: el clip ARRANCA en sentadilla (hip_y ~1200 px vs ~1005 de pie
+  # hasta el cuadro ~55); sin recorte el baseline de reposo queda envenenado y
+  # la señal parece una onda cuadrada alrededor de un cero falso.
+  #
+  # Calibración medida (probe): reps de 0.29–0.40 rad en cadera_izq post-trim,
+  # valles < 0.10 entre reps → prominencia 0.15 / valle 0.10. El global (0.35)
+  # no detectaría NINGUNA rep en esta excursión.
+  #
+  # Trampa geométrica de la vista frontal (sigue vigente): de pie toda cadena
+  # de 3 puntos vale ~π y el ángulo signado vive sobre ±π; el pipeline entero
+  # usa wraparound y la app debe hacer lo mismo al comparar.
+  - exerciseId: "C1000000-0000-0000-0000-000000000002"   # Sentadilla parcial
+    video: data/references/videos/c1000000-0000-0000-0000-000000000002.MOV
+    trimStartS: 1.9
+    driverAngleIndex: 0
+    cycle: {valley_tol_rad: 0.10}
+    multi: {prominence_rad: 0.15}
+    angleDefinitions:
+      - {name: cadera_izq,  pointA: LEFT_SHOULDER,  vertex: LEFT_HIP,    pointC: LEFT_KNEE,   weight: 1.0}
+      - {name: rodilla_izq, pointA: LEFT_HIP,       vertex: LEFT_KNEE,   pointC: LEFT_ANKLE,  weight: 1.0}
+      - {name: cadera_der,  pointA: RIGHT_SHOULDER, vertex: RIGHT_HIP,   pointC: RIGHT_KNEE,  weight: 1.0}
+      - {name: rodilla_der, pointA: RIGHT_HIP,      vertex: RIGHT_KNEE,  pointC: RIGHT_ANKLE, weight: 1.0}
+
+  # Elevación de talones. Video propio: de pie, cámara frontal, 7 reps.
+  #
+  # COCO-17 no tiene pies/dedos, y una elevación de talones es casi traslación
+  # pura del cuerpo (los ángulos entre articulaciones son invariantes a
+  # traslación). La señal medida (rodilla_izq 0.36 rad, cadera_izq 0.33; 7 reps
+  # alineadas entre ambas dims) existe porque el MODELO corre el keypoint de
+  # tobillo/rodilla al rotar el pie — es un artefacto del detector, no
+  # cinemática real. Es válido como referencia PORQUE la app usa el mismo
+  # .tflite: referencia y ejecución en vivo comparten el sesgo (la invariante
+  # de este pipeline). Regenerar SÍ o SÍ si cambia el modelo de la app.
+  #
+  # Lado derecho excluido: 0.17–0.18 rad (mitad que el izquierdo), mismo
+  # escorzo por vista girada que documentamos en la sentadilla v1 — sólo
+  # ensuciaría el DTW. Tronco/hombros excluidos: la parte superior del cuerpo
+  # no es parte del gesto prescrito.
+  - exerciseId: "C1000000-0000-0000-0000-000000000005"   # Elevación de talones
+    video: data/references/videos/c1000000-0000-0000-0000-000000000005.MOV
+    driverAngleIndex: 0
+    cycle: {valley_tol_rad: 0.12}
+    multi: {prominence_rad: 0.18}
+    angleDefinitions:
+      - {name: rodilla_izq, pointA: LEFT_HIP,      vertex: LEFT_KNEE, pointC: LEFT_ANKLE, weight: 1.0}
+      - {name: cadera_izq,  pointA: LEFT_SHOULDER, vertex: LEFT_HIP,  pointC: LEFT_KNEE,  weight: 1.0}
+
+  # Extensión de rodillas (sentado, pierna izquierda). Se grabaron dos tomas:
+  # manos sobre la rodilla vs manos atrás del cuerpo. GANÓ manos-atrás
+  # (_SinManos), medido con el probe sobre ambos clips:
+  #   - amplitud de reps casi idéntica: 0.592–0.621 rad (CV ~2.5%) contra
+  #     0.49–0.68 (CV ~17%) de manos-encima;
+  #   - jitter cuadro a cuadro menor (0.019 vs 0.024 rad);
+  #   - estructura sana: arranca y termina en reposo real, mientras que
+  #     manos-encima trae ~21 s de preámbulo en otra postura (baseline
+  #     envenenado) y corta tras la última rep sin volver al reposo.
+  #   - detección y confianza empatan (0 cuadros sin persona, conf 0.99): las
+  #     manos NO confundieron al detector; la toma perdió por estructura y
+  #     consistencia, no por oclusión.
+  #
+  # UNA sola dimensión a propósito: el gesto prescrito es extender la rodilla.
+  # La cadera/tronco sólo registraría el balanceo compensatorio — exigirlo
+  # penalizaría una ejecución quieta y correcta (mismo criterio que el codo
+  # en el ejercicio 0001). Pierna derecha: no se mueve en el clip.
+  #
+  # Calibración medida: 3 reps limpias de ~0.6 rad; los valles entre reps no
+  # bajan de ~0.21–0.25 (la pierna no vuelve a colgar del todo) → valle 0.28,
+  # prominencia 0.30. La 4ª rep (~0.49 rad, prominencia ~0.2) queda fuera a
+  # propósito: es la más débil y desconsistente del clip.
+  - exerciseId: "C1000000-0000-0000-0000-000000000006"   # Extensión de rodillas
+    video: data/references/videos/c1000000-0000-0000-0000-000000000006_SinManos.MOV
+    driverAngleIndex: 0
+    cycle: {valley_tol_rad: 0.28}
+    multi: {prominence_rad: 0.30}
+    angleDefinitions:
+      - {name: rodilla_izq, pointA: LEFT_HIP, vertex: LEFT_KNEE, pointC: LEFT_ANKLE, weight: 1.0}

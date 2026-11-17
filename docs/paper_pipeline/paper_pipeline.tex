@@ -1,0 +1,747 @@
+% =====================================================================
+% Paper CONAIISI — pipeline de dataset y entrenamiento de pose
+% ESQUELETO (Fase 0): títulos de sección + marcadores \pendiente{} en su
+% lugar. NO tiene prosa todavía — se escribe en una pasada posterior con
+% aprobación previa del usuario. Ver datos_extraidos.md (hechos con fuente
+% verificada) y PENDIENTES.md (huecos agrupados por sección) en esta misma
+% carpeta.
+%
+% Formato clonado de UADE_PFI_Template-develop/paper_conaiisi/paper_conaiisi.tex
+% (revisión doble ciego CoNaIISI, A4 2 columnas, Times 10 pt, máx. 10 págs.
+% incluidas referencias). Ese archivo es el "paper hermano" (comparador de
+% movimiento / DTW): este paper es su complemento y toma esa capa como
+% fuera de alcance.
+%
+% BUSCAR "\pendiente" antes de escribir prosa final o de enviar: son los
+% huecos de contenido y los marcadores de cita pendiente de verificar.
+% =====================================================================
+\documentclass[10pt,a4paper,twocolumn]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot,es-tabla]{babel}
+\usepackage{mathptmx}            % Times para texto y matemática
+\usepackage{helvet}              % Helvética para pies de figura y tabla
+\usepackage{courier}             % Courier para código fuente
+\usepackage{amsmath}
+% ----- Página: área de impresión y columnas ---------------------------
+% Idéntico a paper_conaiisi.tex: columnas de 8,25 cm con 8 mm de separación.
+\usepackage[a4paper,
+  textwidth=17.3cm,     % 2 x 8,25 cm + 8 mm
+  top=3cm,              % margen superior exacto
+  textheight=22.54cm,   % alto del área de impresión
+  columnsep=8mm]{geometry}
+\pagestyle{empty}       % sin número de página: nada fuera del área de impresión
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit}
+\usepackage{xcolor}
+\usepackage{url}
+
+% --- Tipografía de títulos según plantilla -----------------------------
+\titleformat{\section}{\normalfont\fontsize{12}{14}\selectfont\bfseries}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{24pt}{12pt}
+\titleformat{\subsection}{\normalfont\fontsize{11}{13}\selectfont\bfseries}{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{6pt}{6pt}
+\titleformat{\subsubsection}{\normalfont\fontsize{10}{12}\selectfont\bfseries}{\thesubsubsection}{0.5em}{}
+\titlespacing*{\subsubsection}{0pt}{12pt}{6pt}
+
+% ----- Notas al pie: Times 9 pt, interlineado simple -------------------
+\renewcommand{\footnotesize}{\fontsize{9}{11}\selectfont}
+
+% --- Pies de figura y títulos de tabla según plantilla oficial ---------
+\DeclareCaptionFont{nueve}{\fontsize{9}{11}\selectfont}
+\captionsetup{font={sf,bf,nueve},labelsep=period,justification=centering}
+\captionsetup[figure]{position=below,skip=4pt}
+\captionsetup[table]{position=above,skip=4pt}
+
+% --- Párrafos ----------------------------------------------------------
+\setlength{\parindent}{5mm}
+\setlength{\parskip}{0pt}
+
+% --- Marcador de contenido pendiente (quitar antes del envío final) ----
+\newcommand{\pendiente}[1]{\textcolor{red}{\textbf{[PENDIENTE: #1]}}}
+\newcommand{\verificarcita}[1]{\textcolor{red}{\textbf{[VERIFICAR CITA: #1]}}}
+
+\begin{document}
+
+% ======================= TÍTULO Y AUTORES ==============================
+% Revisión doble ciego: versión anónima. Para la versión final, comentar
+% las líneas "anonimizado" y descomentar el bloque de autores (mismo
+% formato/autores que paper_conaiisi.tex: Fernández, Witenas, Martínez,
+% UADE Facultad de Ingeniería).
+\twocolumn[{%
+\centering
+\vspace*{0.49cm}
+{\fontsize{14}{17}\selectfont\bfseries
+% TÍTULO TENTATIVO — confirmar con el resto del equipo antes de la versión final.
+Construcción de un Conjunto de Datos Densamente Anotado y Compresión de un Estimador de Pose para Ejercicios de Rehabilitación en Dispositivos Móviles\par}
+\vspace{2\baselineskip}
+{\fontsize{12}{14}\selectfont Autores anonimizados para revisión\par}
+{\fontsize{12}{14}\selectfont\itshape Filiación anonimizada para revisión\par}
+% ---- BLOQUE DE AUTORES PARA LA VERSIÓN FINAL (descomentar) ------------
+% \noindent
+% \begin{minipage}[t]{0.32\textwidth}\centering
+% {\fontsize{12}{14}\selectfont Fernández,\\Nicolás Esteban\par}
+% \vspace{2pt}
+% {\fontsize{12}{14}\selectfont\itshape Universidad Argentina de\\la Empresa (UADE),\\Facultad de Ingeniería\par}
+% \vspace{2pt}
+% {\fontsize{10}{12}\selectfont nicolasefernandez@uade.edu.ar\par}
+% \end{minipage}%
+% \begin{minipage}[t]{0.32\textwidth}\centering
+% {\fontsize{12}{14}\selectfont Witenas,\\Juan Ignacio\par}
+% \vspace{2pt}
+% {\fontsize{12}{14}\selectfont\itshape Universidad Argentina de\\la Empresa (UADE),\\Facultad de Ingeniería\par}
+% \vspace{2pt}
+% {\fontsize{10}{12}\selectfont jwitenas@uade.edu.ar\par}
+% \end{minipage}%
+% \begin{minipage}[t]{0.32\textwidth}\centering
+% {\fontsize{12}{14}\selectfont Martínez,\\María Roxana\par}
+% \vspace{2pt}
+% {\fontsize{12}{14}\selectfont\itshape Universidad Argentina de\\la Empresa (UADE),\\Facultad de Ingeniería\par}
+% \vspace{2pt}
+% {\fontsize{10}{12}\selectfont mariarmartinez@uade.edu.ar\par}
+% \end{minipage}\par
+% -----------------------------------------------------------------------
+\vspace{2\baselineskip}
+}]
+
+% ======================= RESUMEN =======================================
+\begin{center}
+{\fontsize{12}{14}\selectfont\bfseries Resumen}
+\end{center}
+\begingroup\itshape
+\noindent Este trabajo presenta la construcción del conjunto de datos y el
+entrenamiento de un estimador de pose comprimido para ejercicios de
+rehabilitación, destinado a ejecutarse íntegramente en un teléfono Android de
+gama media. El dominio objetivo ---adultos mayores, ejercicios en
+sedestación, cámara frontal en el hogar--- no está cubierto por los corpus
+públicos de pose humana. Se adoptó una estrategia de anotación en dos
+niveles: pseudo-etiquetado denso sobre la totalidad del corpus con un
+anotador de alta capacidad, y una regla de derivación a revisión humana
+dirigida solo a la cola de casos de baja confianza. El modelo se comprime
+mediante poda estructurada, recuperación, destilación de conocimiento y
+cuantización entera, distinguiendo el artefacto desplegable del instrumento
+---la validación cruzada agrupada por sujeto--- que mide su generalización.
+Se reporta la composición del corpus, la configuración de la cadena de
+compresión y el diagnóstico de dos hallazgos negativos de la primera
+iteración: un colapso de exactitud fuera de dominio pese a un desempeño
+saludable en la partición de validación, y una etapa de destilación cuya
+degradación se rastreó hasta tres defectos concretos de implementación.
+\endgroup
+
+\vspace{6pt}
+\noindent{\fontsize{10}{12}\selectfont\bfseries Palabras clave:} anotación asistida
+por modelo, pseudo-etiquetado, estimación de pose humana, compresión de modelos,
+aprendizaje profundo en el borde, rehabilitación domiciliaria.
+
+% ======================= 1. INTRODUCCIÓN ===============================
+\section{Introducción}
+
+La adherencia a un programa de rehabilitación motriz depende en buena medida
+de lo que ocurre fuera del consultorio, en las sesiones domiciliarias que el
+profesional no supervisa en tiempo real. En personas adultas mayores esa
+ausencia de supervisión se traduce en errores de ejecución que pasan
+inadvertidos y en abandono de la rutina, y la telerehabilitación asistida por
+video ha mostrado evidencia de efectividad frente a ese problema
+\cite{jirasakulsuk2022}. Buena parte de esa evidencia depende, sin embargo,
+de que el propio sistema pueda decidir si una ejecución es correcta, lo que
+exige antes que nada un estimador de pose confiable corriendo sobre el
+dispositivo del paciente. En un trabajo previo \cite{anonimo_previo} se
+presentó una plataforma móvil Android orientada a este escenario, que procesa
+el video de la cámara frontal del teléfono en tiempo real y sin conexión a
+internet; ese trabajo describió la arquitectura general del sistema, pero
+dejó sin desarrollar la construcción del propio modelo de estimación de pose
+que la sostiene.
+
+Este artículo se ocupa precisamente de esa construcción: el conjunto de
+datos, la estrategia de anotación y el proceso de entrenamiento y compresión
+que producen el estimador de pose que la aplicación ejecuta. El componente
+que consume esa salida para decidir si una ejecución del paciente es
+correcta ---basado en alineamiento temporal de trayectorias angulares--- se
+desarrolla en un trabajo complementario \cite{anonimo_dtw} y queda fuera del
+alcance de este artículo, que toma esa capa posterior como dada.
+
+Las contribuciones de este trabajo son seis. Primero, la caracterización del
+dominio objetivo ---adultos mayores, ejercicios en sedestación, cámara
+frontal de teléfono en interiores domésticos--- y de su brecha frente a los
+corpus generales de pose, con la restricción de uso que ese dominio impone
+sobre el diseño del pipeline de anotación, enunciada como una decisión de
+diseño y no como un hecho de licencia verificado (\S\ref{sec:requisitos}).
+Segundo, una estrategia de anotación en dos niveles: pseudo-etiquetado masivo
+con un criterio de calibración de umbrales medido sobre una muestra
+estratificada, y un criterio explícito de derivación a revisión humana que
+concentra el esfuerzo manual en la cola de casos difíciles en lugar de
+distribuirlo sobre todo el corpus. Tercero, la distinción operativa entre el
+modelo que efectivamente se despliega ---entrenado una única vez sobre una
+partición fija--- y el instrumento que mide su capacidad de generalizar a
+personas no vistas ---la validación cruzada agrupada por sujeto---, evitando
+que ambos se confundan en el registro de experimentos. Cuarto, una cadena de
+compresión con un orden justificado (poda, recuperación, destilación,
+cuantización) y un contrato explícito para el artefacto final. Quinto, el
+diagnóstico honesto de dos hallazgos negativos de la primera iteración del
+modelo: un colapso de exactitud fuera de dominio pese a un desempeño
+saludable en la partición de validación, y una etapa de destilación cuya
+degradación se rastreó hasta defectos concretos de implementación. Sexto, un
+conjunto de prácticas de reproducibilidad ---versionado de datos, registro de
+experimentos, determinismo--- que atraviesan todo el proceso.
+
+El resto del artículo se organiza así: la sección 2 revisa los trabajos
+relacionados; la sección 3 desarrolla los requisitos del conjunto de datos;
+la sección 4 describe el pipeline de anotación; la sección 5 presenta el
+entrenamiento y la cadena de compresión; la sección 6 reporta los resultados,
+incluido el diagnóstico de la iteración fallida; la sección 7 discute las
+limitaciones y la sección 8 concluye.
+
+% ======================= 2. TRABAJOS RELACIONADOS ======================
+\section{Trabajos relacionados}
+
+\subsection{Datasets de pose en rehabilitación y sus limitaciones}
+Los corpus de referencia en estimación de pose, como COCO \cite{lin2014}, se
+componen mayormente de escenas cotidianas o deportivas con personas de pie,
+de cuerpo casi completo y sobre una amplia variedad de fondos; ninguno de
+esos supuestos se sostiene en rehabilitación domiciliaria, donde el sujeto
+está sentado, parcialmente ocluido por el mobiliario y filmado de frente por
+la cámara de un teléfono. El dataset UCO Physical Rehabilitation
+\verificarcita{atribución del dataset UCO Physical Rehabilitation — no
+confirmada, ver PENDIENTES.md \S2} es, hasta donde se relevó para este
+trabajo, uno de los pocos que anota ejercicios de rehabilitación cuadro a
+cuadro sobre video; su limitación principal, que motiva la sección
+\ref{sec:pipeline}, es que anota únicamente las articulaciones relevantes a
+cada ejercicio ---típicamente tres de los diecisiete puntos del esquema
+COCO--- y dejar el resto sin etiquetar impide entrenar directamente un
+estimador de cuerpo completo.
+
+\subsection{Anotación asistida y pseudo-etiquetado}
+Cuando el costo de anotar manualmente un corpus completo es prohibitivo, una
+alternativa establecida es generar pseudo-etiquetas con un modelo ya
+entrenado y usarlas como señal de entrenamiento de otro \cite{lee2013}. La
+variante adoptada en este trabajo es un anotador \emph{top-down} de dos
+etapas ---un detector de personas seguido de un estimador de pose sobre el
+recorte--- \verificarcita{"top-down es el enfoque de mayor exactitud
+publicado en estimación de pose" — no hay una fuente concreta identificada,
+ver PENDIENTES.md \S2}, instanciado con un detector de tiempo real
+\cite{lyu2022} y un estimador basado en Vision Transformers \cite{xu2022},
+ejecutados sobre el framework de OpenMMLab \cite{mmpose2020}. A diferencia
+del uso más habitual del pseudo-etiquetado como forma de destilación de
+conocimiento hacia un modelo más chico, aquí el anotador nunca se despliega:
+su única función es producir etiquetas, y su costo computacional es
+irrelevante porque corre una única vez fuera de línea.
+
+\subsection{Compresión de modelos para dispositivos móviles}
+La poda estructurada elimina canales completos de la red siguiendo su grafo
+de dependencias \cite{fang2023}, sobre la idea original de podar y luego
+recuperar precisión con reentrenamiento \cite{han2015}. La destilación de
+conocimiento transfiere la capacidad de un modelo grande a uno chico
+comparando sus salidas \cite{hinton2015} o, en la variante de transferencia
+de atención adoptada en este trabajo, sus mapas de activación intermedios
+\cite{zagoruyko2017}. La cuantización entera post-entrenamiento reduce la
+precisión numérica de pesos y activaciones con una degradación de exactitud
+acotada \cite{jacob2018}. Estas tres técnicas se combinan habitualmente para
+producir un artefacto final compatible con hardware móvil, pero la
+literatura rara vez discute el orden en que deben aplicarse cuando la
+recuperación de precisión no puede apoyarse en un dataset completamente
+etiquetado ---la situación exacta de este trabajo (\S\ref{sec:entrenamiento}).
+
+\subsection{Métricas de evaluación de pose}
+La similitud de keypoint objeto (OKS) y el porcentaje de puntos correctos
+(PCK) sobre el esquema de diecisiete puntos de COCO \cite{lin2014} son las
+métricas estándar para reportar exactitud de un estimador de pose, y ambas se
+usan en este trabajo por etapa de la cadena de compresión. Un aspecto menos
+estandarizado es cómo particionar los datos para medir generalización: un
+particionado aleatorio a nivel de cuadro sobreestima el desempeño cuando el
+mismo sujeto aparece en ambos lados de la partición, un caso particular del
+problema más general de aproximar el caso de uso real en aprendizaje
+automático clínico \cite{saeb2017}; la validación cruzada agrupada por
+sujeto (\S\ref{sec:entrenamiento}) es la respuesta adoptada.
+
+% ======================= 3. REQUISITOS DEL DATASET ======================
+\section{Requisitos del conjunto de datos}
+\label{sec:requisitos}
+
+\subsection{Caracterización del dominio objetivo}
+El sistema descripto en \cite{anonimo_previo} está pensado para adultos
+mayores que ejecutan ejercicios de rehabilitación sentados, en su domicilio,
+filmados con la cámara frontal de un teléfono apoyado a corta distancia. Esa
+combinación de condiciones —sedestación, oclusión parcial por el respaldo de
+una silla o por la ropa holgada habitual en adultos mayores, encuadre cercano
+y de frente, iluminación doméstica no controlada— es exactamente la que los
+corpus generales de pose humana no cubren: esos corpus están dominados por
+personas de pie, de cuerpo completo, en escenas exteriores o deportivas. Un
+estimador entrenado solo sobre esa distribución no tiene garantías de
+generalizar al dominio objetivo, y verificarlo empíricamente es, de hecho, uno
+de los hallazgos de este trabajo (\S\ref{sec:resultados}).
+
+\subsection{Restricciones de uso y su traducción a requisitos técnicos}
+El diseño del pipeline de anotación asume, como restricción de partida, que
+los datos del dominio de rehabilitación no pueden subirse a servicios de
+anotación o de entrenamiento de terceros. \pendiente{Verificar los términos
+exactos de la licencia del dataset UCO Physical Rehabilitation contra su sitio
+de distribución oficial o su publicación original antes de presentar esta
+restricción como un hecho legal; hasta entonces se la trata como una decisión
+de diseño asumida por el equipo, no como una cláusula contractual confirmada.}
+Bajo esa restricción, tres requisitos técnicos se vuelven no negociables: la
+anotación asistida debe ejecutarse sobre infraestructura propia y no sobre una
+plataforma de anotación alojada por terceros, lo que motiva el uso de una
+instancia autoalojada de una herramienta de anotación de código abierto
+(\S\ref{sec:pipeline}); el almacenamiento de datos y modelos debe quedar
+versionado en un remoto controlado por el propio equipo y no en un servicio
+de entrenamiento externo; y ningún artefacto que se publique como resultado
+de este trabajo —el modelo exportado, las métricas— puede permitir
+reconstruir imágenes o identidades de los sujetos filmados.
+
+\subsection{Criterios de selección del dataset}
+La selección de UCO Physical Rehabilitation como base para este trabajo
+respondió a cinco criterios. El primero y excluyente es la correspondencia de
+dominio: se necesitan ejercicios de rehabilitación, no escenas genéricas. El
+segundo es la anotación por cuadro sobre video —y no sobre imágenes
+sueltas—, porque el caso de uso es inferencia continua sobre una secuencia de
+movimiento. El tercero es el volumen: la cadena de compresión de la sección
+\ref{sec:entrenamiento} necesita decenas de miles de cuadros para el ajuste
+fino y la destilación. El cuarto es que el dataset identifique explícitamente
+a qué sujeto pertenece cada cuadro, condición sin la cual el particionado por
+sujeto de la sección \ref{sec:entrenamiento} no es posible. El quinto es la
+disponibilidad efectiva para investigación, tanto práctica como legal —esta
+última sujeta a la verificación pendiente de la subsección anterior—. El
+dataset satisface los primeros cuatro sin ambigüedad; su limitación conocida
+de antemano, que la anotación cubre solo entre dos y tres articulaciones por
+ejercicio, es precisamente el problema que resuelve la sección
+\ref{sec:pipeline}.
+
+% ======================= 4. PIPELINE DE ANOTACIÓN =======================
+\section{Pipeline de anotación}
+\label{sec:pipeline}
+
+La Figura~\ref{fig:pipeline} resume el recorrido de los datos, desde el pool
+crudo hasta los conjuntos de entrenamiento particionados por sujeto.
+
+\begin{figure*}[t]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  font=\footnotesize,
+  caja/.style={draw, rounded corners=2pt, align=center, minimum height=8mm, inner sep=3pt},
+  cajapend/.style={draw, rounded corners=2pt, align=center, minimum height=8mm, inner sep=3pt, dashed, text=black!55},
+  etiqueta/.style={font=\scriptsize\itshape, text=black!60},
+  flecha/.style={-{Stealth[length=2mm]}, thick},
+  flechapend/.style={-{Stealth[length=2mm]}, thick, dashed},
+  node distance=4mm and 6mm
+]
+% --- fila principal ---
+\node[caja] (raw) {Pool UCO crudo\\(27 sujetos, 10 ejerc.,\\5 cámaras, 1280$\times$720)};
+\node[caja, right=of raw] (conv) {Conversor\\(stride=30, bbox\\hull+5\%, 74.107 pares)};
+\node[caja, right=of conv] (pseudo) {Pseudo-etiquetado\\RTMDet-m + ViTPose-H};
+\node[caja, right=of pseudo] (manifest) {Manifiesto\\(flags de confianza)};
+\node[caja, right=of manifest] (kfold) {GroupKFold\\por sujeto (k=5)};
+\node[caja, right=of kfold] (train) {Entrenamiento\\y compresión (\S\ref{sec:entrenamiento})};
+% --- fila inferior: cola de auditoría manual ---
+\node[caja, below=11mm of pseudo] (baja) {Cuadros de\\baja confianza};
+\node[caja, right=of baja] (cvat) {Auditoría CVAT\\(selección + corrección\\humana + round-trip gate)};
+\node[cajapend, right=of cvat] (gold) {Conjunto dorado\\\pendiente{auditoría no ejecutada aún}};
+% --- flechas fila principal ---
+\draw[flecha] (raw) -- (conv);
+\draw[flecha] (conv) -- (pseudo);
+\draw[flecha] (pseudo) -- (manifest);
+\draw[flecha] (manifest) -- (kfold);
+\draw[flecha] (kfold) -- (train);
+% --- flechas cola de auditoría ---
+\draw[flecha] (manifest.south) to[out=-90,in=90] (baja.north);
+\draw[flecha] (baja) -- (cvat);
+\draw[flechapend] (cvat) -- (gold);
+% --- etiquetas de fila ---
+\node[etiqueta, above=1mm of raw.north west, anchor=south west] {Curado y etiquetado automático};
+\node[etiqueta, below=1mm of baja.south west, anchor=north west] {Cola de revisión humana (dirigida por confianza)};
+\end{tikzpicture}%
+}
+\caption{Pipeline de construcción del conjunto de datos. Los cuadros de baja
+confianza se derivan a auditoría manual en CVAT; el conjunto dorado resultante
+(recuadro punteado) todavía no existe porque la auditoría no se ejecutó (ver
+\S\ref{sec:resultados}). Elaboración propia.}
+\label{fig:pipeline}
+\end{figure*}
+
+\subsection{Curado y muestreo}
+La conversión del material crudo a un formato de entrenamiento estandarizado
+integra en una sola pasada la extracción de cuadros y la generación de
+etiquetas, garantizando que cada imagen tenga su etiqueta correspondiente sin
+desfasajes. El muestreo temporal retiene un cuadro cada treinta, porque
+cuadros consecutivos de un movimiento lento son casi idénticos y retenerlos
+todos multiplicaría el costo de almacenamiento sin aportar variedad; con ese
+paso, el conjunto en alcance —veintisiete sujetos ejecutando ejercicios de
+flexo-extensión de rodilla y pierna y de elevación de brazo, registrados por
+cinco cámaras— produce 74.107 pares de imagen y etiqueta. Cada cuadro
+retenido se identifica con un esquema determinístico que codifica sujeto,
+ejercicio, cámara y número de cuadro, con una función de análisis inversa que
+rechaza explícitamente cualquier identificador malformado; ese identificador
+es lo que luego permite recuperar el sujeto para el particionado de la
+sección \ref{sec:entrenamiento} sin tener que inferirlo de otra fuente. Las
+doce articulaciones que UCO anota se proyectan una a una sobre los puntos 5 a
+16 del esquema COCO de diecisiete puntos, mientras que los cinco puntos
+faciales —que UCO nunca anota— se escriben como no visibles; la caja
+delimitadora de cada persona se deriva de la envolvente de los puntos
+visibles con un margen del 5\,\%.
+
+\subsection{Pseudo-etiquetado masivo}
+Etiquetar manualmente las 74.107 imágenes del pool con los diecisiete puntos
+completos es impracticable a la escala de este trabajo, y entrenar
+únicamente con la anotación esparsa original —dos o tres puntos por
+cuadro— enseña al modelo a declarar ausente el resto del cuerpo, que sí está
+visible. La alternativa adoptada es generar pseudo-etiquetas densas sobre la
+totalidad del pool con un anotador \emph{top-down} de dos etapas
+\cite{lee2013}: un detector de personas en tiempo real \cite{lyu2022}
+localiza al sujeto y un estimador de pose basado en Vision Transformers
+\cite{xu2022} predice los diecisiete puntos sobre el recorte, ambos ejecutados
+con el stack de OpenMMLab \cite{mmpose2020}. Los dos umbrales de confianza del
+anotador se calibraron en el orden que su dependencia impone y no al azar:
+primero el umbral de detección, porque una detección perdida descarta el
+cuadro entero y es irrecuperable, y solo después el umbral de visibilidad de
+keypoints, que decide qué entra a la función de pérdida del modelo
+estudiante. Un barrido sobre una muestra de 500 imágenes estratificada por
+sujeto y ejercicio mostró que un umbral de detección de 0,3 pierde apenas el
+0,2\,\% de los cuadros —frente al 1,0\,\% de un umbral de 0,5—, sin admitir
+detecciones espurias porque estas quedan igualmente sujetas al filtro
+posterior de keypoints; sobre ese punto de operación, el percentil 5 de
+confianza de keypoints nunca cayó por debajo de 0,41 (los peores casos, codos
+y muñecas), mientras que el miembro inferior —crítico para los ejercicios en
+alcance— se mantuvo entre 0,75 y 0,82. La corrida completa, ejecutada una
+única vez sobre una GPU RTX 3090 en aproximadamente 2,1 horas, escribió
+73.955 personas sobre las 74.107 imágenes, de las cuales el 94,3\,\%
+(69.880) quedaron con los diecisiete puntos completos y solo 152 imágenes no
+tuvieron ninguna detección, con una confianza media de keypoint de 0,8897
+sobre todo el pool.
+
+\subsection{Criterio de derivación a revisión humana}
+El pseudo-etiquetado automático no es perfecto, y el aporte de este trabajo en
+ese punto no es una corrección manual exhaustiva sino un criterio explícito
+de dónde concentrarla. Cada imagen queda marcada como de baja confianza si su
+confianza media de keypoint cae por debajo de 0,5 o si retiene menos de diez
+de los diecisiete puntos visibles, y se registra el motivo específico —sin
+detección, sin keypoints válidos, múltiples personas en el cuadro o
+confianza baja con una sola persona—. Ese subconjunto, más una muestra de
+control de 150 cuadros sanos estratificada por sujeto y ejercicio (y, dentro
+de cada ejercicio, por si se trata de un movimiento en sedestación o de
+elevación de brazo), define el alcance completo de la revisión humana: en
+lugar de auditar una muestra aleatoria del pool, donde la enorme mayoría de
+las etiquetas ya es correcta y el esfuerzo se diluye, la revisión se
+concentra exactamente donde el propio anotador declara incertidumbre. El
+resultado cuantitativo de aplicar ese criterio —cuántos cuadros se
+corrigieron y con qué costo— se reporta en la sección \ref{sec:resultados}.
+
+\subsection{Cola de anotación manual}
+La infraestructura de revisión humana corre sobre una instancia propia de una
+herramienta de anotación de código abierto, en línea con la restricción de no
+depender de servicios de terceros (\S\ref{sec:requisitos}). Antes de admitir
+cualquier corrección real, un control de ida y vuelta —importar un lote
+reducido de cuadros, exportarlo sin tocar nada y comparar el resultado contra
+el original— verificó que la herramienta preserva la visibilidad de cada
+punto y que el ruido de fondo introducido por el propio ida y vuelta es de
+apenas 0,005 píxeles, muy por debajo del umbral que separa una corrección
+real de un artefacto de la herramienta. Una corrección se define como un
+desplazamiento de un punto por encima de ese umbral o un cambio de su
+visibilidad entre ausente y presente, y el resultado de la reconciliación
+produce, además de una métrica de tasa de corrección por motivo y por tipo de
+ejercicio, un conjunto dorado de imágenes verificadas que queda excluido del
+entrenamiento y reservado para evaluación. \pendiente{La ejecución real de la
+auditoría —selección del subconjunto, empaquetado, corrección humana en la
+herramienta y reconciliación— no se completó todavía sobre el corpus
+completo; no existe aún el conjunto dorado ni el reporte de auditoría. Ver
+PENDIENTES.md \S4 para el comando exacto que los generaría.}
+
+% ======================= 5. ENTRENAMIENTO Y COMPRESIÓN ==================
+\section{Entrenamiento y compresión para despliegue}
+\label{sec:entrenamiento}
+
+\subsection{Particionado por sujeto}
+Un particionado aleatorio a nivel de cuadro es metodológicamente inválido
+sobre este corpus: cuadros consecutivos de un mismo clip son casi idénticos y
+el mismo sujeto aparece simultáneamente en cinco cámaras, de modo que un
+reparto aleatorio dejaría cuadros casi duplicados a ambos lados de la
+partición y las métricas resultantes medirían memorización de sujetos
+vistos y no generalización a personas nuevas —exactamente la aproximación al
+caso de uso real que la literatura de aprendizaje automático clínico señala
+como necesaria \cite{saeb2017}—. El particionado adoptado es una validación
+cruzada agrupada por sujeto con cinco grupos y semilla fija, de modo que cada
+sujeto aporta cuadros a un único grupo en cada partición. El dataset
+pseudo-etiquetado, generado de forma independiente al de etiquetas
+originales, verifica en tiempo de generación que su reparto de sujetos por
+grupo coincide exactamente con el de este último, y aborta ante cualquier
+divergencia; sin esa verificación, la comparabilidad partición a partición
+entre ambos conjuntos sería una suposición y no un hecho constatado.
+
+\subsection{Configuración de entrenamiento}
+El modelo estudiante es la variante más liviana de una arquitectura de una
+sola pasada para detección y estimación conjunta de pose
+\cite{maji2022,ultralytics2024}, entrenada a una resolución de entrada de 640
+píxeles con optimizador AdamW y tasa de aprendizaje inicial de 0,01. Ambos
+valores se declaran de forma explícita en la configuración de cada corrida
+porque, en su modo por defecto, el framework de entrenamiento selecciona
+automáticamente el optimizador y sobrescribe la tasa de aprendizaje recibida
+por una derivada del tamaño del dataset —lo que habría descartado en
+silencio la reducción deliberada de la tasa a un décimo que exige el ajuste
+fino posterior a la poda (\S\ref{sec:cadena}).
+
+\subsection{Modelo desplegable vs. instrumento de medición}
+La validación cruzada de cinco particiones cumple una función de medición:
+estima cuánto generaliza cada configuración a sujetos que el modelo nunca
+vio, y es la que sostiene las comparaciones entre fases de este trabajo. El
+modelo que efectivamente se integra a la aplicación, en cambio, se entrena
+una única vez sobre una partición fija, con una configuración idéntica en
+todo lo demás, y se registra en un experimento separado que deliberadamente
+no reporta media ni desvío estándar entre particiones: una media calculada
+sobre una única partición, con desvío cero, sería indistinguible en una tabla
+de resultados de un resultado de validación cruzada saludable, y esa
+confusión es exactamente la que la separación de experimentos busca evitar.
+La distinción importa porque son dos artefactos con propósitos distintos
+—uno mide, el otro se despliega— y no debería tratárselos como si fueran
+intercambiables.
+
+\subsection{Cadena de compresión}
+\label{sec:cadena}
+La compresión para el dispositivo aplica tres técnicas en un orden que no es
+arbitrario. Primero, la poda estructurada elimina canales completos de la red
+siguiendo su grafo de dependencias \cite{fang2023}, reduciendo los parámetros
+del estudiante de 3,30 a 1,91 millones (un 42\,\% menos); medida sobre la
+partición de validación completa, esa poda por sí sola lleva la exactitud
+(OKS) de 0,846 a 0,000 —el modelo deja de detectar a la persona—, un colapso
+total y no una degradación leve. Segundo, un ajuste fino de recuperación con
+la tasa de aprendizaje reducida a un décimo de la original revierte ese
+colapso. Tercero, la destilación de conocimiento transfiere al estudiante
+podado y recuperado la capacidad de un modelo maestro de mayor tamaño
+mediante transferencia de atención \cite{zagoruyko2017} —comparando los
+mapas de activación intermedios de ambos en lugar de sus salidas finales
+\cite{hinton2015}—, elegida en lugar de un ajuste fino supervisado clásico
+por una razón específica de este trabajo: la transferencia de atención se
+calcula únicamente a partir de imágenes y del modelo maestro, sin requerir
+etiquetas ground-truth, mientras que las etiquetas parciales originales de
+UCO —dos o tres de diecisiete puntos por ejercicio— enseñarían activamente
+al modelo a suprimir el resto del cuerpo si se usaran para un ajuste fino
+supervisado de cuerpo completo. La poda se aplica antes que cualquier
+entrenamiento, de modo que tanto la recuperación como la destilación entrenan
+ya la arquitectura reducida que llegará al dispositivo, y no una arquitectura
+que se mutila después. Cuarto y último, la cuantización entera
+post-entrenamiento \cite{jacob2018} convierte los pesos a enteros de 8 bits;
+el artefacto que efectivamente se exporta cuantiza los pesos pero mantiene
+las activaciones y la entrada/salida en punto flotante de 32 bits —una
+variante de rango dinámico y no de enteros completos—, lo que en la práctica
+es exactamente el contrato que espera la aplicación móvil.
+
+\subsection{Infraestructura de cómputo}
+Todo el entrenamiento y la cuantización se ejecutaron sobre una única GPU
+NVIDIA RTX 3090 de 24 GB. Con el estudiante a resolución 640 y lote de 24, el
+entrenamiento procesa aproximadamente 233 imágenes por segundo, es decir,
+unos 4,1 minutos por época sobre los 57.805 cuadros de entrenamiento de una
+partición. La asimetría más significativa está en la evaluación: un modelo
+cuantizado evaluado sobre CPU —con lote fijo en una imagen, restricción
+propia del formato de exportación— tarda 196 milisegundos por imagen, frente
+a los 12,8 milisegundos de la misma arquitectura sin cuantizar sobre GPU; esa
+diferencia es la que motiva acotar el conjunto de calibración de la
+cuantización a un máximo de unas pocas centenas de imágenes representativas,
+en lugar de recorrer con él la partición de validación completa.
+
+% ======================= 6. RESULTADOS ===================================
+\section{Resultados}
+\label{sec:resultados}
+
+\subsection{Estadísticas del corpus por etapa}
+La Tabla~\ref{tab:corpus} resume la composición del conjunto de datos en cada
+etapa del pipeline. De las 74.107 imágenes del pool, el pseudo-etiquetado
+escribió una persona en 73.955 y dejó los diecisiete puntos completos en el
+94,3\,\% de los casos, lo que deja una fracción acotada de cuadros —los
+marcados de baja confianza más la muestra de control— que requieren atención
+humana antes de poder usarse con la misma confianza que el resto del corpus.
+
+\begin{table}[t]
+\caption{Composición del corpus por etapa del pipeline. Elaboración propia.}
+\label{tab:corpus}
+\centering
+\fontsize{9}{11}\selectfont
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{2.6cm}rrp{1.6cm}@{}}
+\toprule
+\textbf{Etapa} & \textbf{Imágenes} & \textbf{Personas} & \textbf{17 kpts (\%)} \\
+\midrule
+Pool crudo (post-stride) & 74.107 & --- & --- \\
+Pseudo-etiquetado & 74.107 & 73.955 & 94,3 \\
+Derivado a auditoría (baja confianza) & 2.396 & --- & --- \\
+Fold 0 — entrenamiento & --- & --- & --- \\
+Fold 0 — validación & --- & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+\pendiente{Completar las celdas "---" restantes: conteo train/val por fold =
+contar líneas de los manifiestos \texttt{folds/fold0\_\{train,val\}.txt} (no
+calculado todavía, ver PENDIENTES.md \S4); personas/\% completos del
+subconjunto derivado a auditoría = depende de que se corra la auditoría real.}
+
+\subsection{Costo de anotación}
+Reportar el costo de la auditoría —tasa de corrección por motivo, cantidad de
+cuadros efectivamente revisados y horas humanas insumidas— requiere haber
+ejecutado la auditoría real sobre el subconjunto derivado, lo que todavía no
+ocurrió. \pendiente{La auditoría CVAT no se ejecutó: no hay tasa de
+corrección, cantidad de cuadros efectivamente auditados ni horas humanas
+insumidas. Ver PENDIENTES.md \S6 para el comando exacto que generaría estos
+números.}
+
+\subsection{Configuración de entrenamiento y compresión}
+La Tabla~\ref{tab:config} inventaría los hiperparámetros reales de cada fase.
+
+\begin{table}[t]
+\caption{Configuración de entrenamiento y compresión por fase. Elaboración propia.}
+\label{tab:config}
+\centering
+\fontsize{9}{11}\selectfont
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{2.0cm}p{2.6cm}p{1.6cm}@{}}
+\toprule
+\textbf{Fase} & \textbf{Parámetro} & \textbf{Valor} \\
+\midrule
+1 — Base & batch / optimizador & 48 / auto \\
+2 — Poda & sparsity / fine-tune & 0,3 / 20 ép. \\
+3 — Cuant. & calibración & 100--300 img. \\
+4 — Destilación & $T$ / $\alpha$ / épocas & 4,0 / 0,5 / 100 \\
+5 — Combinada (CV) & fine-tune / destil. & 10 ép. / 80 ép. \\
+5 — Combinada (deploy) & fine-tune / destil. & 25 ép. / 20 ép. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La Tabla~\ref{tab:cadena} reporta el resultado medido de aplicar esa cadena,
+en dos corridas distintas que conviene no confundir entre sí: una corrida de
+la fase 2 aislada (base, podado, recuperado) y la corrida de despliegue de la
+fase 5, que retoma el modelo recuperado y continúa con la destilación.
+
+\begin{table}[t]
+\caption{Resultado medido de la cadena de compresión. Elaboración propia.}
+\label{tab:cadena}
+\centering
+\fontsize{9}{11}\selectfont
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}p{1.5cm}p{2.0cm}rrr@{}}
+\toprule
+\textbf{Corrida} & \textbf{Etapa} & \textbf{OKS} & \textbf{Params (M)} & \textbf{Lat. (ms)} \\
+\midrule
+Fase 2 aislada & Base (COCO) & 0,846 & 3,30 & 46,7 \\
+ & Podado (sparsity 0,3) & 0,000 & 1,91 & 31,8 \\
+ & Recuperado (ft 20 ép.) & 0,935 & 1,90 & --- \\
+\addlinespace
+Fase 5 deploy & Recuperado (ft 25 ép.) & 0,935 & --- & --- \\
+ & Destilado (20 ép., roto) & 0,626 & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+El estudiante recuperado supera al modelo maestro sobre la misma partición
+(OKS 0,911 sobre una muestra de 600 cuadros), lo que confirma que la poda es
+recuperable con el fine-tune adoptado; la fila de destilación de la fase 5
+deploy, en cambio, es el punto de partida del diagnóstico de la subsección
+siguiente y no debe leerse como el desempeño esperable de esa técnica.
+
+\subsection{Diagnóstico de iteración negativa}
+La primera iteración completa del pipeline de despliegue produjo dos
+hallazgos que conviene reportar con el mismo detalle que un resultado
+positivo, porque explican decisiones de diseño posteriores y porque un
+hallazgo negativo bien diagnosticado sostiene la motivación de todo el
+trabajo.
+
+\emph{Colapso fuera de dominio.} El primer checkpoint desplegable (\emph{v2})
+alcanzó un OKS de 0,931 sobre la partición de validación completa —un
+resultado saludable— pero, al ejecutarse sobre video real, producía un
+esqueleto visiblemente aplastado en el eje horizontal. La causa no fue la
+cuantización: el modelo cuantizado, el modelo en punto flotante y el
+checkpoint sin exportar coincidieron entre sí. Tampoco fue el encuadre:
+cuadros completos del corpus de origen y recortes reencuadrados como los
+produce la aplicación se comportaron con normalidad. Al evaluar el modelo
+sobre 79 imágenes reales de un corpus general de pose —nunca vistas por el
+estudiante— y normalizar la extensión horizontal de los puntos predichos por
+el ancho de la caja de referencia, la razón cayó a 0,701 contra un techo de
+0,977 alcanzado por un modelo entrenado solo sobre ese corpus general, con 40
+de 76 imágenes efectivamente colapsadas y un error medio de posición de 0,314
+de la diagonal de la caja de referencia: el esqueleto caía fuera del cuerpo,
+no simplemente angosto. El diagnóstico señaló una falla de generalización de
+apariencia del ajuste fino posterior a la poda, entrenado casi
+exclusivamente sobre las imágenes homogéneas del corpus de rehabilitación. La
+corrección consistió en repetir ese ajuste fino sobre una mezcla de ese mismo
+corpus con una muestra del corpus general de pose, con aumentación de datos
+reforzada; el checkpoint resultante (\emph{v3}) llevó la razón de 0,701 a
+0,913, las imágenes colapsadas de 40/76 a 1/79, y de paso mejoró el OKS
+in-domain de 0,931 a 0,941.
+
+\emph{Destilación no resuelta.} La misma corrida de despliegue, al continuar
+con la etapa de destilación tras el ajuste fino de recuperación, degradó al
+estudiante de un OKS de 0,935 a 0,626 en veinte épocas, con predicciones de
+coordenadas de keypoint sin valor numérico definido. El diagnóstico
+identificó tres defectos concretos y no uno solo: la tasa de aprendizaje de
+la destilación es diez veces la del ajuste fino que la precede, porque no se
+reduce al reiniciar el entrenamiento sobre un modelo ya convergido; el
+término de transferencia de atención se normaliza dividiendo por el área
+espacial del mapa de activación, lo que lo reduce a menos del 0,5\,\% de la
+pérdida total y lo vuelve numéricamente inerte; y un factor de temperatura al
+cuadrado, heredado de la destilación clásica sobre distribuciones de
+probabilidad \cite{hinton2015}, se aplica sin justificación a mapas de
+atención que no son distribuciones. Los dos últimos defectos se cancelaban
+entre sí, razón por la cual el problema no era evidente antes de instrumentar
+cada término por separado: corregir la normalización sin corregir también el
+factor de temperatura invertiría la falla, haciendo que el término de
+destilación domine sobre la tarea principal. \pendiente{No usar destilación
+de las fases 4 y 5 para resultados reales hasta corregir conjuntamente los
+tres defectos y recalibrar el peso relativo de ambos términos de la
+pérdida.}
+
+% ======================= 7. LIMITACIONES ================================
+\section{Limitaciones}
+Los alcances de lo reportado deben enunciarse con precisión. La auditoría
+manual está implementada y su mecanismo de control de calidad —el control de
+ida y vuelta— está verificado, pero no se ejecutó todavía sobre el corpus
+real derivado a revisión humana: ninguna cifra de este artículo sobre tasa de
+corrección o costo de anotación existe todavía. La etapa de destilación de
+conocimiento de las fases 4 y 5 tiene un defecto de implementación no
+resuelto y no debe interpretarse como una medición válida de lo que esa
+técnica puede aportar sobre este dataset. La restricción de uso que motiva la
+anotación autoalojada se asume por diseño; los términos exactos de la
+licencia del dataset UCO Physical Rehabilitation no están verificados contra
+su fuente oficial, y ninguna afirmación de este artículo debe leerse como una
+interpretación legal confirmada. Finalmente, el modelo que efectivamente se
+despliega se entrenó una única vez sobre una partición fija: no existe
+todavía una corrida de validación cruzada agrupada por sujeto sobre esa
+configuración exacta —con la mezcla de corpus general de pose y la
+aumentación reforzada del lineage corregido—, omitida por el costo de
+cómputo que impone repetir el entrenamiento cinco veces.
+
+% ======================= 8. CONCLUSIONES =================================
+\section{Conclusiones y trabajo futuro}
+Este trabajo describió la construcción del conjunto de datos y el
+entrenamiento de un estimador de pose comprimido para ejercicios de
+rehabilitación domiciliaria, con foco en dos decisiones que lo hacen viable
+en un dominio sin datasets públicos adecuados y con restricciones de uso
+sobre los datos disponibles: una estrategia de anotación en dos niveles que
+concentra el esfuerzo humano en la cola de casos difíciles en lugar de
+distribuirlo sobre todo el corpus, y una cadena de compresión cuyo orden y
+cuya elección de técnica de recuperación —destilación en lugar de ajuste fino
+supervisado— responden directamente a la limitación de anotación del dataset
+de origen. La distinción entre el modelo desplegable y el instrumento de
+medición, y el diagnóstico honesto de dos hallazgos negativos de la primera
+iteración, completan una descripción del proceso que prioriza la
+trazabilidad de cada cifra por sobre presentar un resultado más prolijo de lo
+que el estado actual del trabajo permite.
+
+El trabajo futuro sigue dos líneas concretas. La primera es completar la
+validación cruzada agrupada por sujeto sobre la configuración exacta del
+modelo finalmente desplegado, pospuesta hasta ahora por su costo de cómputo.
+La segunda es la finalización de la campaña de auditoría manual actualmente
+en curso, cuyo resultado —tasa de corrección, costo de anotación y un
+conjunto dorado de evaluación— es el insumo que falta para cerrar el
+diagnóstico de calidad del pseudo-etiquetado que este artículo deja
+planteado.
+
+% ======================= REFERENCIAS ===================================
+\begingroup
+\fontsize{9}{11}\selectfont
+\bibliographystyle{unsrt}
+\bibliography{referencias}
+\endgroup
+
+\end{document}

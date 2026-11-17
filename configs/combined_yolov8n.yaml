@@ -1,0 +1,66 @@
+# Configuración — FASE 5 (pruning + distillation + cuantización INT8).
+# Ejecutar con:
+#   python -m src.training.combined --config configs/combined_yolov8n.yaml
+#
+# Es la fase que produce el .tflite INT8 que va a la app móvil.
+
+family: yolo
+model: models/yolov8n-pose.pt          # estudiante: checkpoint inicial del modelo ligero
+teacher_model: models/yolov8x-pose.pt  # maestro: usado en la etapa de distillation
+
+# Dataset pseudo-etiquetado (ver baseline_yolov8n.yaml); sirve a la vez de set de
+# entrenamiento y de calibración INT8. El archivo base no existe: el auto-discovery
+# de _kfold encuentra los pose_dataset_pseudo_fold{0..4}.yaml hermanos.
+data: data/processed/pose_dataset_pseudo.yaml
+
+imgsz: 640
+
+# --- Hardware (RTX 3090, 24 GB) ---
+# batch como en Fase 4: el maestro yolov8x comparte la VRAM con el estudiante.
+device: 0
+batch: 24
+workers: 2                   # era 8: con 8, los loaders de train + val lanzan ~17 procesos
+                             # (~1 GB de commit c/u en Windows) y agotaron el archivo de
+                             # paginación (WinError 1455, 2026-09-30, ver el config deploy).
+                             # Sólo cambia la velocidad de carga, no el modelo; es la única
+                             # clave que se puede cambiar al reanudar sin invalidar la CV.
+amp: true
+patience: 15
+
+# --- Checkpoints reanudables (ver src/utils/checkpoints.py) ---
+# La CV completa dura días: con esto un corte de luz no pierde el fold en curso.
+# Para reanudar basta con volver a correr EL MISMO comando con LA MISMA config: los
+# folds terminados se saltean, las etapas terminadas también, y el entrenamiento en
+# curso sigue desde su último epoch (last.pt). Cambiar cualquier otra clave aborta.
+checkpoint_dir: runs/fase5_cv
+checkpoint_report: docs/fase5_cv_bitacora.md   # tabla de avance, regenerada en cada checkpoint
+
+# optimizer y lr0 explícitos: con el default 'auto' Ultralytics SOBREESCRIBE el lr0
+# recibido, y la reducción a 1/10 del fine-tuning post-poda se descartaba en
+# silencio (ver src/models/yolo.py). Aplica a la etapa 2 (poda + recuperación).
+optimizer: AdamW
+lr0: 0.01                    # el fine-tuning post-poda usa lr0/10 = 0.001
+
+pruning:
+  sparsity: 0.3
+  method: structured            # informativo: poda estructurada real (torch_pruning, DepGraph)
+  fine_tune_epochs: 10          # recuperación post-poda, a lr0/10 (= 0.001). Reducido vs.
+                                # Fase 2 porque la distillation que viene después sigue
+                                # recuperando precisión; acá alcanza con estabilizar el
+                                # modelo podado antes de entrar al ciclo con el maestro.
+
+distillation:
+  beta: 1000                    # peso de attention transfer (β de Zagoruyko & Komodakis): el
+                                # término es (1-α)·(β/2)·B·L_AT. Reemplaza a 'temperature' (T²
+                                # no aplica a attention maps). LR de esta etapa: lr0/10 = 0.001.
+  alpha: 0.5                   # peso de la task loss frente a la de distillation.
+                                # Estuvo en 0.0 (distillation pura por attention-transfer)
+                                # mientras las únicas labels eran las esparsas de UCO, donde
+                                # 14 de 17 keypoints venían siempre con v=0. Con el dataset
+                                # pseudo las labels son densas y de buena calidad, así que la
+                                # task loss vuelve a aportar señal. Igual que en Fase 4, para
+                                # que ambas fases sean comparables.
+  epochs: 80                    # reducido vs. Fase 4: el estudiante ya viene pre-podado
+
+mlflow:
+  experiment: fase5-combined

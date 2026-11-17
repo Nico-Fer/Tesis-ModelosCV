@@ -1,0 +1,25 @@
+# Constraints del entorno venv-mmpose. Se aplican vía la variable de entorno
+# PIP_CONSTRAINT, que pip respeta SIEMPRE — incluso cuando lo invoca `mim`.
+#
+# POR QUÉ EXISTE ESTE ARCHIVO: declarar los pines en requirements-mmpose.txt no
+# alcanza. `mim install mmdet` arrastra `opencv-python` sin techo de versión;
+# pip resuelve opencv-python 5.x, que exige numpy>=2, y pisa el numpy 1.26 ya
+# instalado. Resultado: torch/mmcv/mmdet (compilados contra numpy 1.x) siguen
+# importando pero pierden la interoperabilidad con numpy —
+#   "UserWarning: Failed to initialize NumPy: _ARRAY_API not found"
+# — y todo el pipeline revienta en el primer `.cpu().numpy()` de una predicción.
+#
+# Un constraints file no instala nada: sólo pone un techo a lo que pip puede
+# elegir, cualquiera sea el comando que dispare la resolución.
+
+# mmcv 2.1.0, mmdet 3.3.0 y torch 2.1.2 están compilados contra numpy 1.x.
+numpy<2
+
+# opencv-python 5.x exige numpy>=2 y es el vector por el que se cuela.
+opencv-python<4.12
+opencv-python-headless<4.12
+
+# setuptools >=81 elimina `pkg_resources`, del que openmim depende para
+# `mim install` / `mim download`. Con una version mas nueva, mim muere con
+# "ModuleNotFoundError: No module named 'pkg_resources'".
+setuptools<81

@@ -1,0 +1,99 @@
+# =============================================================================
+# requirements-mmpose.txt  —  Entorno OpenMMLab (teacher para pseudo-labeling)
+#
+#   Uso: auto-etiquetado del dataset con ViTPose-H (top-down) + RTMDet-m como
+#        detector de personas. NO participa del pipeline de 5 fases: produce el
+#        dataset pseudo-etiquetado que después consumen los runners en venv-torch.
+#
+#   Crear el venv DEDICADO (tercero, separado de venv-torch y venv-tf):
+#     python3.11 -m venv venv-mmpose
+#     source venv-mmpose/bin/activate       # Windows: venv-mmpose\Scripts\activate
+#     pip install -r requirements-mmpose.txt
+#
+#   ATENCIÓN — este archivo NO se instala con `pip install -r` solo. mmcv se
+#   distribuye como wheel precompilada desde el índice de OpenMMLab, no desde
+#   PyPI, y hay que instalarla con `mim`. Ver "Instalación" abajo.
+#
+#   POR QUÉ UN TERCER VENV: mmcv se compila contra un par (torch, CUDA) concreto
+#   y arrastra su propio torch. Meterlo en venv-torch rompería el toolchain de
+#   export TFLite ya validado (TF 2.15 + onnx2tf 1.22 + Keras 2) y los pins de
+#   numpy<2 / protobuf 4.x. Este entorno vive aislado y no se toca desde el
+#   pipeline de fases.
+# =============================================================================
+
+# --- Instalación (correr EN ESTE ORDEN, no `pip install -r` a secas) ---------
+#
+#   0. ACTIVAR LOS CONSTRAINTS ANTES DE INSTALAR NADA. Sin esto,
+#      `mim install mmdet` arrastra opencv-python 5.x, que exige numpy>=2 y pisa
+#      el numpy 1.26 de más abajo; torch/mmcv/mmdet quedan importando pero sin
+#      interoperar con numpy ("Failed to initialize NumPy: _ARRAY_API not
+#      found") y el pipeline revienta en el primer .cpu().numpy().
+#      Declarar el pin en este archivo NO alcanza: mim lo sobreescribe después.
+#
+#        PowerShell:  $env:PIP_CONSTRAINT = "constraints-mmpose.txt"
+#        bash:        export PIP_CONSTRAINT=constraints-mmpose.txt
+#
+#      La variable tiene que seguir seteada durante TODOS los pasos siguientes,
+#      incluidos los `mim install`.
+#
+#   1. torch con CUDA (el default de PyPI es CPU-only; sin esto la 3090 no se usa):
+#        pip install torch==2.1.2 torchvision==0.16.2 \
+#          --index-url https://download.pytorch.org/whl/cu121
+#
+#      El pin torch 2.1.2 + cu121 NO es arbitrario: mmcv publica wheels
+#      precompiladas sólo para pares (torch, cuda) concretos, y este par tiene
+#      wheel para mmcv 2.1.0. Con un torch más nuevo, `mim install mmcv` intenta
+#      COMPILAR con MSVC, que en Windows es donde se rompe.
+#      Fallback si igual intenta compilar: torch==2.0.1+cu118 / mmcv==2.0.1,
+#      que es la matriz de wheels más completa.
+#
+#   2. el resto de este archivo:
+#        pip install -r requirements-mmpose.txt
+#
+#   3. los paquetes OpenMMLab, vía mim (resuelve el índice de wheels correcto):
+#        mim install mmengine
+#        mim install "mmcv==2.1.0"
+#        mim install "mmdet==3.3.0"
+#        mim install "mmpose==1.3.2"
+#
+#      mmcv 2.1.0 satisface a la vez el rango de mmdet 3.3.0 y el de mmpose
+#      1.3.2 (ambos exigen >=2.0.0,<2.2.0). No subir sin verificar los dos.
+#
+#   4. verificación de humo OBLIGATORIA antes de correr nada:
+#        python -c "import numpy, torch, mmcv, mmdet, mmpose; \
+#          print(numpy.__version__, torch.__version__, torch.cuda.is_available())"
+#      Tiene que imprimir numpy 1.26.x y True. Dos fallas típicas:
+#        - dice False           -> el paso 1 no quedó: reinstalar torch cu121.
+#        - numpy dice 2.x, o
+#          aparece "Failed to initialize NumPy: _ARRAY_API not found"
+#                               -> el paso 0 no estaba activo. Arreglo:
+#             pip install "numpy==1.26.4" "opencv-python==4.11.0.86"
+#
+#   5. checkpoints del teacher (a models/teachers/, gitignored):
+#        mim download mmpose --config td-hm_ViTPose-huge_8xb64-210e_coco-256x192 \
+#          --dest models/teachers
+#        mim download mmdet --config rtmdet_m_8xb32-300e_coco --dest models/teachers
+#      Después, listar models/teachers/ y copiar los nombres REALES de config y
+#      checkpoint al YAML — el par tiene que coincidir o la carga falla.
+# -----------------------------------------------------------------------------
+
+# --- Instalador de paquetes OpenMMLab ---
+openmim>=0.3.9
+
+# --- Núcleo numérico (mismo pin que el resto del repo) ---
+numpy~=1.26          # <2.0: mmcv/mmdet 3.x están compilados contra numpy 1.x
+
+# --- Procesamiento de imagen (headless, igual que requirements-base) ---
+opencv-python-headless~=4.10
+
+# --- Utilidades del script de pseudo-labeling ---
+pyyaml~=6.0
+tqdm~=4.66
+
+# NOTA: torch/torchvision NO se declaran acá a propósito — se instalan en el
+# paso 1 desde el índice de CUDA. Declararlos haría que pip los reemplace por
+# la build CPU de PyPI y la 3090 quedaría sin usar.
+#
+# NOTA: mmengine/mmcv/mmdet/mmpose tampoco — van por `mim` (paso 3).
+# xtcocotools (dep de mmpose) puede necesitar build tools en Windows si no hay
+# wheel para tu Python; si falla, instalar "Microsoft C++ Build Tools".

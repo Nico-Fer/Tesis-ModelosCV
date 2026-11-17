@@ -1,0 +1,42 @@
+2026-10-16 11:09:04.946659: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+11:09:07 From C:\Users\nico\Documents\Facultad\Tesis\Codigo\modelosCV\venv-torch\Lib\site-packages\keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+11:09:08 app_stock_int8 fold 0: 0 cuadros en caché, 16149 por predecir.
+Loading models/yolov8n-pose_saved_model/yolov8n-pose_int8.tflite for TensorFlow Lite inference...
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+11:10:55   500/16149 (209 ms/cuadro, faltan ~55 min)
+11:12:48   1000/16149 (218 ms/cuadro, faltan ~55 min)
+11:14:49   1500/16149 (225 ms/cuadro, faltan ~55 min)
+11:17:06   2000/16149 (238 ms/cuadro, faltan ~56 min)
+11:19:35   2500/16149 (250 ms/cuadro, faltan ~57 min)
+11:22:53   3000/16149 (274 ms/cuadro, faltan ~60 min)
+11:26:23   3500/16149 (295 ms/cuadro, faltan ~62 min)
+11:29:55   4000/16149 (311 ms/cuadro, faltan ~63 min)
+11:32:45   4500/16149 (314 ms/cuadro, faltan ~61 min)
+11:35:33   5000/16149 (317 ms/cuadro, faltan ~59 min)
+11:38:23   5500/16149 (319 ms/cuadro, faltan ~57 min)
+11:41:02   6000/16149 (318 ms/cuadro, faltan ~54 min)
+11:44:09   6500/16149 (323 ms/cuadro, faltan ~52 min)
+11:46:36   7000/16149 (321 ms/cuadro, faltan ~49 min)
+11:49:09   7500/16149 (320 ms/cuadro, faltan ~46 min)
+11:51:33   8000/16149 (318 ms/cuadro, faltan ~43 min)
+11:53:55   8500/16149 (316 ms/cuadro, faltan ~40 min)
+11:56:14   9000/16149 (314 ms/cuadro, faltan ~37 min)
+11:58:33   9500/16149 (312 ms/cuadro, faltan ~35 min)
+12:00:54   10000/16149 (310 ms/cuadro, faltan ~32 min)
+12:03:17   10500/16149 (309 ms/cuadro, faltan ~29 min)
+12:05:36   11000/16149 (308 ms/cuadro, faltan ~26 min)
+12:07:55   11500/16149 (306 ms/cuadro, faltan ~24 min)
+12:10:10   12000/16149 (305 ms/cuadro, faltan ~21 min)
+12:12:10   12500/16149 (302 ms/cuadro, faltan ~18 min)
+12:14:00   13000/16149 (299 ms/cuadro, faltan ~16 min)
+12:15:35   13500/16149 (295 ms/cuadro, faltan ~13 min)
+12:17:22   14000/16149 (292 ms/cuadro, faltan ~10 min)
+12:19:16   14500/16149 (290 ms/cuadro, faltan ~8 min)
+12:21:03   15000/16149 (288 ms/cuadro, faltan ~6 min)
+12:22:58   15500/16149 (286 ms/cuadro, faltan ~3 min)
+12:24:44   16000/16149 (283 ms/cuadro, faltan ~1 min)
+12:25:15   16149/16149 (283 ms/cuadro, faltan ~0 min)
+12:27:27 Resultado en C:\Users\nico\Documents\Facultad\Tesis\Codigo\modelosCV\reports\e75\eval\app_stock_int8_fold0.json
+12:27:27 vs pseudo: {'oks': 0.8441484007518378, 'pck02': 0.9817358473935112, 'pck02_pierna': 0.9775952882589543, 'pck02_brazo': 0.995365845969547, 'n_cuadros': 16149}
+12:27:27 vs instrumental (global): {'n_articulaciones': 48447, 'con_prediccion': 1.0, 'pck0.05': 0.7560014035956819, 'pck0.10': 0.9394389745495078, 'error_mediano': 0.03222439690950626, 'error_p90': 0.07691102340179225, 'dx_mediano': -9.493682183163957e-05, 'dy_mediano': 0.005809932888454878}

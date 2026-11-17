@@ -1,0 +1,65 @@
+# Configuración — poda + fine-tune de recuperación del MODELO DESPLEGABLE, v4.
+# Ejecutar con (DESPUÉS de la auditoría CVAT + apply_corrections):
+#   python -m src.training.prune --config configs/prune_yolov8n_deploy_v4.yaml
+#
+# POR QUÉ EXISTE: es v3 byte a byte salvo el dataset. v3 entrena con los
+# pseudo-labels de ViTPose; v4 con los mismos labels **corregidos por humano** en
+# CVAT (src.audit.apply_corrections → data/processed/uco_pseudo_corrected). La
+# diferencia v3 vs v4 aísla el efecto de la corrección humana
+# (docs/plan_cvat_correcciones.md, F6).
+#
+# Qué comparar (v3 y v4, ambos sobre fold 0):
+#   1. val completo con labels corregidos:
+#        scripts/diagnose_kpt_ratio.py --oks-full --model <m> \
+#          --data data/processed/pose_dataset_pseudo_corrected_fold0.yaml
+#   2. subset verificado por humano (sesgado a frames difíciles):
+#        ... --data data/processed/pose_dataset_pseudo_corrected_gold_fold0.yaml
+#   3. gate OOD: scripts/diagnose_kpt_ratio.py --gt-set <dir>  (v4 no puede empeorar a v3)
+#
+# Nota de caché: el mix comparte el .cache de Ultralytics bajo coco_pose/ con el
+# mix pseudo (se nombra por el primer dir de labels ordenado). Ultralytics lo
+# valida por hash y lo regenera: cuesta tiempo, no correctitud.
+
+family: yolo
+model: models/yolov8n-pose.pt
+
+# El archivo base no existe: _kfold resuelve el hermano
+# pose_dataset_pseudo_corrected_coco_fold0.yaml (cross_validation:false + fold:0),
+# generado por src.audit.apply_corrections (aplicar.mix_coco).
+data: data/processed/pose_dataset_pseudo_corrected_coco.yaml
+cross_validation: false
+fold: 0
+
+imgsz: 640
+
+# --- Hardware (RTX 3090, 24 GB) — igual que v3 ---
+device: 0
+batch: 24
+workers: 8
+amp: true
+patience: 15
+
+# optimizer explícito: con 'auto' Ultralytics descarta el lr0 recibido y la
+# reducción a 1/10 del fine-tune post-poda se perdería (ver src/models/yolo.py).
+optimizer: AdamW
+lr0: 0.01                       # el fine-tune post-poda usa lr0/10 = 0.001, como v3
+
+pruning:
+  sparsity: 0.3
+  method: structured
+  fine_tune_epochs: 25          # igual que v3
+  save_checkpoint: models/student_pruned_ft_deploy_v4.pt
+
+# Igual que v3.
+augmentation:
+  scale: 0.9
+  degrees: 10.0
+  translate: 0.2
+  mosaic: 1.0
+
+export:
+  format: tflite
+  quantize: false               # float32 de control; el INT8 lo produce quantize_deploy_v4
+
+mlflow:
+  experiment: fase5-deploy

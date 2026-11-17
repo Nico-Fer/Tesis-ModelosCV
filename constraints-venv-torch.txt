@@ -1,0 +1,25 @@
+# =============================================================================
+# constraints-venv-torch.txt  —  Pins duros de venv-torch
+#
+#   Se pasa con `-c` a CUALQUIER `pip install` sobre venv-torch. Su único
+#   propósito es que una instalación puntual (p. ej. el swap de torch CPU -> CUDA)
+#   no arrastre un upgrade transitivo del toolchain de export TFLite, que es la
+#   parte más frágil del entorno: la cadena PyTorch -> ONNX -> TF -> TFLite sólo
+#   está validada con estas versiones exactas.
+#
+#   Uso:
+#     pip install -c constraints-venv-torch.txt \
+#       --index-url https://download.pytorch.org/whl/cu126 \
+#       --extra-index-url https://pypi.org/simple \
+#       torch==2.12.1+cu126 torchvision==0.27.1+cu126
+#
+#   NO es un requirements: no instala nada por sí solo, sólo acota versiones.
+# =============================================================================
+
+numpy~=1.26          # <2.0: constraint duro de TF 2.15 / tfmot / mediapipe
+protobuf>=4.25,<5    # piso = mediapipe ; techo = TF / onnx
+tensorflow~=2.15.0   # Keras 2 nativo; >=2.16 trae Keras 3 y rompe onnx2tf
+tf-keras~=2.15.0     # import incondicional de onnx2tf; atado a TF 2.15
+onnx~=1.16.0         # par frágil con onnx2tf
+onnx2tf~=1.22.0      # acoplado a TF 2.15; export validado con este stack
+ultralytics~=8.3.0   # 8.4.x fuerza AutoUpdate a Keras 3 / onnx2tf>=1.26

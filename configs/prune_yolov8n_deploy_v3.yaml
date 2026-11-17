@@ -1,0 +1,63 @@
+# Configuración — poda + fine-tune de recuperación del MODELO DESPLEGABLE, v3.
+# Ejecutar con:
+#   python -m src.training.prune --config configs/prune_yolov8n_deploy_v3.yaml
+#
+# POR QUÉ EXISTE (diagnóstico del 29/07, scripts/diagnose_kpt_ratio.py): el v2
+# (poda 0.3 + 25 ep de recuperación SOLO con uco_pseudo) colapsa la coordenada x
+# de los keypoints sobre personas/escenas fuera del dominio UCO — en la app el
+# esqueleto sale aplastado ~3-5x hacia la línea media (ratio_x 0.24-0.37) aunque
+# in-domain puntúe OKS 0.93. No es cuantización (int8 = float32 = .pt) ni la app
+# (reproducido en desktop con decode crudo): la poda destruye el prior COCO
+# (OKS 0.000) y la recuperación mono-dominio no lo restaura.
+#
+# Cambios vs v2, ambos apuntados a generalización:
+#   1. data: dataset MIXTO uco_pseudo fold-0 + COCO-pose val2017 x8 (~24 % del mix).
+#      El val sigue siendo 100 % uco_pseudo fold-0 (OKS comparable con v2).
+#   2. augmentation reforzada (scale 0.9, degrees 10, translate 0.2).
+# Sin etapa de distillation (sigue rota, ver CLAUDE.md) — igual que el linaje v2.
+
+family: yolo
+model: models/yolov8n-pose.pt
+
+# El archivo base no existe: _kfold resuelve el hermano
+# pose_dataset_pseudo_coco_fold0.yaml (cross_validation:false + fold:0).
+data: data/processed/pose_dataset_pseudo_coco.yaml
+cross_validation: false
+fold: 0
+
+imgsz: 640
+
+# --- Hardware (RTX 3090, 24 GB) — igual que el run v2 ---
+device: 0
+batch: 24
+workers: 8
+amp: true
+patience: 15
+
+# optimizer explícito: con 'auto' Ultralytics descarta el lr0 recibido y la
+# reducción a 1/10 del fine-tune post-poda se perdería (ver src/models/yolo.py).
+optimizer: AdamW
+lr0: 0.01                       # el fine-tune post-poda usa lr0/10 = 0.001, como v2
+
+pruning:
+  sparsity: 0.3
+  method: structured
+  fine_tune_epochs: 25          # igual que v2: la poda deja OKS 0.000, recupera de cero
+  # Path ESTABLE del deliverable (prune.py lo persiste y recarga al terminar el
+  # fine-tune). models/exports/student_pruned_ft.pt queda para combined.py.
+  save_checkpoint: models/student_pruned_ft_deploy_v3.pt
+
+# Deltas reales vs v2 (que usó los defaults de Ultralytics: scale 0.5, degrees 0,
+# translate 0.1, mosaic 1.0 — verificado en runs/pose/pruned_finetune6/args.yaml).
+augmentation:
+  scale: 0.9
+  degrees: 10.0
+  translate: 0.2
+  mosaic: 1.0
+
+export:
+  format: tflite
+  quantize: false               # float32 de control; el INT8 lo produce quantize_deploy_v3
+
+mlflow:
+  experiment: fase5-deploy

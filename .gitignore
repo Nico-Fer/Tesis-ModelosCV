@@ -1,0 +1,61 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# --- Entornos virtuales (split: torch / tf / mmpose) ---
+.venv*/
+venv-*/
+env/
+
+# --- Datos versionados con DVC (el contenido vive en el remote) ---
+data/raw/*
+data/processed/*
+# videos fuente de las referencias DTW (binarios: van a DVC, no a git)
+data/references/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/references/.gitkeep
+# la provenance de cada clip sí se commitea (es doc, no binario)
+!data/references/README.md
+# los punteros .dvc SÍ se commitean (git trackea el hash, no los datos)
+!data/raw/*.dvc
+!data/processed/*.dvc
+
+# --- Artefactos de modelos (se versionan con DVC, no con git) ---
+*.pt
+# checkpoints OpenMMLab (ViTPose-H, RTMDet) descargados con `mim download`
+*.pth
+*.onnx
+*.tflite
+*.pb
+*_saved_model/
+runs/
+# los configs .py que baja `mim` junto al checkpoint tampoco se commitean:
+# son regenerables con el mismo comando (ver README)
+models/teachers/
+
+# --- MLflow (los runs locales no se commitean; solo el .gitkeep) ---
+mlruns/*
+!mlruns/.gitkeep
+# excepcion de la copia publica de entrega: metadatos (sin artefactos) de las corridas
+# citadas por nombre en el informe — fase2-v3-cv (CV de la receta v3), fase5-combined
+# (CV de la receta de la fase 5) y fase5-deploy (comparativa del desplegable)
+!mlruns/312553284617026748/
+!mlruns/853839127993800373/
+!mlruns/536609034621976297/
+# destino de artefactos del server MLflow (--serve-artifacts)
+mlartifacts/
+
+# --- DVC: caché local y credenciales del remote (NUNCA commitear) ---
+.dvc/cache/
+.dvc/tmp/
+.dvc/config.local
+
+# --- Secretos / entorno ---
+.env
+*.local
+
+# --- CVAT self-hosted (clone del repo oficial; corre en Docker, ver docs/cvat_setup.md) ---
+/cvat/

@@ -1,0 +1,5 @@
+outs:
+- md5: 63a694b75d7dd9adb6ae781f13f4e337
+  size: 2393580
+  hash: md5
+  path: student_pruned_ft_deploy_v3_int8.tflite

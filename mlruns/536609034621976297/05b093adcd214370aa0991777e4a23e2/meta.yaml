@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/536609034621976297/05b093adcd214370aa0991777e4a23e2/artifacts
+end_time: 1785263371531
+entry_point_name: ''
+experiment_id: '536609034621976297'
+lifecycle_stage: active
+run_id: 05b093adcd214370aa0991777e4a23e2
+run_name: models/student_pruned_ft_deploy_v2.pt-fold0
+run_uuid: 05b093adcd214370aa0991777e4a23e2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1785258739279
+status: 3
+tags: []
+user_id: nico

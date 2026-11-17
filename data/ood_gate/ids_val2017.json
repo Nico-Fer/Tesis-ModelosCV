@@ -1,0 +1,15 @@
+{
+  "split": "val2017",
+  "criterios": {
+    "personas_por_imagen": 1,
+    "num_keypoints": 17,
+    "cuerpo_visible_v2": "keypoints 5-16",
+    "alto_bbox_min_frac_imagen": 0.5,
+    "bbox_vertical": true,
+    "frontal": "x(hombro_izq) > x(hombro_der) y x(cadera_izq) > x(cadera_der)",
+    "ancho_hombros_min_frac_bbox": 0.3
+  },
+  "candidatas": 37,
+  "elegidas": 37,
+  "semilla": null
+}

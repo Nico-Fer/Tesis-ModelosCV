@@ -1,0 +1,29 @@
+# =============================================================================
+# requirements-tf.txt  —  Entorno TensorFlow / Keras / MediaPipe
+#
+#   Uso: modelos del ecosistema TF (MoveNet, BlazePose) y PRUNING estructurado
+#        con TF Model Optimization Toolkit (Fases 1, 2, 3 para estos modelos).
+#
+#   Crear el venv DEDICADO (separado de venv-torch):
+#     python3.11 -m venv venv-tf
+#     source venv-tf/bin/activate           # Windows: venv-tf\Scripts\activate
+#     pip install -r requirements-tf.txt
+#
+#   ATENCIÓN — tensorflow-model-optimization (0.8.x) trabaja cómodo con Keras 2.
+#   TF 2.15 usa Keras 2 de forma nativa, por eso lo fijamos aquí. Si en el futuro
+#   se sube a TF >= 2.16 (Keras 3 por defecto), habrá que añadir `tf-keras` y
+#   exportar la variable de entorno  TF_USE_LEGACY_KERAS=1  antes de importar
+#   tfmot, o el pruning fallará.
+# =============================================================================
+
+-r requirements-base.txt
+
+# --- Núcleo TF (Keras 2 nativo) ---
+tensorflow~=2.15.0                 # PIN minor: >=2.16 trae Keras 3 y rompe tfmot 0.8
+
+# --- Modelos TF-nativos ---
+tensorflow-hub~=0.16              # MoveNet Lightning / Thunder desde TF Hub
+mediapipe~=0.10                   # BlazePose Lite / Full (SDK oficial)
+
+# --- Optimización (Fase 2: pruning estructurado) ---
+tensorflow-model-optimization~=0.8

@@ -1,0 +1,6 @@
+outs:
+- md5: ee6470b0eb37c7409a9a7ce5d1561a65.dir
+  size: 18277324
+  nfiles: 234
+  hash: md5
+  path: ood_gate_coco

@@ -1,0 +1,37 @@
+# Configuración — SMOKE TEST del pipeline (no es una fase).
+#
+# Corre cualquiera de los cinco runners end-to-end sin dataset ni pesos reales,
+# para validar el cableado (config → registry → optimización → MLflow → export).
+# Ejecutar con cualquier runner, p. ej.:
+#   python -m src.training.train_baseline --config configs/smoke_yolov8n.yaml
+#   python -m src.training.combined       --config configs/smoke_yolov8n.yaml
+#
+# ATENCIÓN: 'smoke_test: true' desactiva el modo estricto (src/utils/strict.py):
+# los fallos se degradan a warnings y el run loguea la métrica
+# 'pipeline_smoke_test'. Un run con esa métrica NO produce resultados válidos y
+# no debe usarse para comparar nada.
+
+family: yolo
+model: models/yolov8n-pose.pt
+teacher_model: models/yolov8x-pose.pt   # requerido por las Fases 4 y 5
+
+smoke_test: true             # fuerza epochs=1, imgsz=32, cache=False
+# data: deliberadamente ausente — es lo que este config ejercita.
+
+imgsz: 640                   # ignorado en smoke (se fuerza a 32)
+
+pruning:
+  sparsity: 0.3
+  fine_tune_epochs: 1
+
+distillation:
+  beta: 1000
+  alpha: 0.5
+  epochs: 1
+
+export:
+  format: tflite
+  quantize: false
+
+mlflow:
+  experiment: smoke-test

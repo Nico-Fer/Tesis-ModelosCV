@@ -1,0 +1,3 @@
+11:39:03 Resultado en C:\Users\nico\Documents\Facultad\Tesis\Codigo\modelosCV\reports\e75\eval\base_pt_fold3.json
+11:39:03 vs pseudo: {'oks': 0.8536469888185833, 'pck02': 0.9813598574101842, 'pck02_pierna': 0.9773453235946369, 'pck02_brazo': 0.9968909266219328, 'n_cuadros': 14614}
+11:39:03 vs instrumental (global): {'n_articulaciones': 43842, 'con_prediccion': 1.0, 'pck0.05': 0.7592035034898043, 'pck0.10': 0.9432507641074769, 'error_mediano': 0.033292796460891394, 'error_p90': 0.07620322988765607, 'dx_mediano': 0.0005518353949652364, 'dy_mediano': 0.007619427530924483}

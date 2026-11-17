@@ -1,0 +1,30 @@
+# Configuración — FASE 1 (baseline) para yolov8n-pose.
+# Ejecutar con:
+#   python -m src.training.train_baseline --config configs/baseline_yolov8n.yaml
+
+family: yolo                 # familia registrada en src/models/registry.py
+model: models/yolov8n-pose.pt   # checkpoint base (se descarga si no existe localmente)
+
+# Dataset PSEUDO-ETIQUETADO (ViTPose-H): 17 keypoints densos por persona, frente al
+# GT de UCO que anota sólo los 3 del ejercicio. El archivo base no existe;
+# src/training/_kfold.py descubre los hermanos pose_dataset_pseudo_fold{0..4}.yaml
+# y corre GroupKFold por sujeto. Generarlo con:
+#   python -m src.data.pseudo_label_vitpose --config configs/pseudo_label_vitpose.yaml
+data: data/processed/pose_dataset_pseudo.yaml
+
+epochs: 1                    # 1 época: validación end-to-end del pipeline sobre la muestra UCO
+imgsz: 640
+
+# --- Hardware (RTX 3090, 24 GB) ---
+device: 0                    # GPU 0; omitir para dejar que Ultralytics elija
+batch: 48                    # entra cómodo en 24 GB con yolov8n @640 + AMP
+workers: 8                   # el cuello de botella son los JPEG 1280x720 en disco
+amp: true                    # mixed precision
+patience: 15                 # early stopping: los frames a stride 30 son muy redundantes
+
+export:
+  format: tflite
+  quantize: false            # Fase 1 = Float32; INT8 corresponde a Fases 3/5
+
+mlflow:
+  experiment: fase1-baseline

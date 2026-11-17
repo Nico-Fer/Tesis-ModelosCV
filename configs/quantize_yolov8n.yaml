@@ -1,0 +1,21 @@
+# Configuración — FASE 3 (cuantización post-training FP32→INT8) para yolov8n-pose.
+# Ejecutar con:
+#   python -m src.training.quantize --config configs/quantize_yolov8n.yaml
+
+family: yolo
+model: models/yolov8n-pose.pt   # checkpoint a cuantizar (puede ser el podado de Fase 2)
+
+# Dataset de calibración INT8 (ver baseline_yolov8n.yaml). El runner acota
+# automáticamente la calibración a 300 imágenes del split val
+# (quantization.cap_calibration_fraction): con los ~16k frames de un fold,
+# Ultralytics los materializa de una vez y agota la memoria.
+data: data/processed/pose_dataset_pseudo.yaml
+
+imgsz: 640
+
+# --- Hardware (RTX 3090, 24 GB) ---
+# Esta fase no entrena: sólo evalúa en Float32 y exporta INT8.
+device: 0
+
+mlflow:
+  experiment: fase3-quantization

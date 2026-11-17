@@ -1,0 +1,75 @@
+{
+  "tag": "test_t4",
+  "fold": 0,
+  "modelo": "models/student_pruned_ft_deploy_v3_saved_model/student_pruned_ft_deploy_v3_int8.tflite",
+  "md5": "63a694b75d7dd9adb6ae781f13f4e337",
+  "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+  "fecha": "2026-10-16T11:07:09",
+  "limit": 40,
+  "vs_pseudo": {
+    "oks": 0.9799033185506808,
+    "pck02": 1.0,
+    "pck02_pierna": 1.0,
+    "pck02_brazo": null,
+    "n_cuadros": 40
+  },
+  "vs_instrumental": {
+    "n_cuadros": 40,
+    "deteccion": 1.0,
+    "global": {
+      "n_articulaciones": 120,
+      "con_prediccion": 1.0,
+      "pck0.05": 1.0,
+      "pck0.10": 1.0,
+      "error_mediano": 0.016622843388980495,
+      "error_p90": 0.034947277163748285,
+      "dx_mediano": -0.0029547966715494705,
+      "dy_mediano": 0.01080047017415365
+    },
+    "por_zona": {
+      "pierna": {
+        "n_articulaciones": 120,
+        "con_prediccion": 1.0,
+        "pck0.05": 1.0,
+        "pck0.10": 1.0,
+        "error_mediano": 0.016622843388980495,
+        "error_p90": 0.034947277163748285,
+        "dx_mediano": -0.0029547966715494705,
+        "dy_mediano": 0.01080047017415365
+      },
+      "brazo": {}
+    },
+    "por_articulacion": {
+      "left_hip": {
+        "n_articulaciones": 40,
+        "con_prediccion": 1.0,
+        "pck0.05": 1.0,
+        "pck0.10": 1.0,
+        "error_mediano": 0.026595326191486576,
+        "error_p90": 0.03035535087120428,
+        "dx_mediano": -0.0029958794216579715,
+        "dy_mediano": 0.02624568238661023
+      },
+      "left_knee": {
+        "n_articulaciones": 40,
+        "con_prediccion": 1.0,
+        "pck0.05": 1.0,
+        "pck0.10": 1.0,
+        "error_mediano": 0.009871590707036342,
+        "error_p90": 0.014639135327495554,
+        "dx_mediano": -0.0019379292263455028,
+        "dy_mediano": 0.00306992518446185
+      },
+      "left_ankle": {
+        "n_articulaciones": 40,
+        "con_prediccion": 1.0,
+        "pck0.05": 1.0,
+        "pck0.10": 1.0,
+        "error_mediano": 0.02143584150886199,
+        "error_p90": 0.04001562816428205,
+        "dx_mediano": -0.00964635724555123,
+        "dy_mediano": 0.011737503065321222
+      }
+    }
+  }
+}

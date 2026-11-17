@@ -1,0 +1,239 @@
+% =====================================================================
+% referencias.bib — paper "pipeline de dataset y entrenamiento" (CoNaIISI)
+%
+% Estilo de cita: \bibliographystyle{unsrt} (numera por orden de PRIMERA
+% aparición de \cite en el texto). Para que la cita del trabajo previo de
+% plataforma salga como "[2]" (pedido explícito), asegurar que sea la
+% SEGUNDA cita distinta que aparece en el cuerpo del paper.
+%
+% Las entradas reutilizadas del paper hermano (DTW_PAPER / paper_conaiisi.tex)
+% están marcadas "reutilizada de DTW_PAPER". El resto son nuevas de este
+% trabajo. Dos afirmaciones NO tienen cita confirmada todavía — ver el
+% bloque comentado al final y PENDIENTES.md; no se citan en el .tex hasta
+% verificarlas.
+% =====================================================================
+
+% ---------------------------------------------------------------------
+% Reutilizadas de DTW_PAPER (bibliografía ya validada por el mismo equipo)
+% ---------------------------------------------------------------------
+
+@article{hellsten2025,
+  author  = {Hellst{\'e}n, Tuomas and Arokoski, Jari and Karlsson, Jari and Ristolainen, Leena and Kettunen, Jyrki},
+  title   = {Reliability and validity of computer vision-based markerless human pose estimation for measuring hip and knee range of motion},
+  journal = {Healthcare Technology Letters},
+  volume  = {12},
+  number  = {1},
+  pages   = {e70002},
+  year    = {2025},
+  note    = {reutilizada de DTW\_PAPER}
+}
+
+@article{cunha2025,
+  author  = {Cunha, Bruno and Ma{\c{c}}{\~a}es, Jo{\~a}o and Amorim, In{\^e}s},
+  title   = {Smartphone-Based Markerless Motion Capture for Accessible Rehabilitation: A Computer Vision Study},
+  journal = {Sensors},
+  volume  = {25},
+  number  = {17},
+  pages   = {5428},
+  year    = {2025},
+  note    = {reutilizada de DTW\_PAPER}
+}
+
+@inproceedings{maji2022,
+  author    = {Maji, Debapriya and Nagori, Soyeb and Mathew, Manu and Poddar, Deepak},
+  title     = {{YOLO-Pose}: Enhancing {YOLO} for Multi Person Pose Estimation Using Object Keypoint Similarity Loss},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)},
+  pages     = {2637--2646},
+  year      = {2022},
+  note      = {reutilizada de DTW\_PAPER}
+}
+
+@misc{ultralytics2024,
+  author = {{Ultralytics}},
+  title  = {Pose Estimation},
+  year   = {2024},
+  howpublished = {\url{https://docs.ultralytics.com/tasks/pose}},
+  note   = {reutilizada de DTW\_PAPER}
+}
+
+@inproceedings{jacob2018,
+  author    = {Jacob, Benoit and Kligys, Skirmantas and Chen, Bo and Zhu, Menglong and Tang, Matthew and Howard, Andrew and Adam, Hartwig and Kalenichenko, Dmitry},
+  title     = {Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference},
+  booktitle = {Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+  pages     = {2704--2713},
+  year      = {2018},
+  note      = {reutilizada de DTW\_PAPER}
+}
+
+@article{jirasakulsuk2022,
+  author  = {Jirasakulsuk, Nutcha and Saengpromma, Patcharaporn and Khruakhorn, Sujitra},
+  title   = {Real-Time Telerehabilitation in Older Adults With Musculoskeletal Conditions: Systematic Review and Meta-analysis},
+  journal = {JMIR Rehabilitation and Assistive Technologies},
+  volume  = {9},
+  number  = {3},
+  pages   = {e36028},
+  year    = {2022},
+  note    = {reutilizada de DTW\_PAPER; usar solo si se retoma el problema cl\'inico de fondo en la introducci\'on}
+}
+
+% ---------------------------------------------------------------------
+% Nuevas — tecnolog\'ias de base (secci\'on 4 / entrenamiento)
+% ---------------------------------------------------------------------
+
+@inproceedings{paszke2019,
+  author    = {Paszke, Adam and Gross, Sam and Massa, Francisco and Lerer, Adam and Bradbury, James and Chanan, Gregory and Killeen, Trevor and Lin, Zeming and Gimelshein, Natalia and Antiga, Luca and others},
+  title     = {{PyTorch}: An Imperative Style, High-Performance Deep Learning Library},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  volume    = {32},
+  year      = {2019}
+}
+
+@article{zaharia2018,
+  author  = {Zaharia, Matei and Chen, Andrew and Davidson, Aaron and Ghodsi, Ali and Hong, Sue Ann and Konwinski, Andy and Murching, Siddharth and Nykodym, Tomas and Ogilvie, Paul and Parkhe, Mani and others},
+  title   = {Accelerating the Machine Learning Lifecycle with {MLflow}},
+  journal = {IEEE Data Engineering Bulletin},
+  volume  = {41},
+  number  = {4},
+  pages   = {39--45},
+  year    = {2018}
+}
+
+@misc{dvc_docs,
+  author       = {{Iterative}},
+  title        = {{DVC}: Data Version Control},
+  howpublished = {\url{https://dvc.org}},
+  year         = {2024}
+}
+
+@misc{onnx_misc,
+  author       = {{ONNX}},
+  title        = {Open Neural Network Exchange},
+  howpublished = {\url{https://onnx.ai}},
+  year         = {2024}
+}
+
+@article{bradski2000,
+  author  = {Bradski, Gary},
+  title   = {The {OpenCV} Library},
+  journal = {Dr. Dobb's Journal of Software Tools},
+  year    = {2000}
+}
+
+% ---------------------------------------------------------------------
+% Nuevas — dataset, pseudo-etiquetado y anotador
+% ---------------------------------------------------------------------
+
+@inproceedings{lin2014,
+  author    = {Lin, Tsung-Yi and Maire, Michael and Belongie, Serge and Hays, James and Perona, Pietro and Ramanan, Deva and Doll{\'a}r, Piotr and Zitnick, C. Lawrence},
+  title     = {Microsoft {COCO}: Common Objects in Context},
+  booktitle = {European Conference on Computer Vision (ECCV)},
+  pages     = {740--755},
+  year      = {2014}
+}
+
+@inproceedings{lee2013,
+  author    = {Lee, Dong-Hyun},
+  title     = {Pseudo-Label: The Simple and Efficient Semi-Supervised Learning Method for Deep Neural Networks},
+  booktitle = {ICML Workshop on Challenges in Representation Learning},
+  year      = {2013}
+}
+
+@article{lyu2022,
+  author  = {Lyu, Chengqi and Zhang, Wenwei and Huang, Haian and Zhou, Yue and Wang, Yudong and Liu, Yanyi and Zhang, Shilong and Chen, Kai},
+  title   = {{RTMDet}: An Empirical Study of Designing Real-Time Object Detectors},
+  journal = {arXiv preprint arXiv:2212.07784},
+  year    = {2022}
+}
+
+@inproceedings{xu2022,
+  author    = {Xu, Yufei and Zhang, Jing and Zhang, Qiming and Tao, Dacheng},
+  title     = {{ViTPose}: Simple Vision Transformer Baselines for Human Pose Estimation},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2022}
+}
+
+@misc{mmpose2020,
+  author       = {{MMPose Contributors}},
+  title        = {{OpenMMLab} Pose Estimation Toolbox and Benchmark},
+  howpublished = {\url{https://github.com/open-mmlab/mmpose}},
+  year         = {2020}
+}
+
+@article{saeb2017,
+  author  = {Saeb, Sohrab and Lonini, Luca and Jayaraman, Arun and Mohr, David C. and Kording, Konrad P.},
+  title   = {The need to approximate the use-case in clinical machine learning},
+  journal = {GigaScience},
+  volume  = {6},
+  number  = {5},
+  year    = {2017}
+}
+
+% ---------------------------------------------------------------------
+% Nuevas — compresi\'on de modelos (poda, destilaci\'on, cuantizaci\'on)
+% ---------------------------------------------------------------------
+
+@inproceedings{fang2023,
+  author    = {Fang, Gongfan and Ma, Xinyin and Song, Mingli and Mi, Michael Bi and Wang, Xinchao},
+  title     = {{DepGraph}: Towards Any Structural Pruning},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year      = {2023}
+}
+
+@inproceedings{han2015,
+  author    = {Han, Song and Pool, Jeff and Tran, John and Dally, William},
+  title     = {Learning both Weights and Connections for Efficient Neural Networks},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2015}
+}
+
+@inproceedings{zagoruyko2017,
+  author    = {Zagoruyko, Sergey and Komodakis, Nikos},
+  title     = {Paying More Attention to Attention: Improving the Performance of Convolutional Neural Networks via Attention Transfer},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2017}
+}
+
+@article{hinton2015,
+  author  = {Hinton, Geoffrey and Vinyals, Oriol and Dean, Jeff},
+  title   = {Distilling the Knowledge in a Neural Network},
+  journal = {arXiv preprint arXiv:1503.02531},
+  year    = {2015}
+}
+
+% ---------------------------------------------------------------------
+% Trabajos previos de los mismos autores, anonimizados para revisi\'on
+% doble ciego (mismo patr\'on que \bibitem{anonimo_previo} en paper_conaiisi.tex)
+% ---------------------------------------------------------------------
+
+@misc{anonimo_previo,
+  author = {{Autores omitidos por anonimato}},
+  title  = {Referencia a trabajo previo de los autores sobre la arquitectura general de la plataforma, omitida por anonimato para revisi\'on doble ciego. Se restituir\'a en la versi\'on final.},
+  year   = {2026}
+}
+
+@misc{anonimo_dtw,
+  author = {{Autores omitidos por anonimato}},
+  title  = {Referencia a trabajo complementario de los autores sobre el comparador de movimiento (DTW), omitida por anonimato para revisi\'on doble ciego. Se restituir\'a en la versi\'on final.},
+  year   = {2026}
+}
+
+% =====================================================================
+% NO INCLUIR / NO CITAR todavia -- marcadas [VERIFICAR CITA] en
+% PENDIENTES.md. Descritas en prosa (SIN sintaxis "arroba-tipo{}") a
+% proposito: BibTeX busca el caracter arroba en cualquier parte del
+% archivo, no solo al inicio de linea, asi que una entrada "comentada"
+% con simbolo porcentaje por linea igual se interpreta como una entrada
+% real y rompe la compilacion. No agregar una entrada real para estas
+% dos citas hasta verificarlas contra la fuente primaria.
+%
+% Pendiente 1: dataset UCO Physical Rehabilitation. La atribucion
+% "Aguilar-Ortega et al., 2023, Sensors, vol. 23, num. 21" aparece solo
+% como sugerencia sin confirmar en docs/redaccion-secciones-4.4-y-5.1.md.
+% Verificar autores, anio, volumen y DOI contra la publicacion o el sitio
+% de distribucion oficial del dataset antes de agregar la entrada.
+%
+% Pendiente 2: afirmacion "el enfoque top-down es el de mayor exactitud
+% publicado en estimacion de pose". La sugerencia "Chen et al., 2023" no
+% esta resuelta a un paper real identificable en el repo. Buscar una cita
+% real (por ejemplo un survey de pose estimation) o reformular la
+% oracion del texto sin cita antes de enviar.

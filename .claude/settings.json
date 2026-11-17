@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp models/exports/student_pruned_ft.pt models/student_pruned_ft_deploy_v2.pt)",
+      "Bash(PYTHONPATH=. venv-torch/Scripts/python.exe -c ' *)",
+      "Bash(venv-torch/Scripts/python.exe -m ruff format src/training/quantize.py)",
+      "Bash(venv-torch/Scripts/python.exe -m mypy src/training/quantize.py)",
+      "Bash(MLFLOW_TRACKING_URI=\"file:///c:/Users/nico/Documents/Facultad/Tesis/Codigo/modelosCV/mlruns\" venv-torch/Scripts/python.exe -m src.training.quantize --config configs/smoke_yolov8n.yaml)",
+      "Bash(MLFLOW_TRACKING_URI=\"http://127.0.0.1:5000\" venv-torch/Scripts/python.exe -u -m src.training.quantize --config configs/quantize_deploy.yaml)",
+      "Bash(tee runs/quantize_deploy.log)",
+      "Bash(grep -viE \"^ *$\")"
+    ]
+  }
+}

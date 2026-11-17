@@ -1,0 +1,99 @@
+{
+  "generado": "2026-10-16T08:18:06",
+  "cv": {
+    "inicio": "2026-10-08T12:03:25",
+    "fin": "2026-10-14T23:49:01",
+    "huella_config": "3aba772da4400779",
+    "huella_config_actual": "3aba772da4400779",
+    "checkpoint_dir": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv"
+  },
+  "mlflow": {
+    "experimento": "fase5-combined",
+    "experimento_id": "853839127993800373",
+    "run_padre": "11734b62e1504b15a146dacd944f96a5",
+    "runs_fold": {
+      "0": "ee2f122c2c014b25bc4d5a29baa1e83c",
+      "1": "c06817a6da954418a9f4840221b01ab8",
+      "2": "f12d16d336fb43bb9dd14949565dca31",
+      "3": "cec8614d22814d4e8495b8a5625da17c",
+      "4": "9c0f3ea0d2764781a7c6d4094c34de7c"
+    }
+  },
+  "codigo": {
+    "rama": "RunCrossValidation",
+    "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5",
+    "cambios_sin_commitear": [
+      "M AGENTS.md",
+      " M docs/fase5_cv_bitacora.md",
+      "?? resultados/",
+      "?? scripts/export_fase5_cv_results.py"
+    ]
+  },
+  "entorno": {
+    "python": "3.11.9",
+    "torch": "2.12.1+cu126",
+    "ultralytics": "8.3.253",
+    "gpu": "NVIDIA GeForce RTX 3090"
+  },
+  "artefactos": {
+    "fold0": {
+      "int8_tflite": {
+        "copia": "modelos\\fold0_int8.tflite",
+        "origen": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold0\\distillation\\distill_student\\weights\\best_saved_model\\best_int8.tflite",
+        "md5": "f67d003ad9bfa739a0c0cd9578a36942",
+        "bytes": 2394323
+      },
+      "distilled_best_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold0\\distillation\\distill_student\\weights\\best.pt",
+      "pruned_ft_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold0\\student_pruned_ft.pt",
+      "pruned_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold0\\student_pruned.pt"
+    },
+    "fold1": {
+      "int8_tflite": {
+        "copia": "modelos\\fold1_int8.tflite",
+        "origen": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold1\\distillation\\distill_student\\weights\\best_saved_model\\best_int8.tflite",
+        "md5": "34b2f8480452f50d2e6e0085d1d531c6",
+        "bytes": 2394827
+      },
+      "distilled_best_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold1\\distillation\\distill_student\\weights\\best.pt",
+      "pruned_ft_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold1\\student_pruned_ft.pt",
+      "pruned_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold1\\student_pruned.pt"
+    },
+    "fold2": {
+      "int8_tflite": {
+        "copia": "modelos\\fold2_int8.tflite",
+        "origen": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold2\\distillation\\distill_student\\weights\\best_saved_model\\best_int8.tflite",
+        "md5": "b7ebc0b9f978aaea6b6d2dc18e091eb0",
+        "bytes": 2394830
+      },
+      "distilled_best_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold2\\distillation\\distill_student\\weights\\best.pt",
+      "pruned_ft_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold2\\student_pruned_ft.pt",
+      "pruned_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold2\\student_pruned.pt"
+    },
+    "fold3": {
+      "int8_tflite": {
+        "copia": "modelos\\fold3_int8.tflite",
+        "origen": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold3\\distillation\\distill_student\\weights\\best_saved_model\\best_int8.tflite",
+        "md5": "c17d219fed291c1435904f63f07a98ea",
+        "bytes": 2394834
+      },
+      "distilled_best_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold3\\distillation\\distill_student\\weights\\best.pt",
+      "pruned_ft_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold3\\student_pruned_ft.pt",
+      "pruned_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold3\\student_pruned.pt"
+    },
+    "fold4": {
+      "int8_tflite": {
+        "copia": "modelos\\fold4_int8.tflite",
+        "origen": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold4\\distillation\\distill_student\\weights\\best_saved_model\\best_int8.tflite",
+        "md5": "87e99492456ac5db0309a4a8c5034529",
+        "bytes": 2394314
+      },
+      "distilled_best_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold4\\distillation\\distill_student\\weights\\best.pt",
+      "pruned_ft_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold4\\student_pruned_ft.pt",
+      "pruned_pt": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\fase5_cv\\fold4\\student_pruned.pt"
+    }
+  },
+  "control_int8_stock": {
+    "ruta": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\models\\yolov8n-pose_saved_model\\yolov8n-pose_int8.tflite",
+    "md5": "ee27dcf9f0ad0c25fcf37868e097ad68"
+  }
+}

@@ -1,0 +1,31 @@
+# =============================================================================
+# requirements-base.txt  —  Dependencias COMPARTIDAS por ambos entornos
+# Se instala con `-r requirements-base.txt` desde requirements-torch.txt y
+# requirements-tf.txt. NO instalar este archivo solo para entrenar.
+#
+# Target: Python 3.11
+#
+# Constraints duros que atraviesan TODO el stack (ver README):
+#   - numpy < 2.0   -> exigido por TensorFlow 2.15, tfmot y MediaPipe.
+#   - protobuf 4.x  -> piso impuesto por MediaPipe (>=4.25), techo por TF/onnx (<5).
+# =============================================================================
+
+# --- Tracking de experimentos ---
+mlflow~=2.19
+
+# --- Versionado de datos/modelos (DVC -> DagsHub, S3-compatible) ---
+dvc[s3]~=3.55
+dagshub~=0.3
+
+# --- Procesamiento de imagen/video (framework-agnóstico) ---
+# headless: evita arrastrar Qt/GUI que genera conflictos en servidor/CI.
+opencv-python-headless~=4.10
+
+# --- Núcleo numérico (PINEADO a propósito) ---
+numpy~=1.26          # <2.0: constraint duro de TF 2.15 / tfmot / mediapipe
+protobuf>=4.25,<5    # piso = mediapipe ; techo = TF / onnx
+
+# --- Utilidades ---
+pandas~=2.2
+pyyaml~=6.0
+tqdm~=4.66

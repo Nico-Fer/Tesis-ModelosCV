@@ -1,0 +1,33 @@
+# Configuración — cuantización INT8 del MODELO DESPLEGABLE v4.
+# Ejecutar con:
+#   python -m src.training.quantize --config configs/quantize_deploy_v4.yaml
+#
+# Es quantize_deploy_v3.yaml apuntado al checkpoint v4 (mismo linaje que v3 pero
+# entrenado con los labels corregidos por humano; ver
+# configs/prune_yolov8n_deploy_v4.yaml). La eval INT8 corre sobre el val del
+# dataset CORREGIDO fold-0: para comparar con v3 en igualdad de condiciones,
+# evaluar también el INT8 de v3 sobre este mismo YAML
+# (scripts/diagnose_kpt_ratio.py --oks-full).
+#
+# Nota heredada: el *_int8.tflite de Ultralytics es dynamic-range quant (pesos
+# int8, activaciones y E/S float32), el mismo formato que corre la app.
+
+family: yolo
+
+# Estudiante v4, persistido por prune.py (pruning.save_checkpoint).
+model: models/student_pruned_ft_deploy_v4.pt
+
+data: data/processed/pose_dataset_pseudo_corrected.yaml
+
+# Un solo fold: el mismo con el que se entrenó el checkpoint.
+cross_validation: false
+fold: 0
+
+# Detector que aporta el bbox de persona normalizador de OKS/PCK; el mismo que v3.
+eval_base_model: models/yolov8n-pose.pt
+
+imgsz: 640
+device: 0
+
+mlflow:
+  experiment: fase5-deploy

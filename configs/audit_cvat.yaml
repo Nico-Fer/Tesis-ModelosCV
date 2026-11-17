@@ -1,0 +1,114 @@
+# Auditoría humana de pseudo-labels ViTPose vía CVAT self-hosted, y cierre del
+# loop: las correcciones vuelven al entrenamiento (docs/plan_cvat_correcciones.md).
+#
+# Flujo completo en docs/cvat_setup.md. Orden de ejecución:
+#   1. python -m src.audit.select_audit_subset   --config configs/audit_cvat.yaml
+#   2. python -m src.audit.pack_for_cvat         --config configs/audit_cvat.yaml [--limit 5]
+#   3. GATE:  python scripts/cvat_roundtrip_gate.py --config configs/audit_cvat.yaml
+#   4. python scripts/cvat_audit.py montar       --config configs/audit_cvat.yaml --project <nombre>
+#   5. [anotar en la UI; marcar cada job como completed al terminarlo]
+#   6. python scripts/cvat_audit.py exportar     --config configs/audit_cvat.yaml --project-id <id>
+#   7. python -m src.audit.reconcile_corrections --config configs/audit_cvat.yaml
+#   8. python -m src.audit.apply_corrections     --config configs/audit_cvat.yaml
+
+pseudo:
+  manifest: data/processed/uco_pseudo/manifest.csv
+  images_dir: data/processed/uco_pseudo/images/all
+  labels_dir: data/processed/uco_pseudo/labels/all
+  folds_dir: data/processed/uco_pseudo/folds
+  # Config efectiva de la corrida de pseudo-labeling: de acá salen los umbrales
+  # del flag baja_confianza (review.*), no del YAML actual, que pudo cambiar.
+  run_metadata: data/processed/uco_pseudo/run_metadata.json
+
+gt:
+  # GT de UCO: solo las 3 articulaciones del ejercicio (las que usa la app).
+  labels_dir: data/processed/uco_yolo/labels/all
+  # Todos los videos UCO son 1280×720; se verifica contra una imagen al arrancar.
+  img_size: [1280, 720]
+  # D3. Medido el 2026-09-28 sobre los 74.107 frames: error máx por frame p50 22,
+  # p95 43, p99 78 px. El ~22 px típico es diferencia de convención articulación
+  # UCO vs keypoint COCO, no error: el umbral va por encima del p99.
+  discrepancia_thr_px: 100
+
+seleccion:
+  # Se auditan TODOS los frames con motivo (sin_deteccion, sin_kpts_validos,
+  # discrepancia_gt, score_bajo). El control son frames "sanos" (sin flag y sin
+  # discrepancia) muestreados estratificadamente: sin esa línea base la tasa de
+  # corrección no es interpretable.
+  control_size: 150
+  stratify_by: [exercise, subject]
+  seed: 42
+  out_csv: data/processed/uco_audit/selection.csv
+  # D2. Los multi_persona sin discrepancia tienen contra el GT el mismo error que
+  # el control (p99 48 vs 47 px): el esqueleto ya es el del paciente. Se excluyen
+  # salvo una muestra estratificada que documenta la exclusión.
+  excluir_multi_sin_discrepancia: true
+  muestra_multi_persona: 50
+
+estratos:
+  # Postura por ejercicio: 01–08 son ejercicios de pierna ejecutados sentado;
+  # 09 y 13 son elevaciones de brazo. Un ejercicio fuera de este mapa aborta.
+  postura:
+    "01": sedente
+    "02": sedente
+    "03": sedente
+    "04": sedente
+    "05": sedente
+    "06": sedente
+    "07": sedente
+    "08": sedente
+    "09": brazo
+    "13": brazo
+
+pack:
+  out_dir: data/processed/uco_audit/cvat_pack
+  link_mode: hardlink
+  # Subset del data.yaml del pack; CVAT lo preserva al exportar.
+  subset: train
+
+cvat:
+  url: http://localhost:8080
+  # String EXACTO verificado contra GET /api/server/annotation/formats
+  # en el server desplegado (v2.74.1). No asumirlo al cambiar de versión.
+  formato: "Ultralytics YOLO Pose 1.0"
+  label_name: person
+  # Frames por job. Un job es la unidad de "auditado": se exporta solo cuando
+  # el anotador lo marca completed.
+  segment_size: 100
+  # Calidad JPEG de la vista de anotación (el default de CVAT, 70, degrada la
+  # imagen). No afecta coordenadas.
+  image_quality: 95
+  # Estado de job que cuenta como auditado.
+  estado_auditado: completed
+  # Mapa stem → (task, job, frame), escrito por `cvat_audit.py montar`.
+  frames_csv: data/processed/uco_audit/cvat_frames.csv
+  backups_dir: data/processed/uco_audit/backups
+
+roundtrip:
+  # Piso de ruido tolerado del viaje norm → px (CVAT) → norm, en píxeles.
+  # Si el gate mide más que esto, se investiga antes de auditar en serio.
+  tol_px: 1.0
+
+reconcile:
+  # Directorio que escribe `cvat_audit.py exportar`: labels/ de los jobs
+  # completados + auditados.txt (la lista de frames revisados por humano).
+  export_dir: data/processed/uco_audit/cvat_export
+  # Desplazamiento mínimo (px) para contar un keypoint como corregido; debe
+  # superar el noise floor reportado por verify_roundtrip.
+  corregido_thr_px: 3.0
+  # Gold set verificado por humano. Con aplicar.usar_en_train: true el held-out
+  # es POR SUJETO (vía los folds), no por frame.
+  gold_root: data/processed/uco_gold
+
+aplicar:
+  out_root: data/processed/uco_pseudo_corrected
+  out_yaml: data/processed/pose_dataset_pseudo_corrected.yaml
+  # D1. true: las correcciones entran al train de los folds donde su sujeto es
+  # train, y se evalúan en el fold donde es val. false: los stems gold se
+  # excluyen de todos los manifests de train (held-out por frame).
+  usar_en_train: true
+  n_folds: 5
+  # Mix v3 (uco + COCO-pose) apuntado al dataset corregido.
+  mix_coco:
+    manifest: data/processed/coco_pose/coco_val2017_pose.txt
+    fold: 0

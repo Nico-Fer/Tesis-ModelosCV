@@ -1,0 +1,204 @@
+{
+  "tag": "v3cv_fp32",
+  "fold": 4,
+  "modelo": "C:\\Users\\nico\\Documents\\Facultad\\Tesis\\Codigo\\modelosCV\\runs\\v3_cv\\fold4\\student_pruned_ft.pt",
+  "md5": "382a57a5f4f3445140f602cdca0808f9",
+  "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+  "fecha": "2026-10-17T16:05:29",
+  "limit": null,
+  "vs_pseudo": {
+    "oks": 0.960487417709944,
+    "pck02": 0.998005004395753,
+    "pck02_pierna": 0.9977537095430433,
+    "pck02_brazo": 0.9990201508115707,
+    "n_cuadros": 13968
+  },
+  "vs_instrumental": {
+    "n_cuadros": 13968,
+    "deteccion": 1.0,
+    "global": {
+      "n_articulaciones": 41904,
+      "con_prediccion": 1.0,
+      "pck0.05": 0.9287657502863689,
+      "pck0.10": 0.9934851088201604,
+      "error_mediano": 0.024104151635349208,
+      "error_p90": 0.04572165999903586,
+      "dx_mediano": -0.002467776652018235,
+      "dy_mediano": 0.003168819268120653
+    },
+    "por_zona": {
+      "pierna": {
+        "n_articulaciones": 33582,
+        "con_prediccion": 1.0,
+        "pck0.05": 0.94598296706569,
+        "pck0.10": 0.9972604371389435,
+        "error_mediano": 0.02358897759200455,
+        "error_p90": 0.04344154793899208,
+        "dx_mediano": -0.0029001326497395197,
+        "dy_mediano": 0.002635305040147568
+      },
+      "brazo": {
+        "n_articulaciones": 8322,
+        "con_prediccion": 1.0,
+        "pck0.05": 0.8592886325402548,
+        "pck0.10": 0.9782504205719779,
+        "error_mediano": 0.026572538973407174,
+        "error_p90": 0.05840083201229028,
+        "dx_mediano": -0.000981261745876891,
+        "dy_mediano": 0.006670775173611155
+      }
+    },
+    "por_articulacion": {
+      "left_shoulder": {
+        "n_articulaciones": 1329,
+        "con_prediccion": 1.0,
+        "pck0.05": 0.9578630549285176,
+        "pck0.10": 1.0,
+        "error_mediano": 0.02399930215753845,
+        "error_p90": 0.041662751038772684,
+        "dx_mediano": -0.005121695665147601,
+        "dy_mediano": 0.010639847873263856
+      },
+      "right_shoulder": {
+        "n_articulaciones": 1445,
+        "con_prediccion": 1.0,
+        "pck0.05": 0.9716262975778547,
+        "pck0.10": 1.0,
+        "error_mediano": 0.026129579697409464,
+        "error_p90": 0.04239588535788034,
+        "dx_mediano": 0.0035557082519529913,
+        "dy_mediano": 0.014059194837782169
+      },
+      "left_elbow": {
+        "n_articulaciones": 1329,
+        "con_prediccion": 1.0,
+        "pck0.05": 0.9142212189616253,
+        "pck0.10": 0.9887133182844243,
+        "error_mediano": 0.02336896161738989,
+        "error_p90": 0.04827832887083496,
+        "dx_mediano": -0.0025781898057726633,
+        "dy_mediano": 0.002817541544596401
+      },
+      "right_elbow": {
+        "n_articulaciones": 1445,
+        "con_prediccion": 1.0,
+        "pck0.05": 0.8878892733564013,
+        "pck0.10": 0.9923875432525952,
+        "error_mediano": 0.020372284086000347,
+        "error_p90": 0.05384216610819925,
+        "dx_mediano": 0.0022797293294271664,
+        "dy_mediano": 0.006176953911675377
+      },
+      "left_wrist": {
+        "n_articulaciones": 1329,
+        "con_prediccion": 1.0,
+        "pck0.05": 0.7268623024830699,
+        "pck0.10": 0.9382994732881866,
+        "error_mediano": 0.03217634769907408,
+        "error_p90": 0.0833469401280044,
+        "dx_mediano": 0.0003067452528212142,
+        "dy_mediano": 0.002957250284830732
+      },
+      "right_wrist": {
+        "n_articulaciones": 1445,
+        "con_prediccion": 1.0,
+        "pck0.05": 0.698961937716263,
+        "pck0.10": 0.9494809688581315,
+        "error_mediano": 0.03639999564194163,
+        "error_p90": 0.07889289235276102,
+        "dx_mediano": -0.004045469997829956,
+        "dy_mediano": 0.00011996427408852304
+      },
+      "left_hip": {
+        "n_articulaciones": 5718,
+        "con_prediccion": 1.0,
+        "pck0.05": 0.9695697796432319,
+        "pck0.10": 1.0,
+        "error_mediano": 0.02928399515727039,
+        "error_p90": 0.04393804070004522,
+        "dx_mediano": -0.02437922580973309,
+        "dy_mediano": 0.000540134799533397
+      },
+      "right_hip": {
+        "n_articulaciones": 5476,
+        "con_prediccion": 1.0,
+        "pck0.05": 0.8763696128560994,
+        "pck0.10": 1.0,
+        "error_mediano": 0.033126324236617655,
+        "error_p90": 0.05154447853664944,
+        "dx_mediano": 0.02282867282443577,
+        "dy_mediano": 0.0029882033759223406
+      },
+      "left_knee": {
+        "n_articulaciones": 5718,
+        "con_prediccion": 1.0,
+        "pck0.05": 0.993704092339979,
+        "pck0.10": 1.0,
+        "error_mediano": 0.016584107584883923,
+        "error_p90": 0.03127111891617719,
+        "dx_mediano": 0.00625422347005203,
+        "dy_mediano": 0.005659975802951363
+      },
+      "right_knee": {
+        "n_articulaciones": 5476,
+        "con_prediccion": 1.0,
+        "pck0.05": 0.9572680788897006,
+        "pck0.10": 0.9994521548575602,
+        "error_mediano": 0.023653728590519913,
+        "error_p90": 0.0401650236787191,
+        "dx_mediano": -0.013996518202040105,
+        "dy_mediano": 0.003801803595648876
+      },
+      "left_ankle": {
+        "n_articulaciones": 5718,
+        "con_prediccion": 1.0,
+        "pck0.05": 0.9526058062259531,
+        "pck0.10": 0.9972018188177685,
+        "error_mediano": 0.01809385289147805,
+        "error_p90": 0.03914998193753477,
+        "dx_mediano": 0.005520127319335878,
+        "dy_mediano": 0.0002273634847005231
+      },
+      "right_ankle": {
+        "n_articulaciones": 5476,
+        "con_prediccion": 1.0,
+        "pck0.05": 0.922936449963477,
+        "pck0.10": 0.9866691015339664,
+        "error_mediano": 0.020103300280395413,
+        "error_p90": 0.04450580502341965,
+        "dx_mediano": -0.008615057888454835,
+        "dy_mediano": 0.002720225138346343
+      }
+    }
+  },
+  "compuerta": {
+    "train2017": {
+      "n_imagenes": 80,
+      "n_gt_validas": 80,
+      "n_detectadas": 78,
+      "n_evaluables": 78,
+      "n_sin_esqueleto": 2,
+      "span_x_rel_gt": 0.777630692228463,
+      "span_x_rel_pred": 0.7386994762849812,
+      "razon_pred_gt": 0.9507611111271231,
+      "razon_pred_gt_mediana": 0.9555803861285609,
+      "colapsadas": 0,
+      "error_kpt": 0.03169809436205494,
+      "det025": 78
+    },
+    "val2017": {
+      "n_imagenes": 37,
+      "n_gt_validas": 37,
+      "n_detectadas": 37,
+      "n_evaluables": 37,
+      "n_sin_esqueleto": 0,
+      "span_x_rel_gt": 0.7660043965921599,
+      "span_x_rel_pred": 0.7330173483227347,
+      "razon_pred_gt": 0.9580404545890412,
+      "razon_pred_gt_mediana": 0.9841485165253696,
+      "colapsadas": 0,
+      "error_kpt": 0.03508851276360526,
+      "det025": 37
+    }
+  }
+}

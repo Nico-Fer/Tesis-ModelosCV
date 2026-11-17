@@ -1,0 +1,37 @@
+# Configuración — FASE 4 (knowledge distillation) yolov8x-pose → yolov8n-pose.
+# Ejecutar con:
+#   python -m src.training.distill --config configs/distill_yolov8n.yaml
+
+family: yolo
+model: models/yolov8n-pose.pt          # estudiante: checkpoint inicial del modelo ligero
+teacher_model: models/yolov8x-pose.pt  # maestro: pre-entrenado, solo inferencia (sin gradientes)
+
+# Dataset pseudo-etiquetado (ver baseline_yolov8n.yaml).
+data: data/processed/pose_dataset_pseudo.yaml
+
+imgsz: 640
+
+# --- Hardware (RTX 3090, 24 GB) ---
+# batch menor que en Fase 1: el maestro yolov8x (68M params) corre en inferencia
+# sobre cada batch además del estudiante, ocupando VRAM en paralelo.
+device: 0
+batch: 24
+workers: 8
+amp: true
+patience: 15
+
+distillation:
+  beta: 1000         # peso de attention transfer (β de Zagoruyko & Komodakis): el término
+                     # es (1-α)·(β/2)·B·L_AT. Reemplaza a 'temperature' (T² no aplica a
+                     # attention maps). Sin optimizer/lr0 acá, Ultralytics elige el LR solo.
+  alpha: 0.5        # peso de la task loss (labels) frente a la loss de distillation.
+                     # Mismo valor que en Fase 5 → el delta entre ambas fases se
+                     # atribuye a la poda + INT8 y no al peso relativo de la loss.
+  epochs: 100
+
+export:
+  format: tflite
+  quantize: false    # Fase 4 = Float32; para INT8 usar Fase 5 (combined)
+
+mlflow:
+  experiment: fase4-distillation

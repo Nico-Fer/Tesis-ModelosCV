@@ -1,0 +1,50 @@
+# =============================================================================
+# requirements-torch.txt  —  Entorno PyTorch / Ultralytics (modelo PRINCIPAL)
+#
+#   Uso: entrenamiento, fine-tuning, knowledge distillation y EXPORTACIÓN a
+#        TFLite de la familia YOLOv8-pose (Fases 1, 2, 4, 5).
+#
+#   Crear el venv DEDICADO:
+#     python3.11 -m venv venv-torch
+#     source venv-torch/bin/activate        # Windows: venv-torch\Scripts\activate
+#     pip install -r requirements-torch.txt
+#
+#   ATENCIÓN — La exportación a TFLite de Ultralytics corre la cadena
+#   PyTorch -> ONNX -> TensorFlow -> TFLite, por lo que TF + onnx2tf DEBEN vivir
+#   en ESTE mismo entorno (no se escapa de TensorFlow). El par
+#   tensorflow <-> onnx2tf es la combinación más frágil: validarla con el spike
+#   de export ANTES de avanzar (ver README / sección Verificación del plan).
+# =============================================================================
+
+-r requirements-base.txt
+
+# --- Framework del modelo principal ---
+ultralytics~=8.3.0    # PIN minor: 8.4.x fuerza AutoUpdate a Keras 3 / tf_keras / onnx2tf>=1.26 y rompe el stack
+
+# --- torch / torchvision: build CUDA (OBLIGATORIO para entrenar) ---
+# Ultralytics los resuelve solo, pero instala la build CPU: entrenar los ~58k
+# frames de un fold en CPU son semanas por fase. Tras instalar este archivo,
+# reemplazar la build CPU por la CUDA (mismas versiones, distinto build):
+#
+#   pip install -c constraints-venv-torch.txt \
+#     --index-url https://download.pytorch.org/whl/cu126 \
+#     --extra-index-url https://pypi.org/simple \
+#     torch==2.12.1+cu126 torchvision==0.27.1+cu126
+#
+# o `make setup-torch-cuda`. El `-c` NO es opcional: sin él, resolver desde otro
+# índice puede arrastrar un upgrade de numpy/protobuf/TF y romper la export TFLite.
+# cu126 y no cu128: en cu128 torch llega sólo hasta 2.11 (sería un downgrade).
+
+# --- Poda estructurada (Fases 2 y 5) ---
+torch-pruning>=1.4.0  # DepGraph + MagnitudePruner: poda real de canales (reduce FLOPs/params).
+                      # Python puro sobre torch; no toca los pins frágiles de export (TF/onnx2tf/Keras).
+
+# --- Toolchain de exportación a TFLite (PyTorch -> ONNX -> TF -> TFLite) ---
+tensorflow~=2.15.0    # PIN minor: Keras 2 nativo (>=2.16 trae Keras 3 y rompe el toolchain)
+onnx~=1.16.0          # PIN minor: par frágil con onnx2tf (ver README)
+onnxslim
+onnxruntime~=1.18
+onnx2tf~=1.22.0       # PIN minor: acoplado a TF 2.15; export validado (spike OK con este stack)
+tf-keras~=2.15.0      # onnx2tf hace `import tf_keras` incondicional; versión atada a TF 2.15 (no bumpea TF)
+onnx-graphsurgeon>=0.3.26  # import incondicional de onnx2tf; en PyPI y en el índice NVIDIA (pypi.ngc.nvidia.com)
+sng4onnx

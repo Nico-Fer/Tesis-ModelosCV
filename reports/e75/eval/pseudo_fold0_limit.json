@@ -1,0 +1,75 @@
+{
+  "tag": "pseudo",
+  "fold": 0,
+  "modelo": "pseudo",
+  "md5": null,
+  "commit": "d1dde1a18b1e1e779b8ffcff381b1973e67edaf5+cambios",
+  "fecha": "2026-10-16T11:07:11",
+  "limit": 40,
+  "vs_pseudo": {
+    "oks": 1.0,
+    "pck02": 1.0,
+    "pck02_pierna": 1.0,
+    "pck02_brazo": null,
+    "n_cuadros": 40
+  },
+  "vs_instrumental": {
+    "n_cuadros": 40,
+    "deteccion": 1.0,
+    "global": {
+      "n_articulaciones": 120,
+      "con_prediccion": 1.0,
+      "pck0.05": 1.0,
+      "pck0.10": 1.0,
+      "error_mediano": 0.016401513325971968,
+      "error_p90": 0.030009589935974475,
+      "dx_mediano": -0.006282666666666733,
+      "dy_mediano": 0.006902999999999951
+    },
+    "por_zona": {
+      "pierna": {
+        "n_articulaciones": 120,
+        "con_prediccion": 1.0,
+        "pck0.05": 1.0,
+        "pck0.10": 1.0,
+        "error_mediano": 0.016401513325971968,
+        "error_p90": 0.030009589935974475,
+        "dx_mediano": -0.006282666666666733,
+        "dy_mediano": 0.006902999999999951
+      },
+      "brazo": {}
+    },
+    "por_articulacion": {
+      "left_hip": {
+        "n_articulaciones": 40,
+        "con_prediccion": 1.0,
+        "pck0.05": 1.0,
+        "pck0.10": 1.0,
+        "error_mediano": 0.02359707570924081,
+        "error_p90": 0.02665552805294682,
+        "dx_mediano": -0.010176888888888888,
+        "dy_mediano": 0.02169849999999999
+      },
+      "left_knee": {
+        "n_articulaciones": 40,
+        "con_prediccion": 1.0,
+        "pck0.05": 1.0,
+        "pck0.10": 1.0,
+        "error_mediano": 0.005501616934886844,
+        "error_p90": 0.010118160614538824,
+        "dx_mediano": -0.001916444444444486,
+        "dy_mediano": 0.002512500000000036
+      },
+      "left_ankle": {
+        "n_articulaciones": 40,
+        "con_prediccion": 1.0,
+        "pck0.05": 1.0,
+        "pck0.10": 1.0,
+        "error_mediano": 0.02135538841988519,
+        "error_p90": 0.035496274076105776,
+        "dx_mediano": -0.006282666666666733,
+        "dy_mediano": 0.003693500000000011
+      }
+    }
+  }
+}

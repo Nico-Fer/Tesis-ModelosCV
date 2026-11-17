@@ -1,0 +1,44 @@
+# Configuración — cuantización INT8 del modelo desplegable, linaje v2. SUPERADO.
+# Ejecutar con:
+#   python -m src.training.quantize --config configs/quantize_deploy.yaml
+#
+# OBSOLETO — usar configs/quantize_deploy_v3.yaml. El checkpoint v2 que cuantiza este
+# config generaliza mal fuera del dominio UCO: sobre 79 imágenes OOD con GT real el
+# span de keypoints cae a 0.70 del GT (40/76 frames con el esqueleto fuera del cuerpo),
+# que es el esqueleto aplastado que se veía en la app. Ver CLAUDE.md, "RESOLVED — the
+# deployed model's keypoints collapsed out of domain". Se conserva sólo como referencia
+# del linaje medido.
+#
+# Toma el estudiante podado + fine-tuneado del run de deploy (OKS 0.9354 sobre el
+# val completo del fold 0) y produce el .tflite INT8 que va a la app.
+#
+# POR QUÉ ESTE CHECKPOINT Y NO EL DE LA FASE 5 COMPLETA: la etapa de distillation
+# está rota (ver CLAUDE.md, "BROKEN — the distillation stage diverges"). En el run
+# del 27/07 llevó al estudiante de OKS 0.935 a 0.626. Este config saltea esa etapa
+# y cuantiza el mejor modelo disponible.
+
+family: yolo
+
+# Estudiante podado (sparsity 0.3) + 25 epochs de recuperación a lr 0.001.
+# Copia estable de models/exports/student_pruned_ft.pt, que combined.py
+# SOBREESCRIBE en cada corrida.
+model: models/student_pruned_ft_deploy_v2.pt
+
+data: data/processed/pose_dataset_pseudo.yaml
+
+# Un solo fold: el mismo con el que se entrenó el checkpoint. Sin esto correría
+# los 5 folds y evaluaría el modelo contra sujetos que vio en entrenamiento.
+cross_validation: false
+fold: 0
+
+# Detector que aporta el bbox de persona normalizador de OKS/PCK. Se fija al mismo
+# que usó la Fase 5 (su config["model"]) para que el oks_int8 de acá sea comparable
+# con los oks_base / oks_pruned / oks_pruned_ft de aquel run. Con el default (el
+# propio modelo cuantizado) las métricas sólo serían comparables entre sí.
+eval_base_model: models/yolov8n-pose.pt
+
+imgsz: 640
+device: 0
+
+mlflow:
+  experiment: fase5-deploy      # mismo experimento que las otras etapas del deploy

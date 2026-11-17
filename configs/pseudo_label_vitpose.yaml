@@ -1,0 +1,80 @@
+# Configuración del auto-etiquetado (pseudo-labeling) con ViTPose-H.
+# Ejecutar en venv-mmpose (NO en venv-torch):
+#   python -m src.data.pseudo_label_vitpose --config configs/pseudo_label_vitpose.yaml
+#
+# Paso previo OBLIGATORIO — calibrar los umbrales con datos, no con los defaults:
+#   python -m src.data.pseudo_label_vitpose --config configs/pseudo_label_vitpose.yaml --dump-scores
+# Ver la sección "Calibración" del README antes de la corrida completa (2–4 h).
+
+input:
+  images_dir: data/processed/uco_yolo/images/all
+  pattern: "*.jpg"
+
+output:
+  root: data/processed/uco_pseudo
+  # Este archivo base NO se genera (igual que pose_dataset.yaml): sirve de stem
+  # para que src/training/_kfold.py descubra los *_fold{k}.yaml hermanos.
+  dataset_yaml: data/processed/pose_dataset_pseudo.yaml
+  link_mode: hardlink        # hardlink | copy | symlink
+
+detector:
+  # RTMDet-m COCO genérico (80 clases). El person-only de mmpose vive en
+  # projects/, que el paquete pip NO incluye, así que `mim download` no lo
+  # resuelve; con el genérico + person_cat_id: 0 el resultado es equivalente,
+  # sólo que filtrando la clase person entre las 80.
+  config: models/teachers/rtmdet_m_8xb32-300e_coco.py
+  checkpoint: models/teachers/rtmdet_m_8xb32-300e_coco_20220719_112220-229f527c.pth
+  # CALIBRADO con --dump-scores sobre 500 imágenes estratificadas.
+  # Barrido de frames perdidos (det_thr_sweep.csv):
+  #   0.2 -> 0.2% | 0.3 -> 0.2% | 0.4 -> 0.6% | 0.5 -> 1.0%
+  # 0.5 costaba ~740 frames de los 74k; 0.3 los baja a ~150 sin admitir basura
+  # (las detecciones débiles igual quedan filtradas por vis_thr_low y marcadas
+  # en el manifest). Una detección perdida cuesta el FRAME ENTERO, así que el
+  # trade-off es asimétrico a favor del umbral bajo.
+  det_thr: 0.3
+  nms_thr: 0.3
+  person_cat_id: 0           # COCO clase 0 = person (vale también para el modelo person-only)
+  max_persons: 1             # UCO es single-subject: se queda la detección de mayor score
+
+pose:
+  config: models/teachers/td-hm_ViTPose-huge_8xb64-210e_coco-256x192.py
+  checkpoint: models/teachers/td-hm_ViTPose-huge_8xb64-210e_coco-256x192-e32adcd4_20230314.pth
+  # ÚNICO umbral que afecta al entrenamiento del student: por debajo, el keypoint
+  # se descarta (v=0, px=py=0) y no entra a la loss.
+  # CALIBRADO con --dump-scores (score_stats.csv): NINGÚN keypoint tiene p5 por
+  # debajo de 0.41 — los peores son codos/muñecas (p5 0.41-0.51), y el miembro
+  # inferior NO se degrada (caderas/rodillas/tobillos p5 0.75-0.82, p50 0.86-0.93).
+  # El riesgo de dominio que se temía (adultos mayores sentados) no aparece en
+  # UCO: los sujetos están bien encuadrados.
+  # Retención por imagen: 0.2 -> 17.0/17 | 0.3 -> 16.9/17 | 0.5 -> 16.7/17.
+  # 0.3 descarta sólo el 0.6% de los keypoints, y son justo los inciertos.
+  vis_thr_low: 0.3
+  # NO afecta al entrenamiento: Ultralytics binariza la visibilidad (usa v>0 como
+  # máscara de la loss), así que v=1 y v=2 entrenan idéntico. Sólo separa
+  # n_v1/n_v2 en el manifest para priorizar la revisión humana.
+  vis_thr_high: 0.6
+
+runtime:
+  device: cuda:0
+  seed: 42
+  resume: true               # saltea imágenes cuyo .txt ya existe
+  flush_every: 500           # cada cuántas imágenes se vuelca el manifest a disco
+
+folds:
+  n_folds: 5
+  # Mismo seed que src/data/uco_to_yolo → MISMO reparto de sujetos, así el fold k
+  # del dataset pseudo es comparable 1:1 contra el fold k del ground truth.
+  seed: 42
+  skip_empty: true           # los .txt vacíos no entran a los manifests de train/val
+  # Aborta si el reparto de sujetos por fold difiere del dataset GT. Convierte
+  # "mismo seed ⇒ mismo reparto" de suposición a hecho verificado.
+  verify_against: data/processed/uco_yolo
+
+calibration:                 # sólo se usa en modo --dump-scores
+  sample_size: 500
+  stratify_by: [exercise, subject]
+  det_thr_candidates: [0.2, 0.3, 0.4, 0.5]
+
+review:                      # reglas del flag "baja_confianza" del manifest
+  mean_score_thr: 0.5
+  min_visible_kpts: 10

@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/853839127993800373/11734b62e1504b15a146dacd944f96a5/artifacts
+end_time: 1792032541714
+entry_point_name: ''
+experiment_id: '853839127993800373'
+lifecycle_stage: active
+run_id: 11734b62e1504b15a146dacd944f96a5
+run_name: models/yolov8n-pose.pt
+run_uuid: 11734b62e1504b15a146dacd944f96a5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1791471805337
+status: 3
+tags: []
+user_id: nico
